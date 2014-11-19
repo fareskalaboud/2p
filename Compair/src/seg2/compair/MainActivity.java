@@ -2,8 +2,13 @@ package seg2.compair;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+import model.download.DownloadData;
+
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends Activity {
 
@@ -11,6 +16,18 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		Toast.makeText(getApplicationContext(),"Downloading started...", Toast.LENGTH_LONG).show();
+		DownloadData data = new DownloadData();
+		data.execute("http://api.worldbank.org/countries?format=json&per_page=10");
+
+		try {
+			Log.w("JSON response", data.get().toString());
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

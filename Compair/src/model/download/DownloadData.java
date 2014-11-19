@@ -1,4 +1,4 @@
-package model;
+package model.download;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -23,7 +23,10 @@ import java.io.InputStreamReader;
  */
 public class DownloadData extends AsyncTask<String, String, JSONArray> {
 
-
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+    }
 
     /**
      * Overridden method for downloading a JSON data
@@ -59,7 +62,7 @@ public class DownloadData extends AsyncTask<String, String, JSONArray> {
             }
 
         } catch (ClientProtocolException e) {
-            Log.e("readData", "CLientProtocolException during reading");
+            Log.e("readData", "ClientProtocolException during reading");
         } catch (IOException e) {
             Log.e("readData", "IOException during reading");
         }
@@ -77,5 +80,10 @@ public class DownloadData extends AsyncTask<String, String, JSONArray> {
         }
 
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(JSONArray jsonArray) {
+        super.onPostExecute(jsonArray);
     }
 }
