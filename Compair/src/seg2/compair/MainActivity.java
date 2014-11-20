@@ -6,10 +6,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import model.download.DownloadData;
 import model.download.JSONParser;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends Activity {
@@ -19,7 +23,10 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		JSONParser.getCountries();
+		ArrayList<String> countries = JSONParser.getCountries();
+		ListView listView = (ListView)findViewById(R.id.listView);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, countries);
+		listView.setAdapter(adapter);
 	}
 
 	@Override

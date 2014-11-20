@@ -22,6 +22,7 @@ public class JSONParser {
      */
     public static ArrayList<String> getCountries() {
         //TODO:Country class
+        ArrayList<String> countries = new ArrayList<String>();
 
         String url = COUNTRIES + "?per_page=300&" + JSON_FORMAT;
         JSONArray jsonResponse = download(url);
@@ -35,13 +36,18 @@ public class JSONParser {
                     String capital = object.getString("capitalCity");
                     String latitude = object.getString("latitude");
                     String longitude = object.getString("longitude");
+
+                    // check if the country exist or not (meaning it has lat and long)
+                    if (!latitude.equals("") && !longitude.equals("")) {
+                        countries.add(name);
+                    }
                     Log.w(id, name + ", " + capital + " (" + latitude + ", " + longitude + ")");
                 }
             } catch (JSONException e) {
                 Log.e("JSONException", "Get countries data at index 1");
             }
         }
-        return null;
+        return countries;
     }
 
     // Execute download request and return a JSONArray
