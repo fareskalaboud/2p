@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import model.download.DownloadData;
 import model.download.JSONParser;
+import model.storage.Store;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;

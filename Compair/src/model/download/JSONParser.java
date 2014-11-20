@@ -13,8 +13,8 @@ import java.util.concurrent.ExecutionException;
  */
 public class JSONParser {
 
-    private static String JSON_FORMAT = "format=json";
-    private static String COUNTRIES = "http://api.worldbank.org/countries";
+    private static final String JSON_FORMAT = "format=json";
+    private static final String COUNTRIES = "http://api.worldbank.org/countries";
 
     /**
      * Get countries from the WorldBank API
