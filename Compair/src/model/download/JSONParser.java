@@ -35,13 +35,15 @@ public class JSONParser {
                     JSONObject object = jsonCountries.getJSONObject(i);
                     String id = object.getString("id");
                     String name = object.getString("name");
+                    JSONObject region = object.getJSONObject("region");
+                    String regionName = region.getString("value");
                     String capital = object.getString("capitalCity");
                     String latitude = object.getString("latitude");
                     String longitude = object.getString("longitude");
 
                     // check if the country exist or not (meaning it has lat and long)
                     if (!latitude.equals("") && !longitude.equals("")) {
-                        Country newCountry = new Country(id, name, capital, latitude, longitude);
+                        Country newCountry = new Country(id, name,regionName, capital, latitude, longitude);
                         countries.put(id, newCountry);
                     }
                 }
