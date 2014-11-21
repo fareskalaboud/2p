@@ -8,13 +8,13 @@ public class Country {
 	private String latitude;
 	private String longitude;
 
-	public Country() {
+	public Country(String id, String name, String capital, String latitude, String longitude) {
 
-		name = this.name;
-		id = this.id;
-		capital = this.capital;
-		longitude = this.longitude;
-		latitude = this.latitude;
+		this.name = name;
+		this.id = id;
+		this.capital = capital;
+		this.latitude = latitude;
+		this.longitude = longitude;
 
 	}
 
