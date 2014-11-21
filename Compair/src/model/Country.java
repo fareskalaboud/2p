@@ -1,4 +1,4 @@
-package model.download;
+package model;
 
 public class Country {
 
