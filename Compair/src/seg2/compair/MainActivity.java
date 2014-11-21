@@ -10,8 +10,10 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import model.Country;
 import model.download.JSONParser;
-import java.util.ArrayList;
+
+import java.util.*;
 
 public class MainActivity extends Activity {
 
@@ -20,13 +22,21 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		ArrayList<String> countries = new ArrayList<String>();
+		HashMap<String, Country> countries = new HashMap<String, Country>();
 		if (isInternetAvailable()) {
 			countries = JSONParser.getCountries();
 		}
 
 		ListView listView = (ListView)findViewById(R.id.listView);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, countries);
+		ArrayList<String> countriesName = new ArrayList<String>();
+
+		Iterator iterator = countries.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Map.Entry pairs = (Map.Entry)iterator.next();
+			countriesName.add(((Country)pairs.getValue()).getName());
+		}
+		Collections.sort(countriesName);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, countriesName);
 		listView.setAdapter(adapter);
 	}
 
