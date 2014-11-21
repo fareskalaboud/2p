@@ -11,22 +11,28 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
+/**
+ * This class is used to test if the graph.class works as intended, by using two fake datasets in the form of hashmaps. 
+ * @author Vladimir Putin
+ *
+ */
 public class MainActivity extends Activity {
-	
+	//The two fakes hashmaps, we fill with data in the onCreate method. 
 	HashMap<String,String> map1 = new HashMap<String,String>();
 	HashMap<String,String> map2 = new HashMap<String,String>();
+
+	Graph graph;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+		//We add fake data in the form of <Date,Value>
 		map1.put("2014-11-21", "5");
 		map1.put("2014-11-20", "10");
 		map1.put("2014-11-19", "15");
 		map1.put("2014-11-18", "16");
 		map1.put("2014-11-17", "20");
-		
+
 		map2.put("2014-11-21", "10");
 		map2.put("2014-11-20", "15");
 		map2.put("2014-11-19", "15");
@@ -40,22 +46,44 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
+
 	public void createGraph(View view)
 	{
-		Graph graph = new Graph("Date", "Percent (%)");
-		try {
-			graph.addDataSet(map1, "Currency1");
-			graph.addDataSet(map2, "Currency2");
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		Intent intent = graph.createGraph(getApplicationContext());
-		
-		startActivity(intent);
-		
+		//To prevent the ui thread from hanging on pressing the button, we use a thread runnable. I don't know how pre-historic the device this app will be ran on. 
+		new Thread(new Runnable()
+		{
+
+			@Override
+			public void run() {
+				//We create the new graph object, with the X and Y Labels, and add the data sets we want to use. 
+				graph = new Graph("Date", "Percent (%)");
+				try {
+					graph.addDataSet(map1, "Currency1");
+					graph.addDataSet(map2, "Currency2");
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				//We have to create and start the intent on the main UI thread. 
+				runOnUiThread( new Runnable()
+				{
+
+					@Override
+					public void run() {
+						Intent intent = graph.createGraph(getApplicationContext());
+						startActivity(intent);
+
+					}
+
+				});
+
+
+
+			}
+
+		}).start();
+
+
 	}
 
 	@Override

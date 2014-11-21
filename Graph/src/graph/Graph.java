@@ -17,25 +17,29 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 
-
+/**
+ * This class defines the graph that visualises the datasets recieved from the user input from the Central Bank. 
+ * @author Joseph Stalin
+ *
+ */
 public class Graph {
-
+	//The renderer and dataset for all the data added. 
 	XYMultipleSeriesRenderer renderer;
 	XYMultipleSeriesDataset dataSet;
-
+	//The names of the X and Y Labels on the graph. 
 	String xLabel;
 	String yLabel;
-
+	//The different colours for each dataset. We use a counter to add the correct number of renderers, for the number of datasets added.
 	int[] colours = {Color.RED,Color.BLUE,Color.GREEN,Color.MAGENTA};
 	int colourCount = 0;
-
+	//The number of datasets. 
 	int numberOfSets = 0;
 
-/**
- * This class defines a graph intent. 
- * @param xLabel The Label we are giving the X Axis.
- * @param yLabel The Label we are giving the Y Axis.
- */
+	/**
+	 * This class defines a graph intent. 
+	 * @param xLabel The Label we are giving the X Axis.
+	 * @param yLabel The Label we are giving the Y Axis.
+	 */
 
 	public Graph(String xLabel, String yLabel)
 	{
@@ -45,9 +49,9 @@ public class Graph {
 		this.xLabel = xLabel;
 		this.yLabel = yLabel;
 
-	
+
 	}
-	
+
 	/**
 	 * Class defines adding a set of data to the graph. 
 	 * @param data The dataset we are to add in the format of <Date,Value>
@@ -57,10 +61,11 @@ public class Graph {
 
 	public void addDataSet(HashMap<String,String> data, String label) throws ParseException
 	{
+		//We use the SDF to parse the strings into the correct format to create the Date object. 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		TimeSeries timeSeries = new TimeSeries(label);
-
+		//We iterate through the map, getting the date and value. We put this into a series. 
 		for (Map.Entry<String, String> entry : data.entrySet()) {
 
 			String date = entry.getKey();
@@ -69,7 +74,9 @@ public class Graph {
 			timeSeries.add(convertedDate, Double.valueOf(value));
 
 		}
-
+		/*
+		 * Increase the count of the number of sets, and we add this series to the main series dataset. 
+		 */
 		numberOfSets++;
 
 		dataSet.addSeries(timeSeries);
@@ -83,33 +90,39 @@ public class Graph {
 	 */
 	public Intent createGraph(Context context)
 	{
+		//Sets the size of the title(I don't even think there is a title).
 		renderer.setAxisTitleTextSize(40);
+		//Sets the size of the Chart title(I don't think there is a title).
 		renderer.setChartTitleTextSize(60);
+		//Sets the size of the labels on X and Y.
 		renderer.setLabelsTextSize(40);
+		//Sets the size of the keys for each graph. 
 		renderer.setLegendTextSize(16);
+		//This is used to set the default number of Labels on the Y axis. to increase labels, increase number. 
 		renderer.setYLabels(16);
+		//Sets the size of the individual points.
 		renderer.setPointSize(7f);
+		//We increase the margin size on the left side of the screen to prevent clipping of the axis. 
 		renderer.setMargins(new int[] {0, 60, 0, 0});
-
+		//We iterate through the  number of sets, creating a specific renderer for each one, changing the colour every time. 
 		for(int i = 0;i<numberOfSets;i++)
 		{
 			XYSeriesRenderer r = new XYSeriesRenderer();
-			
 			r.setColor(colours[colourCount]);
-			
 			r.setPointStyle(PointStyle.CIRCLE);
 			r.setFillPoints(true);
 			r.setLineWidth(3f);
 			renderer.addSeriesRenderer(r);
-			
+			//Increase the count. 
 			colourCount++;
 		}
-
+		//The grid layout on the chart. 
 		renderer.setShowGrid(true);
+		//Set the colours of the labels and the axis. 
 		renderer.setAxesColor(Color.DKGRAY);
 		renderer.setLabelsColor(Color.LTGRAY);
-		
 
+		//We create the intent and return it. 
 		Intent LineChart = ChartFactory.getTimeChartIntent(context, dataSet, renderer,"dd/MM/yyyy");
 		return LineChart;
 
