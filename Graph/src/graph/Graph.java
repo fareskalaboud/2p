@@ -63,7 +63,7 @@ public class Graph {
 	public void addDataSet(HashMap<String,String> data, String label) throws ParseException
 	{
 		//We use the SDF to parse the strings into the correct format to create the Date object. 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
 		TimeSeries timeSeries = new TimeSeries(label);
 		//We iterate through the map, getting the date and value. We put this into a series. 
@@ -99,14 +99,15 @@ public class Graph {
 		//Sets the size of the labels on X and Y.
 		renderer.setLabelsTextSize(40);
 		//Sets the size of the keys for each graph. 
-		renderer.setLegendTextSize(16);
+		renderer.setLegendTextSize(28);
 		//This is used to set the default number of Labels on the X & Y axis. to increase labels, increase number. 
 		renderer.setYLabels(16);
+		
 	
 		//Sets the size of the individual points.
 		renderer.setPointSize(7f);
 		//We increase the margin size on the left side of the screen to prevent clipping of the axis. 
-		renderer.setMargins(new int[] {0, 60, 60, 0});
+		renderer.setMargins(new int[] {0, 100, 60, 0});
 		
 		renderer.setYLabelsAlign(Align.RIGHT, 0);
 		renderer.setFitLegend(true);
@@ -140,7 +141,7 @@ public class Graph {
 		
 		renderer.setYLabelsColor(0, Color.BLACK);
 		//We create the intent and return it. 
-		Intent LineChart = ChartFactory.getTimeChartIntent(context, dataSet, renderer,"yyyy");
+		Intent LineChart = ChartFactory.getTimeChartIntent(context, dataSet, renderer,"dd/MM/yyyy");
 		return LineChart;
 
 	}
