@@ -49,8 +49,6 @@ public class Graph {
 
 		this.xLabel = xLabel;
 		this.yLabel = yLabel;
-
-
 	}
 
 	/**
@@ -66,20 +64,28 @@ public class Graph {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
 		TimeSeries timeSeries = new TimeSeries(label);
-		//We iterate through the map, getting the date and value. We put this into a series. 
+		//We iterate through the map, getting the date and value. We put this into a series.
+
+
 		for (Map.Entry<String, String> entry : data.entrySet()) {
+			/*
+			 * We use a string builder to automatically add the month and day to the date, to parse it in the correct form. 
+			 */
+			StringBuilder builder = new StringBuilder();
 
 			String date = entry.getKey();
+
+			builder.append("01-01-" + date);
+			date = builder.toString();
+
 			String value = entry.getValue();
 			Date convertedDate = sdf.parse(date);
 			timeSeries.add(convertedDate, Double.valueOf(value));
-
 		}
 		/*
 		 * Increase the count of the number of sets, and we add this series to the main series dataset. 
 		 */
 		numberOfSets++;
-
 		dataSet.addSeries(timeSeries);
 
 	}
@@ -93,7 +99,7 @@ public class Graph {
 	{
 		//Sets the size of the title(I don't even think there is a title).
 		renderer.setAxisTitleTextSize(40);
-		
+
 		//Sets the size of the Chart title(I don't think there is a title).
 		renderer.setChartTitleTextSize(60);
 		//Sets the size of the labels on X and Y.
@@ -102,13 +108,12 @@ public class Graph {
 		renderer.setLegendTextSize(28);
 		//This is used to set the default number of Labels on the X & Y axis. to increase labels, increase number. 
 		renderer.setYLabels(16);
-		
-	
+
 		//Sets the size of the individual points.
 		renderer.setPointSize(7f);
 		//We increase the margin size on the left side of the screen to prevent clipping of the axis. 
 		renderer.setMargins(new int[] {0, 100, 60, 0});
-		
+
 		renderer.setYLabelsAlign(Align.RIGHT, 0);
 		renderer.setFitLegend(true);
 		//We iterate through the  number of sets, creating a specific renderer for each one, changing the colour every time. 
@@ -128,17 +133,17 @@ public class Graph {
 		renderer.setGridColor(Color.DKGRAY);
 		//Set the colours of the labels and the axis. 
 		renderer.setAxesColor(Color.BLACK);
-		
+
 		renderer.setLabelsColor(Color.BLACK);
-		
+
 		renderer.setApplyBackgroundColor(true);
-		
+
 		renderer.setBackgroundColor(Color.WHITE);
-		
+
 		renderer.setMarginsColor(Color.WHITE);
-		
+
 		renderer.setXLabelsColor(Color.BLACK);
-		
+
 		renderer.setYLabelsColor(0, Color.BLACK);
 		//We create the intent and return it. 
 		Intent LineChart = ChartFactory.getTimeChartIntent(context, dataSet, renderer,"dd/MM/yyyy");
