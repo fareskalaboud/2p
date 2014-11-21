@@ -1,11 +1,13 @@
 package model.download;
 
 import android.util.Log;
+import model.Country;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -20,9 +22,9 @@ public class JSONParser {
      * Get countries from the WorldBank API
      * @return the list of the countries
      */
-    public static ArrayList<String> getCountries() {
-        //TODO:Country class
-        ArrayList<String> countries = new ArrayList<String>();
+    public static HashMap<String, Country> getCountries() {
+        // Key - Country ID, Value - Country object
+        HashMap<String, Country> countries = new HashMap<String, Country>();
 
         String url = COUNTRIES + "?per_page=300&" + JSON_FORMAT;
         JSONArray jsonResponse = download(url);
@@ -39,9 +41,9 @@ public class JSONParser {
 
                     // check if the country exist or not (meaning it has lat and long)
                     if (!latitude.equals("") && !longitude.equals("")) {
-                        countries.add(name);
+                        Country newCountry = new Country(id, name, capital, latitude, longitude);
+                        countries.put(id, newCountry);
                     }
-                    Log.w(id, name + ", " + capital + " (" + latitude + ", " + longitude + ")");
                 }
             } catch (JSONException e) {
                 Log.e("JSONException", "Get countries data at index 1");

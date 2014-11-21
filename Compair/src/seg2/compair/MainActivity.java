@@ -1,21 +1,19 @@
 package seg2.compair;
 
 import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-import model.download.DownloadData;
+import model.Country;
 import model.download.JSONParser;
-import model.storage.Store;
 
-import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
+import java.util.*;
 
 public class MainActivity extends Activity {
 
@@ -24,9 +22,21 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		ArrayList<String> countries = JSONParser.getCountries();
+		HashMap<String, Country> countries = new HashMap<String, Country>();
+		if (isInternetAvailable()) {
+			countries = JSONParser.getCountries();
+		}
+
 		ListView listView = (ListView)findViewById(R.id.listView);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, countries);
+		ArrayList<String> countriesName = new ArrayList<String>();
+
+		Iterator iterator = countries.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Map.Entry pairs = (Map.Entry)iterator.next();
+			countriesName.add(((Country)pairs.getValue()).getName());
+		}
+		Collections.sort(countriesName);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, countriesName);
 		listView.setAdapter(adapter);
 	}
 
@@ -47,5 +57,17 @@ public class MainActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private boolean isInternetAvailable() {
+		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+		if (networkInfo != null && networkInfo.isConnected()) {
+			return true;
+		}
+
+		Toast.makeText(getApplicationContext(), "No Internet Connection...", Toast.LENGTH_SHORT).show();
+		return  false;
 	}
 }
