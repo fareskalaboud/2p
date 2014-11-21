@@ -27,17 +27,17 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		//We add fake data in the form of <Date,Value>
-		map1.put("2014-11-21", "5");
-		map1.put("2014-11-20", "10");
-		map1.put("2014-11-19", "15");
-		map1.put("2014-11-18", "16");
-		map1.put("2014-11-17", "20");
+		map1.put("2014", "5");
+		map1.put("2013", "10");
+		map1.put("2012", "15");
+		map1.put("2011", "16");
+		map1.put("2010", "20");
 
-		map2.put("2014-11-21", "10");
-		map2.put("2014-11-20", "15");
-		map2.put("2014-11-19", "15");
-		map2.put("2014-11-18", "2");
-		map2.put("2014-11-17", "5");
+		map2.put("2014", "10");
+		map2.put("2013", "15");
+		map2.put("2012", "15");
+		map2.put("2011", "2");
+		map2.put("2010", "5");
 	}
 
 	@Override

@@ -63,7 +63,7 @@ public class Graph {
 	public void addDataSet(HashMap<String,String> data, String label) throws ParseException
 	{
 		//We use the SDF to parse the strings into the correct format to create the Date object. 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 
 		TimeSeries timeSeries = new TimeSeries(label);
 		//We iterate through the map, getting the date and value. We put this into a series. 
@@ -140,7 +140,7 @@ public class Graph {
 		
 		renderer.setYLabelsColor(0, Color.BLACK);
 		//We create the intent and return it. 
-		Intent LineChart = ChartFactory.getTimeChartIntent(context, dataSet, renderer,"dd/MM/yyyy");
+		Intent LineChart = ChartFactory.getTimeChartIntent(context, dataSet, renderer,"yyyy");
 		return LineChart;
 
 	}
