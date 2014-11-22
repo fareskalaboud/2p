@@ -1,9 +1,10 @@
 package com.example.graph;
 
-import graph.Graph;
 
 import java.text.ParseException;
 import java.util.HashMap;
+
+import model.graph.Graph;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,7 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 /**
  * This class is used to test if the graph.class works as intended, by using two fake datasets in the form of hashmaps. 
- * @author Vladimir Putin
+ * @author Sean
  *
  */
 public class MainActivity extends Activity {
