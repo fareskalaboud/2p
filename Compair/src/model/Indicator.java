@@ -1,6 +1,7 @@
 package model;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -40,8 +41,8 @@ public class Indicator {
      * Get indicators entry set
      * @return the Entry of the indicators hash map
      */
-    public Map.Entry getEntrySet() {
-        return (Map.Entry) indicatorValues.entrySet();
+    public Iterator getValuesIterator() {
+        return indicatorValues.entrySet().iterator();
     }
 
     /**

@@ -59,6 +59,7 @@ public class JSONParser {
 
     public static Indicator getIndicatorFor(String countryID, String indicatorID, String from, String to) {
         //The indicator which contains the values to represent it on the graph
+        //TODO: Sometimes UI freezes
         Indicator indicator = new Indicator(indicatorID, null);
 
         String url = COUNTRIES + "/" + countryID + "/indicators/" + indicatorID + "?date=" + from + ":" + to + JSON_FORMAT + PAGE_100;
@@ -66,28 +67,33 @@ public class JSONParser {
         if (jsonResponse != null && jsonResponse.length() > 1) {
             try {
                 JSONArray jsonIndicatorValues = jsonResponse.getJSONArray(1);
+                String name = "";
+                boolean decimal = false;
+
                 for (int i = 0; i < jsonIndicatorValues.length(); i++) {
                     JSONObject object = jsonIndicatorValues.getJSONObject(i);
                     JSONObject indicatorName = object.getJSONObject("indicator");
-                    String name = indicatorName.getString("value");
+                    name = indicatorName.getString("value");
                     String value = object.getString("value");
-                    boolean decimal = object.getBoolean("decimal");
+                    decimal = Boolean.valueOf(object.getString("decimal"));
                     String date = object.getString("date");
-
-                    // Add the values to the indicator class
-                    indicator.setName(name);
-                    indicator.setDouble(decimal);
 
                     // check if the value for a date is null or not
                     // if it is, insert 0
-                    if (value != null) {
+                    if (!value.equals("null")) {
                         indicator.addValue(date, value);
                     } else {
                         indicator.addValue(date, "0");
                     }
                 }
+
+                // Add the values to the indicator class
+                indicator.setName(name);
+                indicator.setDouble(decimal);
+
             } catch (JSONException e) {
                 Log.e("JSONException", "Get indicator for country " + countryID + " data error");
+                Log.e("JSONException", url);
             }
         }
 
