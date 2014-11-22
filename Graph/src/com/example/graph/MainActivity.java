@@ -4,7 +4,8 @@ package com.example.graph;
 import java.text.ParseException;
 import java.util.HashMap;
 
-import model.graph.Graph;
+import model.graph.CubicGraph;
+import model.graph.LineGraph;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,8 +22,9 @@ public class MainActivity extends Activity {
 	//The two fakes hashmaps, we fill with data in the onCreate method. 
 	HashMap<String,String> map1 = new HashMap<String,String>();
 	HashMap<String,String> map2 = new HashMap<String,String>();
-
-	Graph graph;
+	
+	LineGraph lineGraph;
+	CubicGraph cubicGraph;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,7 +50,7 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
-	public void createGraph(View view)
+	public void createLineGraph(View view)
 	{
 		//To prevent the ui thread from hanging on pressing the button, we use a thread runnable. I don't know how pre-historic the device this app will be ran on. 
 		new Thread(new Runnable()
@@ -56,10 +58,10 @@ public class MainActivity extends Activity {
 			@Override
 			public void run() {
 				//We create the new graph object, with the X and Y Labels, and add the data sets we want to use. 
-				graph = new Graph("Date", "Percent (%)");
+				lineGraph = new LineGraph("Date", "Percent (%)");
 				try {
-					graph.addDataSet(map1, "Currency1");
-					graph.addDataSet(map2, "Currency2");
+					lineGraph.addDataSet(map1, "Currency1");
+					lineGraph.addDataSet(map2, "Currency2");
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -70,7 +72,36 @@ public class MainActivity extends Activity {
 
 					@Override
 					public void run() {
-						Intent intent = graph.createGraph(getApplicationContext());
+						Intent intent = lineGraph.createGraph(getApplicationContext());
+						startActivity(intent);
+					}
+				});
+			}
+		}).start();
+	}
+	public void createCubicGraph(View view)
+	{
+		//To prevent the ui thread from hanging on pressing the button, we use a thread runnable. I don't know how pre-historic the device this app will be ran on. 
+		new Thread(new Runnable()
+		{
+			@Override
+			public void run() {
+				//We create the new graph object, with the X and Y Labels, and add the data sets we want to use. 
+				cubicGraph = new CubicGraph("Date", "Percent (%)");
+				try {
+					cubicGraph.addDataSet(map1, "Currency1");
+					cubicGraph.addDataSet(map2, "Currency2");
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				//We have to create and start the intent on the main UI thread. 
+				runOnUiThread( new Runnable()
+				{
+
+					@Override
+					public void run() {
+						Intent intent = cubicGraph.createGraph(getApplicationContext());
 						startActivity(intent);
 					}
 				});

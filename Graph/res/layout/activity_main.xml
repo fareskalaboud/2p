@@ -10,13 +10,23 @@
    >
 
     <Button
-        android:id="@+id/createGraph"
+        android:id="@+id/createLineGraph"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="228dp"
-        android:onClick="createGraph"
-        android:text="Create Graph" />
+        android:onClick="createLineGraph"
+        android:text="Create Line Graph" />
+
+ <Button
+     android:id="@+id/createCubicGraph"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_alignTop="@+id/createLineGraph"
+     android:layout_centerHorizontal="true"
+     android:layout_marginTop="56dp"
+     android:onClick="createCubicGraph"
+     android:text="Create Cubic Graph" />
 
 </RelativeLayout>
