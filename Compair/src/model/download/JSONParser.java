@@ -2,6 +2,7 @@ package model.download;
 
 import android.util.Log;
 import model.Country;
+import model.Indicator;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,8 +16,10 @@ import java.util.concurrent.ExecutionException;
  */
 public class JSONParser {
 
-    private static final String JSON_FORMAT = "format=json";
+    private static final String JSON_FORMAT = "&format=json";
     private static final String COUNTRIES = "http://api.worldbank.org/countries";
+    private static final String PAGE_300 = "per_page=300";
+    private static final String PAGE_100 = "&per_page=100";
 
     /**
      * Get countries from the WorldBank API
@@ -26,7 +29,7 @@ public class JSONParser {
         // Key - Country ID, Value - Country object
         HashMap<String, Country> countries = new HashMap<String, Country>();
 
-        String url = COUNTRIES + "?per_page=300&" + JSON_FORMAT;
+        String url = COUNTRIES + "?" + PAGE_300 + "&" + JSON_FORMAT;
         JSONArray jsonResponse = download(url);
         if (jsonResponse != null && jsonResponse.length() > 1) {
             try {
@@ -52,6 +55,43 @@ public class JSONParser {
             }
         }
         return countries;
+    }
+
+    public static Indicator getIndicatorFor(String countryID, String indicatorID, String from, String to) {
+        //The indicator which contains the values to represent it on the graph
+        Indicator indicator = new Indicator(indicatorID, null);
+
+        String url = COUNTRIES + "/" + countryID + "/indicators/" + indicatorID + "?date=" + from + ":" + to + JSON_FORMAT + PAGE_100;
+        JSONArray jsonResponse = download(url);
+        if (jsonResponse != null && jsonResponse.length() > 1) {
+            try {
+                JSONArray jsonIndicatorValues = jsonResponse.getJSONArray(1);
+                for (int i = 0; i < jsonIndicatorValues.length(); i++) {
+                    JSONObject object = jsonIndicatorValues.getJSONObject(i);
+                    JSONObject indicatorName = object.getJSONObject("indicator");
+                    String name = indicatorName.getString("value");
+                    String value = object.getString("value");
+                    boolean decimal = object.getBoolean("decimal");
+                    String date = object.getString("date");
+
+                    // Add the values to the indicator class
+                    indicator.setName(name);
+                    indicator.setDouble(decimal);
+
+                    // check if the value for a date is null or not
+                    // if it is, insert 0
+                    if (value != null) {
+                        indicator.addValue(date, value);
+                    } else {
+                        indicator.addValue(date, "0");
+                    }
+                }
+            } catch (JSONException e) {
+                Log.e("JSONException", "Get indicator for country " + countryID + " data error");
+            }
+        }
+
+        return indicator;
     }
 
     // Execute download request and return a JSONArray

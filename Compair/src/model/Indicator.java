@@ -9,6 +9,7 @@ import java.util.Map;
 public class Indicator {
     private String id;
     private String name;
+    private boolean isDouble;
     private HashMap<String, String> indicatorValues;
 
     /**
@@ -50,5 +51,33 @@ public class Indicator {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Setter for the name of the indicator which
+     * is parsed from the API call
+     * @param name the name of the Indicator we creating
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Boolean variable if the indicator stores a double
+     * value or just an integer. Use it when converting
+     * the string to number
+     * @return wheter the indicator stores double values
+     */
+    public boolean isDouble() {
+        return isDouble;
+    }
+
+    /**
+     * Set if the indicator stores double values or not
+     * @param isDouble true if the value is in double
+     *                 false if the value is in integer
+     */
+    public void setDouble(boolean isDouble) {
+        this.isDouble = isDouble;
     }
 }
