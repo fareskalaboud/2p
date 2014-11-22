@@ -60,8 +60,8 @@ public class MainActivity extends Activity {
 				//We create the new graph object, with the X and Y Labels, and add the data sets we want to use. 
 				lineGraph = new LineGraph("Date", "Percent (%)");
 				try {
-					lineGraph.addDataSet(map1, "Currency1");
-					lineGraph.addDataSet(map2, "Currency2");
+					lineGraph.addDataSet(map1, "Country1");
+					lineGraph.addDataSet(map2, "Country2");
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

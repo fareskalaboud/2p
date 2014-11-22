@@ -45,7 +45,7 @@ public class LineGraph {
 	public LineGraph(String xLabel, String yLabel)
 	{
 		renderer = new XYMultipleSeriesRenderer();
-		
+
 		dataSet = new XYMultipleSeriesDataset();
 
 		this.xLabel = xLabel;
@@ -99,21 +99,25 @@ public class LineGraph {
 	public Intent createGraph(Context context)
 	{
 		//Sets the size of the title(I don't even think there is a title).
-		renderer.setAxisTitleTextSize(40);
+		renderer.setAxisTitleTextSize(20);
 
 		//Sets the size of the Chart title(I don't think there is a title).
-		renderer.setChartTitleTextSize(60);
+		renderer.setChartTitleTextSize(30);
 		//Sets the size of the labels on X and Y.
-		renderer.setLabelsTextSize(40);
+		renderer.setLabelsTextSize(20);
 		//Sets the size of the keys for each graph. 
-		renderer.setLegendTextSize(28);
+		renderer.setLegendTextSize(14);
 		//This is used to set the default number of Labels on the X & Y axis. to increase labels, increase number. 
 		renderer.setYLabels(16);
+
+		//We add the x and y names to the graph. 
+		renderer.setXTitle(xLabel);
+		renderer.setYTitle(yLabel);
 
 		//Sets the size of the individual points.
 		renderer.setPointSize(7f);
 		//We increase the margin size on the left side of the screen to prevent clipping of the axis. 
-		renderer.setMargins(new int[] {0, 100, 60, 0});
+		renderer.setMargins(new int[] {0, 40, 20, 0});
 
 		renderer.setYLabelsAlign(Align.RIGHT, 0);
 		renderer.setFitLegend(true);
