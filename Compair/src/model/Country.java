@@ -7,6 +7,7 @@ public class Country {
 	private String region;
 	private String latitude;
 	private String longitude;
+    private boolean selected;
 
 	/**
 	 * Constrctor of the Country class to create a country
@@ -17,6 +18,7 @@ public class Country {
 	 * @param capital the capital city of the country
 	 * @param latitude the latitude of the country (middle)
 	 * @param longitude the longitude of the country (middle)
+     * @param selected whether it's been selected or not for displaying on the graphs
 	 */
 	public Country(String id, String name, String region, String capital, String latitude, String longitude) {
 
@@ -26,6 +28,7 @@ public class Country {
 		this.capital = capital;
 		this.latitude = latitude;
 		this.longitude = longitude;
+        this.selected = false;
 
 	}
 
@@ -74,4 +77,20 @@ public class Country {
 	 * @return the region of the country
 	 */
 	public String getRegion() {return region; }
+
+    /**
+     * Getter for whether the country is selected
+     * @return whether the country is selected
+     */
+    public boolean isSelected() {
+        return selected;
+    }
+
+    /**
+     * Setter for whether the country is selected
+     * @param selected whether the country is selected
+     */
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
 }
