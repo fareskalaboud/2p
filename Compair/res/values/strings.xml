@@ -5,4 +5,33 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <string-array name="id">
+        <item>SP.DYN.LE00.IN</item>
+        <item>SM.POP.NETM</item>
+        <item>SP.POP.GROW</item>
+        <item>NY.GDP.MKTP.CD</item>
+        <item>NE.IMP.GNFS.ZS</item>
+        <item>GC.DOD.TOTL.GD.ZS</item>
+        <item>SP.POP.0014.TO.ZS</item>
+        <item>SP.POP.1564.TO.ZS</item>
+        <item>EG.USE.COMM.FO.ZS</item>
+        <item>EP.PMP.SGAS.CD</item>
+        <item>FR.INR.RINR</item>
+        <item>SL.TLF.0714.ZS</item>
+    </string-array>
+    <string-array name="name">
+        <item>Life Expectancy at Birth, Total (%)</item>
+        <item>Net Migration</item>
+        <item>Population Growth (Annual %)</item>
+        <item>GDP (current US$)</item>
+        <item>Imports of goods and services (% GDP)</item>
+        <item>Central government debt (% GDP)</item>
+        <item>Population ages 0/14 (% total)</item>
+        <item>Population ages 15/64 (% total)</item>
+        <item>Fossil fuel energy consumption</item>
+        <item>Pump price for gasoline per liter</item>
+        <item>Real interest rate</item>
+        <item>Children in employment, total (% of children ages 7/14)</item>
+    </string-array>
+
 </resources>
