@@ -16,7 +16,7 @@ import model.storage.Store;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
-
+//na
 public class MainActivity extends Activity {
 
 	@Override
