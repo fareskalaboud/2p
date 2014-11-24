@@ -80,6 +80,14 @@ public class JSONParser implements DownloadDataListener<JSONArray> {
         jsonParserListener.onJSONParseFinished(TYPE_COUNTRY, countries);
     }
 
+    /**
+     * Get the data for a specific indicator
+     * @param countryID the country where we get the data from
+     * @param indicatorID the indicatorID, we use to fetch the data
+     *                    for that indicator
+     * @param from the date we want to get the data from
+     * @param to the date we want to get the data to
+     */
     public void getIndicatorFor(final String countryID, final String indicatorID, final String from, final String to) {
         downloadType = TYPE_INDICATOR;
 
