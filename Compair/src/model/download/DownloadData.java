@@ -23,6 +23,12 @@ import java.io.InputStreamReader;
  */
 public class DownloadData extends AsyncTask<String, String, JSONArray> {
 
+    private DownloadDataListener<JSONArray> downloadDataListener;
+
+    public DownloadData(DownloadDataListener<JSONArray> downloadDataListener) {
+        this.downloadDataListener = downloadDataListener;
+    }
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -85,5 +91,6 @@ public class DownloadData extends AsyncTask<String, String, JSONArray> {
     @Override
     protected void onPostExecute(JSONArray jsonArray) {
         super.onPostExecute(jsonArray);
+        downloadDataListener.onDownloadFinished(jsonArray);
     }
 }

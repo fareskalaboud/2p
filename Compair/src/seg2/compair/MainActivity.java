@@ -12,11 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import model.Country;
+import model.download.DownloadDataListener;
 import model.download.JSONParser;
+import model.download.JSONParserListener;
+import org.json.JSONArray;
 
 import java.util.*;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements JSONParserListener<HashMap> {
+
+	public JSONParser parser;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,22 +30,10 @@ public class MainActivity extends Activity {
 
         Fonts.makeFonts(this);
 
-		HashMap<String, Country> countries = new HashMap<String, Country>();
 		if (isInternetAvailable()) {
-			countries = JSONParser.getCountries();
+			parser = new JSONParser(this);
+			parser.getCountries();
 		}
-
-		ListView listView = (ListView)findViewById(R.id.listView);
-		ArrayList<String> countriesName = new ArrayList<String>();
-
-		Iterator iterator = countries.entrySet().iterator();
-		while (iterator.hasNext()) {
-			Map.Entry pairs = (Map.Entry)iterator.next();
-			countriesName.add(((Country)pairs.getValue()).getName());
-		}
-		Collections.sort(countriesName);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, countriesName);
-		listView.setAdapter(adapter);
 	}
 
 	@Override
@@ -60,6 +53,39 @@ public class MainActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * Overridden method from JSONParserListener
+	 * @see model.download.JSONParserListener
+	 * @param result the parsed json data (HashMap)
+	 */
+	@Override
+	public void onJSONParseFinished(String type, HashMap result) {
+		System.out.println("Parsing finished");
+		if (type.equals(parser.TYPE_COUNTRY)) {
+			ListView listView = (ListView)findViewById(R.id.listView);
+			ArrayList<String> countriesName = new ArrayList<String>();
+
+			Iterator iterator = result.entrySet().iterator();
+			while (iterator.hasNext()) {
+				Map.Entry pairs = (Map.Entry)iterator.next();
+				countriesName.add(((Country)pairs.getValue()).getName());
+			}
+			Collections.sort(countriesName);
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, countriesName);
+			listView.setAdapter(adapter);
+
+			listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+					parser.getIndicatorFor("GB", "SP.POP.TOTL", "1960", "2014");
+				}
+			});
+
+		} else if(type.equals(parser.TYPE_INDICATOR)) {
+			System.out.println(result);
+		}
 	}
 
 	private boolean isInternetAvailable() {

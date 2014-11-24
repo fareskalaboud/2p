@@ -14,23 +14,45 @@ import java.util.concurrent.ExecutionException;
 /**
  * Created by alextelek on 19/11/14.
  */
-public class JSONParser {
+public class JSONParser implements DownloadDataListener<JSONArray> {
 
-    private static final String JSON_FORMAT = "&format=json";
-    private static final String COUNTRIES = "http://api.worldbank.org/countries";
-    private static final String PAGE_300 = "per_page=300";
-    private static final String PAGE_100 = "&per_page=100";
+    private final String JSON_FORMAT = "&format=json";
+    private final String COUNTRIES = "http://api.worldbank.org/countries";
+    private final String PAGE_300 = "per_page=300";
+    private final String PAGE_100 = "&per_page=100";
+
+    public final String TYPE_COUNTRY = "country";
+    public final String TYPE_INDICATOR = "indicator";
+
+    private JSONParserListener<HashMap> jsonParserListener;
+    private String downloadType;
+
+    /**
+     * Constructor of the JSONParser.
+     * It requires a listener to pass
+     * @param jsonParserListener the listener which notifies when
+     *                           the listener finished
+     */
+    public JSONParser(JSONParserListener<HashMap> jsonParserListener) {
+        this.jsonParserListener = jsonParserListener;
+    }
 
     /**
      * Get countries from the WorldBank API
      * @return the list of the countries
      */
-    public static HashMap<String, Country> getCountries() {
+    public void getCountries() {
+        downloadType = TYPE_COUNTRY;
+
+        String url = COUNTRIES + "?" + PAGE_300 + "&" + JSON_FORMAT;
+        DownloadData data = new DownloadData(this);
+        data.execute(url);
+    }
+
+    private void getCountries(JSONArray jsonResponse) {
         // Key - Country ID, Value - Country object
         HashMap<String, Country> countries = new HashMap<String, Country>();
 
-        String url = COUNTRIES + "?" + PAGE_300 + "&" + JSON_FORMAT;
-        JSONArray jsonResponse = download(url);
         if (jsonResponse != null && jsonResponse.length() > 1) {
             try {
                 JSONArray jsonCountries = jsonResponse.getJSONArray(1);
@@ -54,16 +76,27 @@ public class JSONParser {
                 Log.e("JSONException", "Get countries data at index 1");
             }
         }
-        return countries;
+
+        jsonParserListener.onJSONParseFinished(TYPE_COUNTRY, countries);
     }
 
-    public static Indicator getIndicatorFor(String countryID, String indicatorID, String from, String to) {
-        //The indicator which contains the values to represent it on the graph
-        //TODO: Sometimes UI freezes
-        Indicator indicator = new Indicator(indicatorID, null);
+    public void getIndicatorFor(final String countryID, final String indicatorID, final String from, final String to) {
+        downloadType = TYPE_INDICATOR;
 
         String url = COUNTRIES + "/" + countryID + "/indicators/" + indicatorID + "?date=" + from + ":" + to + JSON_FORMAT + PAGE_100;
-        JSONArray jsonResponse = download(url);
+        DownloadData data = new DownloadData(new DownloadDataListener<JSONArray>() {
+            @Override
+            public void onDownloadFinished(JSONArray result) {
+                getIndicatorFor(result, countryID, indicatorID, from, to);
+            }
+        });
+        data.execute(url);
+    }
+
+    private void getIndicatorFor(JSONArray jsonResponse, String countryID, String indicatorID, String from, String to) {
+        //The indicator which contains the values to represent it on the graph
+        Indicator indicator = new Indicator(indicatorID, null);
+
         if (jsonResponse != null && jsonResponse.length() > 1) {
             try {
                 JSONArray jsonIndicatorValues = jsonResponse.getJSONArray(1);
@@ -93,27 +126,24 @@ public class JSONParser {
 
             } catch (JSONException e) {
                 Log.e("JSONException", "Get indicator for country " + countryID + " data error");
-                Log.e("JSONException", url);
             }
         }
 
-        return indicator;
+        HashMap<String, Indicator> indicatorHashMap = new HashMap<String, Indicator>();
+        indicatorHashMap.put(indicatorID, indicator);
+
+        jsonParserListener.onJSONParseFinished(TYPE_INDICATOR, indicatorHashMap);
     }
 
-    // Execute download request and return a JSONArray
-    // with the data
-    private static JSONArray download(String url) {
-        DownloadData data = new DownloadData();
-        data.execute(url);
-
-        try {
-            return data.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+    /**
+     * Overridden method from DownloadDataListener
+     * @param result the object what the download
+     */
+    @Override
+    public void onDownloadFinished(JSONArray result) {
+        if (downloadType.equals(TYPE_COUNTRY)) {
+            System.out.println("Download finished");
+            getCountries(result);
         }
-
-        return null;
     }
 }
