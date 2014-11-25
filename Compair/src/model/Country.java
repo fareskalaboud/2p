@@ -18,7 +18,6 @@ public class Country {
 	 * @param capital the capital city of the country
 	 * @param latitude the latitude of the country (middle)
 	 * @param longitude the longitude of the country (middle)
-     * @param selected whether it's been selected or not for displaying on the graphs
 	 */
 	public Country(String id, String name, String region, String capital, String latitude, String longitude) {
 

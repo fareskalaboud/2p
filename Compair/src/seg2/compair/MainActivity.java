@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
+import java.util.HashMap;
 
 public class MainActivity extends Activity {
 
@@ -12,7 +13,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-        Fonts.makeFonts(this);
+		Fonts.makeFonts(this);
 
 	}
 
@@ -40,5 +41,18 @@ public class MainActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	// Get indicators that we are using from strings.xml
+	private HashMap<String, String> getIndicators () {
+		//Code to use in different classes
+		//Get indicators
+		String[] indicatorsID = getResources().getStringArray(R.array.idicatorID);
+		String[] indicatorsName = getResources().getStringArray(R.array.indicatorName);
+		HashMap<String, String> indicators = new HashMap<String, String>();
 
+		for (int i = 0;i < indicatorsID.length; i++) {
+			indicators.put(indicatorsID[i], indicatorsName[i]);
+		}
+
+		return indicators;
+	}
 }
