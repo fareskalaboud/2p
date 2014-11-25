@@ -8,13 +8,18 @@ import java.util.HashMap;
 
 
 
+
 import model.Indicator;
 import model.download.JSONParser;
 import model.download.JSONParserListener;
 import model.graph.LineGraph;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +33,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 /**
  * This class defines the graph ui and the functionality to change indicators. 
@@ -56,6 +62,13 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 	//The animationed loading animation
 	ImageView logoanimated;
+
+	//ImageView of the lock to unlock the Xaxis.
+	ImageView lock;
+
+	//Boolean that is used to see if the lock is unlocked or locked.
+	boolean isOpen = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -75,12 +88,12 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		//Initialise the layout to add animations and graphs to.
 		layout = (LinearLayout) findViewById(R.id.chart);
 
+		//We initialise the imageview of the lock.
+		lock = (ImageView)findViewById(R.id.xlock);
+
+
 		//We add adapters to the x and y spinners, to edit the labels to match the correct chosen label. 
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-				R.array.date, android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		xindicator.setAdapter(adapter);
-		xindicator.setEnabled(false);
+		setXAdapterDate();
 
 		xindicator.setOnItemSelectedListener(new OnItemSelectedListener(){
 
@@ -129,6 +142,63 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		countries.add("AUT");
 		countries.add("AUS");
 		countries.add("CAN");
+	}
+
+	public void lock(View v)
+	{
+
+		if(isOpen == false){
+
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			LayoutInflater inflater = this.getLayoutInflater();
+			builder.setView(inflater.inflate(R.layout.confirmindicator_dialog, null));
+
+			builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener(){
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					
+					setXAdapterArray();
+					lock.setImageResource(R.drawable.unlock);
+					layout.removeAllViews();
+					xindicator.setEnabled(true);
+					isOpen = true;
+
+				}
+
+			});
+
+			final AlertDialog alertDialog = builder.create();
+			alertDialog.show();
+		} else {
+			setXAdapterDate();
+			lock.setImageResource(R.drawable.lock);
+			layout.removeAllViews();
+			xindicator.setEnabled(false);
+			isOpen = false;
+			
+		}
+	}
+
+	public void setXAdapterDate()
+	{
+		//We add adapters to the x and y spinners, to edit the labels to match the correct chosen label. 
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+				R.array.date, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		xindicator.setAdapter(adapter);
+		xindicator.setEnabled(false);
+	}
+	
+	public void setXAdapterArray()
+	{
+		//We add adapters to the x and y spinners, to edit the labels to match the correct chosen label. 
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+				R.array.indicatorName, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		xindicator.setAdapter(adapter);
+		xindicator.setEnabled(false);
 	}
 
 	/**

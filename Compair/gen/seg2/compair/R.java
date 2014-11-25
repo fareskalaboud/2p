@@ -33,18 +33,21 @@ public final class R {
         public static final int front_end_background=0x7f020000;
         public static final int ic_launcher=0x7f020001;
         public static final int ic_perm_group_sync_settings=0x7f020002;
-        public static final int text=0x7f020003;
+        public static final int lock=0x7f020003;
+        public static final int text=0x7f020004;
+        public static final int unlock=0x7f020005;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a000a;
+        public static final int action_settings=0x7f0a000b;
         public static final int chart=0x7f0a0006;
-        public static final int checkBox1=0x7f0a0008;
-        public static final int code=0x7f0a0009;
+        public static final int checkBox1=0x7f0a0009;
+        public static final int code=0x7f0a000a;
         public static final int graphButton=0x7f0a0003;
         public static final int imageView=0x7f0a0000;
         public static final int listView=0x7f0a0002;
         public static final int txtSelectCountry=0x7f0a0001;
         public static final int update=0x7f0a0007;
+        public static final int xlock=0x7f0a0008;
         public static final int xspinner=0x7f0a0004;
         public static final int yspinner=0x7f0a0005;
     }
@@ -52,7 +55,8 @@ public final class R {
         public static final int activity_countryselect=0x7f030000;
         public static final int activity_graph=0x7f030001;
         public static final int activity_main=0x7f030002;
-        public static final int countrylistview_row=0x7f030003;
+        public static final int confirmindicator_dialog=0x7f030003;
+        public static final int countrylistview_row=0x7f030004;
     }
     public static final class menu {
         public static final int main=0x7f090000;
