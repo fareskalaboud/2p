@@ -6,9 +6,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
-
-
 import model.Indicator;
 import model.download.JSONParser;
 import model.download.JSONParserListener;
@@ -16,9 +13,8 @@ import model.graph.LineGraph;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,7 +29,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.TextView;
 
 /**
  * This class defines the graph ui and the functionality to change indicators. 
@@ -41,9 +37,17 @@ import android.widget.Toast;
  */
 public class GraphActivity extends Activity implements JSONParserListener<HashMap> {
 
+	//We use this for the dates
+	ArrayList<String> dates = new ArrayList<String>();
+
 	//Spinners for the x indicators and the y indicators
 	Spinner xindicator;
 	Spinner yindicator;
+	Spinner datespinner;
+
+	//Text for the date, invisible default
+	TextView datetext;
+
 	//Update button
 	Button update;
 	//The labels for the x and y axis. 
@@ -59,6 +63,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	int countriescount;
 	//The layout we add the graph to, and the loading animation.
 	LinearLayout layout;
+	LinearLayout layoutindicator;
 
 	//The animationed loading animation
 	ImageView logoanimated;
@@ -79,6 +84,17 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		 * We can put the country objects into an array and iterate through when adding datasets to the graph. 
 		 */
 
+
+		/*
+		 * For ease, we add all the possible years to an arraylist by iteration, for the dates spinner.
+		 * This will become an issue, many countries do not have data on those dates for that indicator. We may have to let that slide for now. 
+		 */
+
+		for(int i = 1970; i<=2014; i++)
+		{
+			dates.add(String.valueOf(i));
+		}
+
 		// We get the x any y indicators and update button.
 
 		xindicator = (Spinner)findViewById(R.id.xspinner);
@@ -88,9 +104,23 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		//Initialise the layout to add animations and graphs to.
 		layout = (LinearLayout) findViewById(R.id.chart);
 
+		//Initialise the layout to add animations and graphs to.
+		layoutindicator = (LinearLayout) findViewById(R.id.bottombar);
+
 		//We initialise the imageview of the lock.
 		lock = (ImageView)findViewById(R.id.xlock);
 
+		datetext = (TextView)findViewById(R.id.datetext);
+
+		/*
+		 * This spinner is kept invisible till unlocked when the dual indicators are unlocked. 
+		 */
+		datespinner = (Spinner)findViewById(R.id.datespinner);
+		datespinner.setVisibility(View.GONE);
+
+		ArrayAdapter<String> adapterdate = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item , dates);
+		adapterdate.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		datespinner.setAdapter(adapterdate);
 
 		//We add adapters to the x and y spinners, to edit the labels to match the correct chosen label. 
 		setXAdapterDate();
@@ -158,7 +188,15 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					
+
+
+
+					datetext.setText("  Date: ");
+					datetext.setTextSize(30f);
+					datetext.setTextColor(Color.DKGRAY);
+
+					datespinner.setVisibility(View.VISIBLE);
+
 					setXAdapterArray();
 					lock.setImageResource(R.drawable.unlock);
 					layout.removeAllViews();
@@ -174,10 +212,12 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		} else {
 			setXAdapterDate();
 			lock.setImageResource(R.drawable.lock);
+			datespinner.setVisibility(View.GONE);
+			datetext.setText("          ");
 			layout.removeAllViews();
 			xindicator.setEnabled(false);
 			isOpen = false;
-			
+
 		}
 	}
 
@@ -190,7 +230,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		xindicator.setAdapter(adapter);
 		xindicator.setEnabled(false);
 	}
-	
+
 	public void setXAdapterArray()
 	{
 		//We add adapters to the x and y spinners, to edit the labels to match the correct chosen label. 
@@ -224,22 +264,31 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		//We add the image to the view. 
 		layout.addView(logoanimated);
 
-		/*
-		 * We initialise the renderer and dataseries. 
-		 */
-
-		graph.clear(xLabel,yLabel);
-		//We get the selected index to get the index code. 
-		int IndicatorPos = yindicator.getSelectedItemPosition();
-		IndicatorName = getResources().getStringArray(R.array.idicatorID)[IndicatorPos];
-		//We create the parser object
-		JSONParser parser = new JSONParser(this);
-		//We reset the countriescount
-		countriescount = 0;
-		//We iterate through the countries add get the indicators.
-		for(String country: countries)
+		if(isOpen == true)
 		{
-			parser.getIndicatorFor(country, IndicatorName, "1970","2014");
+			/*
+			 * This means that the user wants to get a scatter graph. So we need to add this if statement to the parse listener below
+			 * to make sure it adds the value to the new scatter graph class. We will add a scatter graph instead, using a lot more data. 
+			 */
+		} else {
+
+			/*
+			 * We initialise the renderer and dataseries. 
+			 */
+
+			graph.clear(xLabel,yLabel);
+			//We get the selected index to get the index code. 
+			int IndicatorPos = yindicator.getSelectedItemPosition();
+			IndicatorName = getResources().getStringArray(R.array.idicatorID)[IndicatorPos];
+			//We create the parser object
+			JSONParser parser = new JSONParser(this);
+			//We reset the countriescount
+			countriescount = 0;
+			//We iterate through the countries add get the indicators.
+			for(String country: countries)
+			{
+				parser.getIndicatorFor(country, IndicatorName, "1970","2014");
+			}
 		}
 	}
 

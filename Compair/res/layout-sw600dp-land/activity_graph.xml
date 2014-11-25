@@ -68,6 +68,19 @@
             android:onClick="update"
             android:text="Update" />
 
+        <TextView
+            android:id="@+id/datetext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:text="          " />
+
+        <Spinner
+            android:id="@+id/datespinner"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+             />
+
     </LinearLayout>
 
 </LinearLayout>

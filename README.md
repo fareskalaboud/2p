@@ -2,6 +2,6 @@ Graph Class
 ==
 This class will create graph based on different datasets. 
 
-Currently supports a line graph and a cubic graph based on a HashMap dataset.
+Currently linegraph y indicator only is working.
 
-Please change the format of the parser to reflect the date that will be inputed (i.e 15.11.13 or 15/11/13).
+Need scattergraph class to create data with 2 datasets. 
