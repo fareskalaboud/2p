@@ -14,7 +14,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		Fonts.makeFonts(this);
-		
+
 	}
 
     public void goToCountrySelector(View view) {
