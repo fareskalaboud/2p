@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    tools:context="com.example.interactivegraph.MainActivity" >
+    tools:context="com.example.interactivegraph.GraphActivity" >
 
     <TextView
         android:layout_width="wrap_content"

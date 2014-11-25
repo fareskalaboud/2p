@@ -21,7 +21,7 @@ import android.widget.Spinner;
  * This class defines the graph ui and the functionality to change indicators. 
  * @author Sean
  */
-public class MainActivity extends Activity {
+public class GraphActivity extends Activity {
 
 	//Spinners for the x indicators and the y indicators
 	Spinner xindicator;
@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_graph);
 		
 		/*
 		 * I still need to get all countries that are to be compared from the other view. This is so i know what datasets to get. 
