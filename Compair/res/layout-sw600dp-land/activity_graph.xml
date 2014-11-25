@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:text="Choose indicators using the drop down boxes." />
 
-
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -39,6 +38,13 @@
             android:id="@+id/yspinner"
             android:layout_width="430dp"
             android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/xlock"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:onClick="lock"
+            android:src="@drawable/lock" />
     </LinearLayout>
 
     <LinearLayout
@@ -49,6 +55,7 @@
         android:orientation="horizontal" />
 
     <LinearLayout
+        android:id="@+id/bottombar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -60,6 +67,7 @@
             android:layout_height="wrap_content"
             android:onClick="update"
             android:text="Update" />
+
     </LinearLayout>
 
 </LinearLayout>
