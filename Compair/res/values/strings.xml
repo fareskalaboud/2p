@@ -20,6 +20,14 @@
         <item>EP.PMP.SGAS.CD</item>
         <item>FR.INR.RINR</item>
         <item>SL.TLF.0714.ZS</item>
+        <item>SP.POP.TOTL</item>
+        <item>SL.GDP.PCAP.EM.KD</item>
+        <item>SH.XPD.PCAP</item>
+        <item>SE.ADT.LITR.ZS</item>
+        <item>MS.MIL.XPND.GD.ZS</item>
+        <item>EN.POP.DNST</item>
+        <item>SP.POP.GROW</item>
+        <item>FP.CPI.TOTL.ZG</item>
     </string-array>
     <string-array name="indicatorName">
         <item>Life Expectancy at Birth, Total (%)</item>
@@ -34,6 +42,14 @@
         <item>Pump price for gasoline per liter</item>
         <item>Real interest rate</item>
         <item>Children in employment, total (% of children ages 7/14)</item>
+        <item>Poulation, total</item>
+        <item>GDP per person employed</item>
+        <item>Health expenditure per capita (current US$)</item>
+        <item>Literacy rate, adult total (% of people ages 15 and above) </item>
+        <item>Military expenditure (% of GDP)</item>
+        <item>Population density (people per sq. km)</item>
+        <item>Population growth (annual %)</item>
+        <item>Inflation, consumer prices (annual %)</item>
     </string-array>
 
 </resources>
