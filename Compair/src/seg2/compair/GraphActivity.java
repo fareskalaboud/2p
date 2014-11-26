@@ -37,6 +37,7 @@ import android.widget.TextView;
 /**
  * This class defines the graph ui and the functionality to change indicators. 
  * @author Sean
+ * @author Amrinder
  */
 public class GraphActivity extends Activity implements JSONParserListener<HashMap> {
 
@@ -95,7 +96,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	//The minimum and maximum value for the scattergraph in two arrays.
 	double[] xaxisminmax;
 	double[] yaxisminmax;
-
+	//The default year string for the dual indicators. 
 	String year = "1970";
 
 	@Override
@@ -145,9 +146,9 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		datesSeekBar = (SeekBar)findViewById(R.id.datespinner);
 		datesSeekBar.setVisibility(View.GONE);
 
-
+		//We set the maximum number of years for the seekbar.
 		datesSeekBar.setMax(numberOfYears-1);
-
+		//Listener for the seekbar on dual indicators. 
 		datesSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -166,12 +167,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 						} else {
 
-
 							layout.removeAllViews();
-
 							scatterGraph.clearAll(xLabel, yLabel);
-
-
 
 							for(String country: countries)
 							{
@@ -183,33 +180,24 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 							scatterGraph.setXAxisMinMax(xaxisminmax[0],xaxisminmax[1]);
 							scatterGraph.setYAxisMinMax(yaxisminmax[0],yaxisminmax[1]);
 
-
 							layout.addView(scatterGraph.getScatterGraph(getApplicationContext()), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
-
-
 						}
 					}
-
 				}
-
 			}
 
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {
-
 			}
 
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
-
-
-
 			}
 		});
 
 		//We add adapters to the x and y spinners, to edit the labels to match the correct chosen label. 
 		setXAdapterDate();
-
+		//We get set the x indicator listener. 
 		xindicator.setOnItemSelectedListener(new OnItemSelectedListener(){
 
 			@Override
@@ -260,12 +248,15 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		countries.add("AUS");
 		countries.add("CAN");
 	}
-
+	/**
+	 * This method is called if user presses the lock button. 
+	 * @param v The view.
+	 */
 	public void lock(View v)
 	{
-
+		//This if statement checks if the lock is already open. 
 		if(isOpen == false){
-
+			//We create a dialog to confirm the user wants to open the lock and use dual indicators. 
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			LayoutInflater inflater = this.getLayoutInflater();
@@ -278,22 +269,19 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 					//We set the textfield to now show a date.
 					datetext.setText("1970");
-
-
-
 					datetext.setTextSize(30f);
 					datetext.setTextColor(Color.DKGRAY);
-
+					//We set the visibility of the seekbar to visible. 
 					datesSeekBar.setVisibility(View.VISIBLE);
-
+					//We set the adapter up, and change the  lock image to an unlocked image. 
 					setXAdapterArray();
 					lock.setImageResource(R.drawable.unlock);
 					layout.removeAllViews();
+					//Enable x indicator spinner.
 					xindicator.setEnabled(true);
+					//the lock is now open. 
 					isOpen = true;
-
 				}
-
 			});
 
 			final AlertDialog alertDialog = builder.create();
@@ -301,6 +289,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		} else {
 			//We set the spinner back to 0 for the next instance of using dual indicators.
 			accessspinnercount = 0;
+			//We set the x indicator back to the date array, to remove the rest of the indicators. 
 			setXAdapterDate();
 			lock.setImageResource(R.drawable.lock);
 			datesSeekBar.setVisibility(View.GONE);
@@ -311,7 +300,9 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 		}
 	}
-
+	/**
+	 * This method adds adapters to the X and Y spinners based on the date array in strings.xml. 
+	 */
 	public void setXAdapterDate()
 	{
 		//We add adapters to the x and y spinners, to edit the labels to match the correct chosen label. 
@@ -321,7 +312,9 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		xindicator.setAdapter(adapter);
 		xindicator.setEnabled(false);
 	}
-
+	/**
+	 * This method adds adapters to the X and Y spinners based on the indicatorName array in strings.xml. 
+	 */
 	public void setXAdapterArray()
 	{
 		//We add adapters to the x and y spinners, to edit the labels to match the correct chosen label. 
@@ -341,16 +334,15 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 		update.setEnabled(false);
 		datesSeekBar.setProgress(0);
-		
+
 		//We reset this count so the spinner has to effect on the graph. 
 		accessspinnercount = 0;
 
 		//We remove the old graph & animation from the view. 
 		layout.removeAllViews();
 
-		/*
-		 * We create the animated logo animation and set the resources. 
-		 */
+		//We create the animated logo animation and set the resources. 
+
 		logoanimated = new ImageView(this);
 		logoanimated.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
 		final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.rotate);
@@ -366,9 +358,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			 * This means that the user wants to get a scatter graph. So we need to add this if statement to the parse listener below
 			 * to make sure it adds the value to the new scatter graph class. We will add a scatter graph instead, using a lot more data. 
 			 */
-
-			
-
 			scatterGraph.clearAll(xLabel, yLabel);
 
 			//We get the selected index to get the index code. 
@@ -386,7 +375,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				parser.getIndicatorFor(country, IndicatorNamey, "1970","2014");
 				parser.getIndicatorFor(country, IndicatorNamex, "1970", "2014");
 			}
-
 
 		} else {
 

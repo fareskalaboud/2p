@@ -18,50 +18,52 @@ import android.graphics.Paint.Align;
 import android.util.Log;
 
 /**
- * We need to get the data, we need to keep all the data for the countries chosen and store them in an 
- * hashmap to access.
- * When the user changes the year, we want to add that data to the graph using the addData method. 
- * So for all hashmaps stored in the hashmap we have to go through it all, and get the data for each axis.
- * 
- * Two different hashmap, one for the xAxis indicator, and one for the yAxis indicator.
- * 
- * in our add dataset, we add the xaxis hashmap to the x hashmap, the yaxis hashmap to the y hasmaph
- * when we get the data we get the
- * @author user
+ *This class defines the scatter graph and all the dataset/operations and renderer for it. 
+ * @author Sean
  *
  */
 
 public class ScatterGraph {
 
+	//The dataset and renderer we add data and renderers to
 	XYMultipleSeriesDataset dataset;
 	XYMultipleSeriesRenderer renderer;
-
+	//Number of sets in the graph
 	int numberOfSets = 0;
-
+	//The array to store all colours
 	int[] colours = {Color.parseColor("#CD5C5C"),Color.parseColor("#4169E1"),Color.parseColor("#9ACD32"),Color.parseColor("#8A2BE2")
 			,Color.parseColor("#2897B7"),Color.parseColor("#2F74D0"),Color.parseColor("#6755E3"),Color.parseColor("#9B4EE9")
 			,Color.parseColor("#75D6FF"),Color.parseColor("#79FC4E"),Color.parseColor("#DFDF00"),Color.parseColor("#FF7575")};
+	//The colour count to see which colour to add from the above array
 	int colourCount = 0;
-
+	//The x and y labels for the graphs
 	String xLabel;
 	String yLabel;
-
+	//The x and y maps to store the data, access later when changing years. 
 	HashMap<String,HashMap<String,String>> xMap;
 	HashMap<String,HashMap<String,String>> yMap;
-
+	/**
+	 * Initialises the hashmaps.
+	 */
 	public ScatterGraph()
 	{
 		xMap = new HashMap<String,HashMap<String,String>>();
 		yMap = new HashMap<String,HashMap<String,String>>();
 	}
-
+	/**
+	 * We create the final graph based on values given.
+	 * @param context The application context
+	 * @return the graph itself as a view. 
+	 */
 	public GraphicalView getScatterGraph(Context context)
 	{
 		GraphicalView view = ChartFactory.getScatterChartView(context, dataset, renderer);
-		
+
 		return view;
 	}
-
+	/**
+	 * adds all renderers once datasets are added. Call this method once all datasets are added. 
+	 */
 	public void addRenderers(){
 
 		for(int i = 0;i<numberOfSets;i++)
@@ -76,23 +78,32 @@ public class ScatterGraph {
 		}
 
 	}
-
+	/**
+	 * Adds dataset to the X Hashmap to reference later. 
+	 */
 	public void addXDataSet(HashMap<String,String>xDataset,String country)
 	{
 		xMap.put(country, xDataset);
 	}
-
+	/**
+	 * Adds dataset to the Y Hashmap to reference later. 
+	 */
 	public void addYDataSet(HashMap<String,String>yDataset,String country)
 	{
 		yMap.put(country, yDataset);
 	}
-
+	/**
+	 * We add the specific data from the hashmaps given. 
+	 * @param country The country we want to access data for.
+	 * @param year The specific year we want the data from.
+	 */
 	public void addDataToGraph(String country,String year)
 	{
 		HashMap<String, String> xDataset = xMap.get(country);
 		HashMap<String, String> yDataset = yMap.get(country);
 
 		XYSeries series = new XYSeries(country);
+		//We get the values as doubles from the hashmaps. 
 		Double x = Double.valueOf(xDataset.get(year));
 		Double y = Double.valueOf(yDataset.get(year));
 		//If the y axis value is greater than a certain value, we need to move the margin.
@@ -110,19 +121,30 @@ public class ScatterGraph {
 		numberOfSets++;
 		dataset.addSeries(series);
 	}
-
+	/**
+	 * We set the minimum and maximium values of the X Axis
+	 * @param min the minimum value
+	 * @param max the maximum value
+	 */
 	public void setXAxisMinMax(double min,double max)
 	{
 		renderer.setXAxisMin(min);
 		renderer.setXAxisMax(max);
 	}
-
+	/**
+	 * We set the minimum and maximium values of the Y Axis
+	 * @param min the minimum value
+	 * @param max the maximum value
+	 */
 	public void setYAxisMinMax(double min,double max)
 	{
 		renderer.setYAxisMin(min);
 		renderer.setYAxisMax(max);
 	}
-
+	/**
+	 * We get the minimum and maximum value of the y axis, once all data is added to the class.
+	 * @return array with minimum and maximum value. 
+	 */
 	public double[] getYMinMax()
 	{
 		double[] array = new double[2];
@@ -165,10 +187,13 @@ public class ScatterGraph {
 
 		array[0] = min;
 		array[1] = max;
-	
+
 		return array;
 	}
-
+	/**
+	 * We get the minimum and maximum value of the x axis, once all data is added to the class.
+	 * @return array with minimum and maximum value. 
+	 */
 	public double[] getXMinMax()
 	{
 
@@ -217,7 +242,11 @@ public class ScatterGraph {
 		return array;
 
 	}
-
+	/**
+	 * Clears the renderer and datasets, setting default variables on the renderer for use.
+	 * @param xLabel the XLabel title
+	 * @param yLabel the YLabel title
+	 */
 	public void clearAll(String xLabel,String yLabel)
 	{
 		this.xLabel = xLabel;
