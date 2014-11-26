@@ -1,6 +1,7 @@
 package seg2.compair;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -17,7 +18,8 @@ import java.util.*;
 
 public class CountrySelectActivity extends Activity implements JSONParserListener<HashMap>, View.OnClickListener {
 
-    public JSONParser parser;
+    private ProgressDialog dialog;
+    private JSONParser parser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +30,14 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
         Fonts.makeFonts(this);
 
         if (isInternetAvailable()) {
+            // create the progress dialog
+            dialog = ProgressDialog.show(this, "",
+                    "Loading. Please wait...", true);
+
             parser = new JSONParser(this);
             parser.getCountries();
+        } else {
+            Toast.makeText(getApplicationContext(), "No internet connection, please connect to the internet!", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -59,7 +67,8 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
      */
     @Override
     public void onJSONParseFinished(String type, HashMap result) {
-        System.out.println("Parsing finished");
+        dialog.dismiss();
+
         if (type.equals(parser.TYPE_COUNTRY)) {
             ListView listView = (ListView)findViewById(R.id.listView);
             ArrayList<Country> countryList = new ArrayList<Country>();
@@ -95,8 +104,6 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
         if (networkInfo != null && networkInfo.isConnected()) {
             return true;
         }
-
-        Toast.makeText(getApplicationContext(), "No Internet Connection...", Toast.LENGTH_SHORT).show();
         return  false;
     }
 
