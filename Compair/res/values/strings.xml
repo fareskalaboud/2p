@@ -28,6 +28,20 @@
         <item>EN.POP.DNST</item>
         <item>SP.POP.GROW</item>
         <item>FP.CPI.TOTL.ZG</item>
+        <item>SP.RUR.TOTL</item>
+        <item>AG.LND.ARBL.HA.PC</item>
+        <item>EG.USE.COMM.KT.OE</item>
+        <item>SP.URB.TOTL</item>
+        <item>NY.GNP.ATLS.CD</item>
+        <item>SL.TLF.TOTL.IN</item>
+        <item>EG.IMP.CONS.ZS</item>
+        <item>AG.LND.FRST.K2</item>
+        <item>BN.CAB.XOKA.CD</item>
+        <item>DT.DOD.DECT.CD</item>
+        <item>BX.KLT.DINV.CD.WD</item>
+        <item>DT.DOD.DIMF.CD</item>
+        <item>SP.DYN.CBRT.IN</item>
+        <item>SP.DYN.LE00.IN</item>
     </string-array>
     <string-array name="indicatorName">
         <item>Life Expectancy at Birth, Total (%)</item>
@@ -50,6 +64,20 @@
         <item>Population density (people per sq. km)</item>
         <item>Population growth (annual %)</item>
         <item>Inflation, consumer prices (annual %)</item>
+        <item>Rural population</item>
+        <item>Arable land(hectares per person)</item>
+        <item>Energy use (kt of oil equivalent)</item>
+        <item>Urban population</item>
+        <item>GNI Atlas Method</item>
+        <item>Labor force, total</item>
+        <item>Energy imports, net(%use of energy)</item>
+        <item>Forest Area</item>
+        <item>Current account balance</item>
+        <item>External debt stocks</item>
+        <item>Foreign direct investment, net inflows</item>
+        <item>Use of IMF credit (DOD, current US$)</item>
+        <item>Birth rate, crude(per 1000 people)</item>
+        <item>Life expectancy at birth, total(years)</item>
     </string-array>
 
 </resources>

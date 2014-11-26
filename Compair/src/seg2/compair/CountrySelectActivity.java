@@ -1,6 +1,7 @@
 package seg2.compair;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -29,12 +30,15 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
         System.out.println("HI THERE. I'M THE GUY YOU'RE LOOKING FOR.");
         setContentView(R.layout.activity_countryselect);
 
+        // create the progress dialog
+        dialog = new ProgressDialog(this, AlertDialog.THEME_HOLO_DARK);
+        dialog.setMessage("Loading. Please wait...");
+        dialog.setIndeterminate(true);
+
         Fonts.makeFonts(this);
 
         if (isInternetAvailable()) {
-            // create the progress dialog
-            dialog = ProgressDialog.show(this, "",
-                    "Loading. Please wait...", true);
+            dialog.show();
 
             parser = new JSONParser(this);
             parser.getCountries();
