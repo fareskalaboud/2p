@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
 		Fonts.makeFonts(this);
 
         if (!isInternetAvailable()) {
-            openAlert(new View(getApplicationContext()));
+            new NoInternetAlertDialog(this);
         }
 	}
 
@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
             Intent intent = new Intent(this, CountrySelectActivity.class);
             startActivity(intent);
         } else {
-            Toast.makeText(this.getApplicationContext(), "You need a working internet connection!", Toast.LENGTH_LONG).show();
+            new NoInternetAlertDialog(this);
         }
     }
 
@@ -83,32 +83,5 @@ public class MainActivity extends Activity {
 
 		return indicators;
 	}
-
-    private void openAlert(View view) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this, AlertDialog.THEME_HOLO_DARK);
-
-        alertDialogBuilder.setTitle("No Internet Connection");
-        alertDialogBuilder.setMessage("You need a working internet connection to use this app. Please check that you are connected.");
-        // set positive button: Yes message
-        alertDialogBuilder.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // go to a new activity of the app
-                startActivityForResult(new Intent(Settings.ACTION_WIFI_SETTINGS), 0);
-            }
-        });
-        // set negative button: No message
-        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // cancel the alert box and put a Toast to the user
-                dialog.cancel();
-                Toast.makeText(getApplicationContext(), "You chose a negative answer",
-                        Toast.LENGTH_LONG).show();
-            }
-        });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        // show alert
-        alertDialog.show();
-    }
 
 }

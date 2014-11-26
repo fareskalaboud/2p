@@ -114,8 +114,11 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
     }
 
     public void onClick(View v) {
-        System.out.println("GRAPH BUTTON CLICKED");
-        sendCheckedCountriesToGraph();
+        if(isInternetAvailable()) {
+            sendCheckedCountriesToGraph();
+        } else {
+            new NoInternetAlertDialog(this);
+        }
     }
 
     /**
