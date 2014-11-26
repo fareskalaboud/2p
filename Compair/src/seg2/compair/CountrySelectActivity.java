@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import model.Country;
-import model.CountryComparator;
 import model.download.JSONParser;
 import model.download.JSONParserListener;
 
