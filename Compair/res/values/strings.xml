@@ -6,8 +6,8 @@
     <string name="action_settings">Settings</string>
     <string name="next_button">Next</string>
     <string name="graph_button">Graph!</string>
-    
-    <string-array name="idicatorID">
+
+    <string-array name="indicatorID">
         <item>SP.DYN.LE00.IN</item>
         <item>SM.POP.NETM</item>
         <item>SP.POP.GROW</item>
