@@ -1,6 +1,8 @@
 package model;
 
-public class Country {
+import java.util.Comparator;
+
+public class Country implements Comparator<Country> {
 	private String id;
 	private String capital;
 	private String name;
@@ -28,6 +30,10 @@ public class Country {
 		this.latitude = latitude;
 		this.longitude = longitude;
         this.selected = false;
+
+	}
+
+	public Country() {
 
 	}
 
@@ -92,4 +98,17 @@ public class Country {
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
+
+	/**
+	 * Custom comparator class to sort the array of coutries
+	 * @param country1 one country class
+	 * @param country2 the other country class
+	 * @return  0 if it equals
+	 * 			1 if rhs > lhs
+	 * 			-1 if rhs < lhs
+	 */
+	@Override
+	public int compare(Country country1, Country country2) {
+		return country1.name.compareTo(country1.name);
+	}
 }

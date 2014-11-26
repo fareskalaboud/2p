@@ -62,28 +62,12 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
         System.out.println("Parsing finished");
         if (type.equals(parser.TYPE_COUNTRY)) {
             ListView listView = (ListView)findViewById(R.id.listView);
-            ArrayList<String> countriesName = new ArrayList<String>();
             ArrayList<Country> countryList = new ArrayList<Country>();
 
-            Iterator iterator = result.entrySet().iterator();
-            while (iterator.hasNext()) {
-                Map.Entry pairs = (Map.Entry)iterator.next();
-                countryList.add(((Country)pairs.getValue()));
-                countriesName.add(((Country)pairs.getValue()).getName());
-            }
-
-            Collections.sort(countriesName);
-
-//            String[] countriesNameArray = new String[countriesName.size()];
-//            countriesNameArray = countriesName.toArray(countriesNameArray);
-//            CountryListAdapter adapter = new CountryListAdapter(this, android.R.layout.simple_list_item_1, countriesNameArray);
-//            listView.setAdapter(adapter);
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, countriesName);
+            Collections.sort(countryList, new Country());
+            System.out.println(countryList);
 
             CountryListAdapter clAdapter = new CountryListAdapter(this, R.layout.countrylistview_row, countryList);
-
-//            listView.setSelection(ListView.CHOICE_MODE_MULTIPLE);
             listView.setAdapter(clAdapter);
 
             //TODO: Uncomment to get data
