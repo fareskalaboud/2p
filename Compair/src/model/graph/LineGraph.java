@@ -116,9 +116,17 @@ public class LineGraph {
 			 */
 
 			String value = entry.getValue();
-			//If the value is greater than 1000000, we are going to have to change the margins size to fit the value in. 
-			if(Double.valueOf(value)>1000000){
+			//We changed the margins depending on how big the value is.
+
+			double valuedouble = Double.valueOf(value);
+			if(valuedouble>1000000){
 				renderer.setMargins(new int[] {0, 130, 20, 0});
+			} 
+			if(valuedouble>10000000){
+				renderer.setMargins(new int[] {0, 160, 20, 0});
+			} 
+			if(valuedouble>100000000){
+				renderer.setMargins(new int[] {0, 200, 20, 0});
 			} 
 
 			if(value.equals("0"))
@@ -133,7 +141,7 @@ public class LineGraph {
 				date = builder.toString();
 
 				Date convertedDate = sdf.parse(date);
-				timeSeries.add(convertedDate, Double.valueOf(value));
+				timeSeries.add(convertedDate, valuedouble);
 			}
 		}
 		/*
@@ -144,7 +152,7 @@ public class LineGraph {
 
 	}
 
-	
+
 	/**
 	 * This method adds all renderers once all datasets are added. 
 	 */
