@@ -45,7 +45,7 @@ public class MainActivity extends Activity {
 	private HashMap<String, String> getIndicators () {
 		//Code to use in different classes
 		//Get indicators
-		String[] indicatorsID = getResources().getStringArray(R.array.idicatorID);
+		String[] indicatorsID = getResources().getStringArray(R.array.indicatorID);
 		String[] indicatorsName = getResources().getStringArray(R.array.indicatorName);
 		HashMap<String, String> indicators = new HashMap<String, String>();
 

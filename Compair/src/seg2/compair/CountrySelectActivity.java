@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import model.Country;
+import model.CountryComparator;
 import model.download.JSONParser;
 import model.download.JSONParserListener;
 
@@ -64,8 +65,13 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
             ListView listView = (ListView)findViewById(R.id.listView);
             ArrayList<Country> countryList = new ArrayList<Country>();
 
-            Collections.sort(countryList, new Country());
-            System.out.println(countryList);
+            Iterator iterator = result.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry pairs = (Map.Entry)iterator.next();
+                countryList.add((Country)pairs.getValue());
+            }
+
+            Collections.sort(countryList, new CountryComparator());
 
             CountryListAdapter clAdapter = new CountryListAdapter(this, R.layout.countrylistview_row, countryList);
             listView.setAdapter(clAdapter);
