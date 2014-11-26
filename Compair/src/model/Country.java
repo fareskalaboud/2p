@@ -2,7 +2,7 @@ package model;
 
 import java.util.Comparator;
 
-public class Country {
+public class Country implements  Comparable<Country> {
 	private String id;
 	private String capital;
 	private String name;
@@ -96,4 +96,16 @@ public class Country {
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
+
+	/**
+	 * Custom comparator class to sort the array of coutries
+	 * @param another the other country class
+	 * @return  0 if it equals
+	 * 			1 if rhs > lhs
+	 * 			-1 if rhs < lhs
+	 */
+	@Override
+	public int compareTo(Country another) {
+		return name.compareTo(another.name);
+	}
 }

@@ -71,7 +71,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
                 countryList.add((Country)pairs.getValue());
             }
 
-            Collections.sort(countryList, new CountryComparator());
+            Collections.sort(countryList);
 
             CountryListAdapter clAdapter = new CountryListAdapter(this, R.layout.countrylistview_row, countryList);
             listView.setAdapter(clAdapter);
