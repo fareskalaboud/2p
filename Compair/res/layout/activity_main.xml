@@ -7,7 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="seg2.compair.MainActivity" android:focusable="false"
-    android:background="@drawable/front_end_background">
+   >
 
     <ListView
             android:layout_width="match_parent"
