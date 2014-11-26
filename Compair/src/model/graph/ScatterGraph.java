@@ -1,5 +1,6 @@
 package model.graph;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
@@ -31,9 +32,9 @@ public class ScatterGraph {
 	//Number of sets in the graph
 	int numberOfSets = 0;
 	//The array to store all colours
-	int[] colours = {Color.parseColor("#CD5C5C"),Color.parseColor("#4169E1"),Color.parseColor("#9ACD32"),Color.parseColor("#8A2BE2")
+	int[] colours = {Color.parseColor("#CD5C5C"),Color.parseColor("#4169E1"),Color.parseColor("#8A2BE2")
 			,Color.parseColor("#2897B7"),Color.parseColor("#2F74D0"),Color.parseColor("#6755E3"),Color.parseColor("#9B4EE9")
-			,Color.parseColor("#75D6FF"),Color.parseColor("#79FC4E"),Color.parseColor("#DFDF00"),Color.parseColor("#FF7575")};
+			,Color.parseColor("#75D6FF"),Color.parseColor("#79FC4E"),Color.parseColor("#DFDF00"),Color.parseColor("#FF7575"),Color.parseColor("#9ACD32")};
 	//The colour count to see which colour to add from the above array
 	int colourCount = 0;
 	//The x and y labels for the graphs
@@ -42,13 +43,25 @@ public class ScatterGraph {
 	//The x and y maps to store the data, access later when changing years. 
 	HashMap<String,HashMap<String,String>> xMap;
 	HashMap<String,HashMap<String,String>> yMap;
+
+	//This stringbuilder is used to create the missing countries string.
+	StringBuilder builder;
+	//We store the missing values in the seperate arraylists
+	ArrayList<String> missingx;
+	ArrayList<String> missingy;
+	ArrayList<String> missingxy;
 	/**
-	 * Initialises the hashmaps.
+	 * Initialises the hashmaps and the string builder.
 	 */
 	public ScatterGraph()
 	{
 		xMap = new HashMap<String,HashMap<String,String>>();
 		yMap = new HashMap<String,HashMap<String,String>>();
+		builder = new StringBuilder();
+		
+		missingx = new ArrayList<String>();
+		missingy = new ArrayList<String>();
+		missingxy = new ArrayList<String>();
 	}
 	/**
 	 * We create the final graph based on values given.
@@ -106,20 +119,36 @@ public class ScatterGraph {
 		//We get the values as doubles from the hashmaps. 
 		Double x = Double.valueOf(xDataset.get(year));
 		Double y = Double.valueOf(yDataset.get(year));
-		//If the y axis value is greater than a certain value, we need to move the margin.
-		if(y>1000000){
-			renderer.setMargins(new int[] {0, 130, 20, 0});
-		} 
-		if(y>10000000){
-			renderer.setMargins(new int[] {0, 160, 20, 0});
-		} 
-		if(y>100000000){
-			renderer.setMargins(new int[] {0, 200, 20, 0});
-		} 
 
-		series.add(x, y);
-		numberOfSets++;
-		dataset.addSeries(series);
+		//We see if the data is not there, if it isn't we do not add it and update the textview accordingly.
+		if(x==0 && y ==0)
+		{
+			missingxy.add(country);
+		} else if (x==0)
+		{
+			missingx.add(country);
+		} else if (y==0)
+		{
+			missingy.add(country);
+		} else {
+
+
+			//If the y axis value is greater than a certain value, we need to move the margin.
+
+			if(y>1000000){
+				renderer.setMargins(new int[] {0, 130, 20, 0});
+			} 
+			if(y>10000000){
+				renderer.setMargins(new int[] {0, 160, 20, 0});
+			} 
+			if(y>100000000){
+				renderer.setMargins(new int[] {0, 200, 20, 0});
+			} 
+
+			series.add(x, y);
+			numberOfSets++;
+			dataset.addSeries(series);
+		}
 	}
 	/**
 	 * We set the minimum and maximium values of the X Axis
@@ -242,6 +271,44 @@ public class ScatterGraph {
 		return array;
 
 	}
+
+	/**
+	 * This method gets us the string that represents the missing countries of this graph.
+	 * @return String to set text of missing countries textview. 
+	 */
+	public String getMissingCountries()
+	{
+		try{
+			if(missingxy.size() !=0)
+			{
+				builder.append(" Countries missing (x,y): ");
+				for(String x: missingxy)
+				{
+					builder.append(x+",");
+				}
+			}
+			if(missingx.size() !=0)
+			{
+				builder.append(" Countries missing (x): ");
+				for(String x: missingx)
+				{
+					builder.append(x+",");
+				}
+			}
+			if(missingy.size() !=0)
+			{
+				builder.append(" Countries missing (y): ");
+				for(String x: missingy)
+				{
+					builder.append(x+",");
+				}
+			}
+		} catch (NullPointerException e)
+		{
+
+		}
+		return builder.toString();
+	}
 	/**
 	 * Clears the renderer and datasets, setting default variables on the renderer for use.
 	 * @param xLabel the XLabel title
@@ -255,6 +322,14 @@ public class ScatterGraph {
 		//We reset these counts. They tell later methods the amount of colours or sets that are needed. 
 		colourCount = 0;
 		numberOfSets = 0;
+		
+		//We remove data from the missing country datastructures and builder.
+		
+		missingxy.clear();
+		missingx.clear();
+		missingy.clear();
+		
+		builder = new StringBuilder();
 
 		dataset = new XYMultipleSeriesDataset();
 

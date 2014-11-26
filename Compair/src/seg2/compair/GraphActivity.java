@@ -55,6 +55,9 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 	//Text for the date, invisible default
 	TextView datetext;
+	
+	//Texview for any country that does not have data when using dual indicators.
+	TextView nodata;
 
 	//Update button
 	Button update;
@@ -147,6 +150,10 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		//Initialise the checkbox for dual indicators.
 		population = (CheckBox)findViewById(R.id.population);
 		
+		//Initialise the textview for dual indicators of countries with no data.
+		nodata = (TextView)findViewById(R.id.nodata);
+		nodata.setText("");
+		
 		//We remove this from view.
 		population.setVisibility(View.GONE);
 
@@ -191,6 +198,9 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 							scatterGraph.setYAxisMinMax(yaxisminmax[0],yaxisminmax[1]);
 
 							layout.addView(scatterGraph.getScatterGraph(getApplicationContext()), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
+							
+							//We set the textview to represent missing data
+							nodata.setText(scatterGraph.getMissingCountries());
 						}
 					}
 				}
@@ -497,6 +507,9 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 					logoanimated.setImageResource(android.R.color.transparent);
 					layout.removeAllViews();
 					layout.addView(scatterGraph.getScatterGraph(getApplicationContext()), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
+					
+					//We set the textview to represent missing data
+					nodata.setText(scatterGraph.getMissingCountries());
 					//The spinner can now be used, since an update has occured. 
 					accessspinnercount = 1;
 					update.setEnabled(true);
