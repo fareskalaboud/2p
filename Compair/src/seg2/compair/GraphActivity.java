@@ -16,7 +16,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -49,6 +49,9 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	Spinner yindicator;
 	//Seekbar for dualindicators
 	SeekBar datesSeekBar;
+	
+	//Checkbox for changing to a bubble chart
+	CheckBox population;
 
 	//Text for the date, invisible default
 	TextView datetext;
@@ -138,7 +141,14 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		//We initialise the imageview of the lock.
 		lock = (ImageView)findViewById(R.id.xlock);
 
+		//Initialise the date text for dual indicators.
 		datetext = (TextView)findViewById(R.id.datetext);
+		
+		//Initialise the checkbox for dual indicators.
+		population = (CheckBox)findViewById(R.id.population);
+		
+		//We remove this from view.
+		population.setVisibility(View.GONE);
 
 		/*
 		 * This spinner is kept invisible till unlocked when the dual indicators are unlocked. 
@@ -273,6 +283,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 					datetext.setTextColor(Color.DKGRAY);
 					//We set the visibility of the seekbar to visible. 
 					datesSeekBar.setVisibility(View.VISIBLE);
+					//We set the visibility of the checkbox to visible.
+					population.setVisibility(View.VISIBLE);
 					//We set the adapter up, and change the  lock image to an unlocked image. 
 					setXAdapterArray();
 					lock.setImageResource(R.drawable.unlock);
@@ -293,6 +305,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			setXAdapterDate();
 			lock.setImageResource(R.drawable.lock);
 			datesSeekBar.setVisibility(View.GONE);
+			population.setVisibility(View.GONE);
 			datetext.setText("          ");
 			layout.removeAllViews();
 			xindicator.setEnabled(false);

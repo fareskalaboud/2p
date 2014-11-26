@@ -77,10 +77,16 @@
 
         <SeekBar
             android:id="@+id/datespinner"
-            android:layout_width="150dp"
+            android:layout_width="500dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.68" />
+             />
 
+        <CheckBox
+            android:id="@+id/population"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add population"
+            android:textSize="15dp" />
     </LinearLayout>
 
 </LinearLayout>
