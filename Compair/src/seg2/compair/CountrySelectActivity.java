@@ -20,6 +20,8 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 
     private ProgressDialog dialog;
     private JSONParser parser;
+    private ArrayList<Country> checkedCountries = new ArrayList<Country>();
+    private ArrayList<Country> countryList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +73,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 
         if (type.equals(parser.TYPE_COUNTRY)) {
             ListView listView = (ListView)findViewById(R.id.listView);
-            ArrayList<Country> countryList = new ArrayList<Country>();
+            countryList = new ArrayList<Country>();
 
             Iterator iterator = result.entrySet().iterator();
             while (iterator.hasNext()) {
@@ -107,6 +109,27 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
         return  false;
     }
 
-    public void onClick(View v) {}
+    public void onClick(View v) {
+        System.out.println("GRAPH BUTTON CLICKED");
+        sendCheckedCountriesToGraph();
+    }
 
+    /**
+     * Checks which countries are selected and sends it
+     * to the next activity, which graphs the data it obtains
+     * from it.
+     */
+    public void sendCheckedCountriesToGraph() {
+        String s = new String();
+        for (Country c : countryList) {
+            if (c.isSelected()) {
+                checkedCountries.add(c);
+                s = s + " : " + c.getName();
+            }
+        }
+
+        System.out.println("Countries checked: " + s);
+
+        // TODO: Send this in an intent
+    }
 }
