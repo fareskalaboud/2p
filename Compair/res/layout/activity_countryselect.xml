@@ -48,6 +48,7 @@
             android:layout_centerHorizontal="true" android:textStyle="bold" android:id="@+id/graphButton"
             android:background="#0F6699"
             android:textColor="#FFFFFF"
+            android:onClick="onClick"
             style="?android:attr/borderlessButtonStyle"/>
 
 
