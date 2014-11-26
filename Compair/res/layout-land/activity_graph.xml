@@ -66,19 +66,19 @@
             android:layout_height="wrap_content"
             android:onClick="update"
             android:text="Update" />
-        
+
         <TextView
             android:id="@+id/datetext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:text="          " />
+            android:text="          "
+            android:textSize="18dp" />
 
-        <Spinner
+        <SeekBar
             android:id="@+id/datespinner"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-             />
+            android:layout_weight="0.68" />
     </LinearLayout>
 
 </LinearLayout>
