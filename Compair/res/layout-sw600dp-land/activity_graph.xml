@@ -24,7 +24,7 @@
 
         <Spinner
             android:id="@+id/xspinner"
-            android:layout_width="430dp"
+            android:layout_width="400dp"
             android:layout_height="wrap_content" />
 
         <ImageView
@@ -43,7 +43,7 @@
 
         <Spinner
             android:id="@+id/yspinner"
-            android:layout_width="430dp"
+            android:layout_width="400dp"
             android:layout_height="wrap_content" />
 
         <ImageView
@@ -52,6 +52,7 @@
             android:layout_height="40dp"
             android:onClick="lock"
             android:src="@drawable/lock" />
+
     </LinearLayout>
 
     <LinearLayout

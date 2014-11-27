@@ -29,7 +29,7 @@
 
         <Spinner
             android:id="@+id/xspinner"
-            android:layout_width="240dp"
+            android:layout_width="230dp"
             android:layout_height="wrap_content" />
 
         <ImageView
@@ -48,7 +48,7 @@
 
         <Spinner
             android:id="@+id/yspinner"
-            android:layout_width="240dp"
+            android:layout_width="230dp"
             android:layout_height="wrap_content" />
 
         <ImageView
