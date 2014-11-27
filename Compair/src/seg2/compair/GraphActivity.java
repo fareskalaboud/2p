@@ -49,13 +49,11 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	Spinner yindicator;
 	//Seekbar for dualindicators
 	SeekBar datesSeekBar;
-	
-	//Checkbox for changing to a bubble chart
-	CheckBox population;
+
 
 	//Text for the date, invisible default
 	TextView datetext;
-	
+
 	//Texview for any country that does not have data when using dual indicators.
 	TextView nodata;
 
@@ -83,6 +81,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 	//ImageView of the lock to unlock the Xaxis.
 	ImageView lock;
+	//ImageView of the switch indicator.
+	ImageView switchindicator;
 
 	//Boolean that is used to see if the lock is unlocked or locked.
 	boolean isOpen = false;
@@ -104,6 +104,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	double[] yaxisminmax;
 	//The default year string for the dual indicators. 
 	String year = "1970";
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -143,20 +144,18 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 		//We initialise the imageview of the lock.
 		lock = (ImageView)findViewById(R.id.xlock);
+		//We initialise the imageview of the switch indicator. 
+		switchindicator = (ImageView)findViewById(R.id.switchindicator);
 
 		//Initialise the date text for dual indicators.
 		datetext = (TextView)findViewById(R.id.datetext);
-		
-		//Initialise the checkbox for dual indicators.
-		population = (CheckBox)findViewById(R.id.population);
-		
+
+
 		//Initialise the textview for dual indicators of countries with no data.
 		nodata = (TextView)findViewById(R.id.nodata);
 		nodata.setText("");
 		
-		//We remove this from view.
-		population.setVisibility(View.GONE);
-
+	
 		/*
 		 * This spinner is kept invisible till unlocked when the dual indicators are unlocked. 
 		 */
@@ -198,7 +197,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 							scatterGraph.setYAxisMinMax(yaxisminmax[0],yaxisminmax[1]);
 
 							layout.addView(scatterGraph.getScatterGraph(getApplicationContext()), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
-							
+
 							//We set the textview to represent missing data
 							nodata.setText(scatterGraph.getMissingCountries());
 						}
@@ -214,6 +213,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			public void onStopTrackingTouch(SeekBar seekBar) {
 			}
 		});
+		
+		
 
 		//We add adapters to the x and y spinners, to edit the labels to match the correct chosen label. 
 		setXAdapterDate();
@@ -268,6 +269,25 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		countries.add("AUS");
 		countries.add("CAN");
 	}
+	
+	
+	public void switchIndicators(View v)
+	{
+		if(isOpen == false)
+		{
+			
+		} else {
+			final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.rotateindicator);
+
+			switchindicator.startAnimation(animRotate);
+			int positionx = xindicator.getSelectedItemPosition();
+			int positiony = yindicator.getSelectedItemPosition();
+			
+			yindicator.setSelection(positionx);
+			xindicator.setSelection(positiony);
+		}
+		
+	}
 	/**
 	 * This method is called if user presses the lock button. 
 	 * @param v The view.
@@ -293,11 +313,13 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 					datetext.setTextColor(Color.DKGRAY);
 					//We set the visibility of the seekbar to visible. 
 					datesSeekBar.setVisibility(View.VISIBLE);
-					//We set the visibility of the checkbox to visible.
-					population.setVisibility(View.VISIBLE);
 					//We set the adapter up, and change the  lock image to an unlocked image. 
 					setXAdapterArray();
+					//We change the lock image to an unlocked image.
 					lock.setImageResource(R.drawable.unlock);
+					//We change the colour of the switch indicator, indicating it is now possible to switch.
+					switchindicator.setImageResource(R.drawable.switchindicatorblue);
+					//Remove all views out of the graph if there was any ready for the next graph. 
 					layout.removeAllViews();
 					//Enable x indicator spinner.
 					xindicator.setEnabled(true);
@@ -313,12 +335,18 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			accessspinnercount = 0;
 			//We set the x indicator back to the date array, to remove the rest of the indicators. 
 			setXAdapterDate();
+			//We set the lock back to close.
 			lock.setImageResource(R.drawable.lock);
+			//We change the colour of the switch indicator, indicating it is not possible to switch.
+			switchindicator.setImageResource(R.drawable.switchindicatorgrey);
+			//We remove the seekbar and the date.
 			datesSeekBar.setVisibility(View.GONE);
-			population.setVisibility(View.GONE);
 			datetext.setText("          ");
+			//Remove all views out of the graph if there was any ready for the next graph. 
 			layout.removeAllViews();
+			//Prevent editing of the xindicator.
 			xindicator.setEnabled(false);
+			//We prevent the user from seeing anything but date. 
 			isOpen = false;
 
 		}
@@ -374,6 +402,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		logoanimated.setImageResource(R.drawable.ic_perm_group_sync_settings);
 		//We add the image to the view. 
 		layout.addView(logoanimated);
+		
+		
 
 		if(isOpen == true)
 		{
@@ -507,7 +537,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 					logoanimated.setImageResource(android.R.color.transparent);
 					layout.removeAllViews();
 					layout.addView(scatterGraph.getScatterGraph(getApplicationContext()), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
-					
+
 					//We set the textview to represent missing data
 					nodata.setText(scatterGraph.getMissingCountries());
 					//The spinner can now be used, since an update has occured. 

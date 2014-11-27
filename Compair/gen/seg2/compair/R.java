@@ -10,6 +10,7 @@ package seg2.compair;
 public final class R {
     public static final class anim {
         public static final int rotate=0x7f040000;
+        public static final int rotateindicator=0x7f040001;
     }
     public static final class array {
         public static final int date=0x7f070001;
@@ -34,27 +35,29 @@ public final class R {
         public static final int ic_launcher=0x7f020001;
         public static final int ic_perm_group_sync_settings=0x7f020002;
         public static final int lock=0x7f020003;
-        public static final int text=0x7f020004;
-        public static final int unlock=0x7f020005;
+        public static final int switchindicatorblue=0x7f020004;
+        public static final int switchindicatorgrey=0x7f020005;
+        public static final int text=0x7f020006;
+        public static final int unlock=0x7f020007;
     }
     public static final class id {
         public static final int action_settings=0x7f0a0010;
         public static final int bottombar=0x7f0a000d;
-        public static final int chart=0x7f0a0006;
+        public static final int chart=0x7f0a0008;
         public static final int checkBox1=0x7f0a000e;
         public static final int code=0x7f0a000f;
-        public static final int datespinner=0x7f0a000a;
-        public static final int datetext=0x7f0a0009;
+        public static final int datespinner=0x7f0a000c;
+        public static final int datetext=0x7f0a000b;
         public static final int graphButton=0x7f0a0003;
         public static final int imageView=0x7f0a0000;
         public static final int listView=0x7f0a0002;
-        public static final int nodata=0x7f0a0007;
-        public static final int population=0x7f0a000b;
+        public static final int nodata=0x7f0a0009;
+        public static final int switchindicator=0x7f0a0005;
         public static final int txtSelectCountry=0x7f0a0001;
-        public static final int update=0x7f0a0008;
-        public static final int xlock=0x7f0a000c;
+        public static final int update=0x7f0a000a;
+        public static final int xlock=0x7f0a0007;
         public static final int xspinner=0x7f0a0004;
-        public static final int yspinner=0x7f0a0005;
+        public static final int yspinner=0x7f0a0006;
     }
     public static final class layout {
         public static final int activity_countryselect=0x7f030000;

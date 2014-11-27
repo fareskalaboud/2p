@@ -32,6 +32,13 @@
             android:layout_width="240dp"
             android:layout_height="wrap_content" />
 
+        <ImageView
+            android:id="@+id/switchindicator"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:onClick="switchIndicators"
+            android:src="@drawable/switchindicatorgrey" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,6 +50,13 @@
             android:id="@+id/yspinner"
             android:layout_width="240dp"
             android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/xlock"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:onClick="lock"
+            android:src="@drawable/lock" />
     </LinearLayout>
 
     <LinearLayout
@@ -51,8 +65,8 @@
         android:layout_height="0dip"
         android:layout_weight="1"
         android:orientation="horizontal" />
-    
-      <LinearLayout
+
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
@@ -88,15 +102,7 @@
         <SeekBar
             android:id="@+id/datespinner"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
-             />
-
-        <CheckBox
-            android:id="@+id/population"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add population"
-            android:textSize="15dp" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </LinearLayout>
