@@ -12,7 +12,6 @@
         <item>SM.POP.NETM</item>
         <item>SP.POP.GROW</item>
         <item>NY.GDP.MKTP.CD</item>
-        <item>NE.IMP.GNFS.ZS</item>
         <item>GC.DOD.TOTL.GD.ZS</item>
         <item>SP.POP.0014.TO.ZS</item>
         <item>SP.POP.1564.TO.ZS</item>
@@ -29,8 +28,7 @@
         <item>SP.POP.GROW</item>
         <item>FP.CPI.TOTL.ZG</item>
         <item>SP.RUR.TOTL</item>
-        <item>AG.LND.ARBL.HA.PC</item>
-        <item>EG.USE.COMM.KT.OE</item>
+        <item>AG.LND.ARBL.HA.PC</item> 
         <item>SP.URB.TOTL</item>
         <item>NY.GNP.ATLS.CD</item>
         <item>SL.TLF.TOTL.IN</item>
@@ -49,7 +47,6 @@
         <item>Population Growth (Annual %)</item>
         <item>GDP (current US$)</item>
         <item>Imports of goods and services (% GDP)</item>
-        <item>Central government debt (% GDP)</item>
         <item>Population ages 0/14 (% total)</item>
         <item>Population ages 15/64 (% total)</item>
         <item>Fossil fuel energy consumption</item>
@@ -66,7 +63,6 @@
         <item>Inflation, consumer prices (annual %)</item>
         <item>Rural population</item>
         <item>Arable land(hectares per person)</item>
-        <item>Energy use (kt of oil equivalent)</item>
         <item>Urban population</item>
         <item>GNI Atlas Method</item>
         <item>Labor force, total</item>
