@@ -21,7 +21,6 @@ import android.util.Log;
 /**
  *This class defines the scatter graph and all the dataset/operations and renderer for it. 
  * @author Sean
- *
  */
 
 public class ScatterGraph {
@@ -58,7 +57,7 @@ public class ScatterGraph {
 		xMap = new HashMap<String,HashMap<String,String>>();
 		yMap = new HashMap<String,HashMap<String,String>>();
 		builder = new StringBuilder();
-		
+
 		missingx = new ArrayList<String>();
 		missingy = new ArrayList<String>();
 		missingxy = new ArrayList<String>();
@@ -81,6 +80,7 @@ public class ScatterGraph {
 
 		for(int i = 0;i<numberOfSets;i++)
 		{
+			//We create ta new renderer, set the colour by iterating through the colours array, set the point style and to fill.
 			XYSeriesRenderer r = new XYSeriesRenderer();
 			r.setColor(colours[colourCount]);
 			r.setPointStyle(PointStyle.DIAMOND);
@@ -120,7 +120,7 @@ public class ScatterGraph {
 		Double x = Double.valueOf(xDataset.get(year));
 		Double y = Double.valueOf(yDataset.get(year));
 
-		//We see if the data is not there, if it isn't we do not add it and update the textview accordingly.
+		//We see if the data is not there, if it isn't we do not add it to an arraylist and update the textview accordingly at the end.
 		if(x==0 && y ==0)
 		{
 			missingxy.add(country);
@@ -131,8 +131,6 @@ public class ScatterGraph {
 		{
 			missingy.add(country);
 		} else {
-
-
 			//If the y axis value is greater than a certain value, we need to move the margin.
 
 			if(y>1000000){
@@ -144,9 +142,11 @@ public class ScatterGraph {
 			if(y>100000000){
 				renderer.setMargins(new int[] {0, 200, 20, 0});
 			} 
-
+			//We add these values to the graph. 
 			series.add(x, y);
+			//Incremement th enumber of sets. 
 			numberOfSets++;
+			//We add the series to the dataset.
 			dataset.addSeries(series);
 		}
 	}
@@ -177,27 +177,29 @@ public class ScatterGraph {
 	public double[] getYMinMax()
 	{
 		double[] array = new double[2];
-
+		//The min and max values.
 		double max = 0;
 		double min = 0;
 
+		//We get all keys within the yMap that holds all y values.
 		Set keys = yMap.keySet();
 		Iterator iterate = keys.iterator();
+		/*
+		 * This method is used to get the first value in the hashmap, to set the minimum value. 
+		 * We cannot use zero, as that might be well below the minimum value in the graph, causing the graph to be out of scale.
+		 */
 		HashMap<String,String> tempmap = yMap.get(iterate.next());
 		Set keyset2 = tempmap.keySet();
 		Iterator iterate2 = keyset2.iterator();
 		String firstvalue = tempmap.get(iterate2.next());
 
 		min = Double.valueOf(firstvalue);
-
+		//We iterate through the map and get every value. We compare each value to the min max, and adjust the values if greater or smaller.
 		for(HashMap<String,String> values: yMap.values())
 		{
-
 			for(String data: values.values())
 			{
-
 				double number = Double.valueOf(data);
-
 				if(number == 0)
 				{
 
@@ -213,7 +215,7 @@ public class ScatterGraph {
 				}
 			}
 		}
-
+		//We place the minimum and maximum values.
 		array[0] = min;
 		array[1] = max;
 
@@ -227,27 +229,28 @@ public class ScatterGraph {
 	{
 
 		double[] array = new double[2];
-
+		//The min and max values.
 		double max = 0;
 		double min = 0;
-
+		//We get all keys within the yMap that holds all y values.
 		Set keys = xMap.keySet();
 		Iterator iterate = keys.iterator();
+		/*
+		 * This method is used to get the first value in the hashmap, to set the minimum value. 
+		 * We cannot use zero, as that might be well below the minimum value in the graph, causing the graph to be out of scale.
+		 */
 		HashMap<String,String> tempmap = xMap.get(iterate.next());
 		Set keyset2 = tempmap.keySet();
 		Iterator iterate2 = keyset2.iterator();
 		String firstvalue = tempmap.get(iterate2.next());
 
 		min = Double.valueOf(firstvalue);
-
+		//We iterate through the map and get every value. We compare each value to the min max, and adjust the values if greater or smaller.
 		for(HashMap<String,String> values: xMap.values())
 		{
-
 			for(String data: values.values())
 			{
-
 				double number = Double.valueOf(data);
-
 				if(number == 0)
 				{
 
@@ -264,7 +267,7 @@ public class ScatterGraph {
 				}
 			}
 		}
-
+		//We place the minimum and maximum values.
 		array[0] = min;
 		array[1] = max;
 
@@ -278,6 +281,7 @@ public class ScatterGraph {
 	 */
 	public String getMissingCountries()
 	{
+		//We append the values depending on the countries that have missing values. 
 		try{
 			if(missingxy.size() !=0)
 			{
@@ -322,13 +326,13 @@ public class ScatterGraph {
 		//We reset these counts. They tell later methods the amount of colours or sets that are needed. 
 		colourCount = 0;
 		numberOfSets = 0;
-		
+
 		//We remove data from the missing country datastructures and builder.
-		
+
 		missingxy.clear();
 		missingx.clear();
 		missingy.clear();
-		
+		//We recreate the builder for the missing countries, the dataset and renderer. We set default renderer properties.
 		builder = new StringBuilder();
 
 		dataset = new XYMultipleSeriesDataset();

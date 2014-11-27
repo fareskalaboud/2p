@@ -31,14 +31,23 @@ public final class R {
         public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
-        public static final int front_end_background=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int ic_perm_group_sync_settings=0x7f020002;
-        public static final int lock=0x7f020003;
-        public static final int switchindicatorblue=0x7f020004;
-        public static final int switchindicatorgrey=0x7f020005;
-        public static final int text=0x7f020006;
-        public static final int unlock=0x7f020007;
+        public static final int customseekbar_scrubber_control=0x7f020000;
+        public static final int customseekbar_scrubber_control_disabled_holo=0x7f020001;
+        public static final int customseekbar_scrubber_control_focused_holo=0x7f020002;
+        public static final int customseekbar_scrubber_control_normal_holo=0x7f020003;
+        public static final int customseekbar_scrubber_control_pressed_holo=0x7f020004;
+        public static final int customseekbar_scrubber_primary_holo=0x7f020005;
+        public static final int customseekbar_scrubber_progress=0x7f020006;
+        public static final int customseekbar_scrubber_secondary_holo=0x7f020007;
+        public static final int customseekbar_scrubber_track_holo_light=0x7f020008;
+        public static final int front_end_background=0x7f020009;
+        public static final int ic_launcher=0x7f02000a;
+        public static final int ic_perm_group_sync_settings=0x7f02000b;
+        public static final int lock=0x7f02000c;
+        public static final int switchindicatorblue=0x7f02000d;
+        public static final int switchindicatorgrey=0x7f02000e;
+        public static final int text=0x7f02000f;
+        public static final int unlock=0x7f020010;
     }
     public static final class id {
         public static final int action_settings=0x7f0a0010;

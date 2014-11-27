@@ -19,17 +19,19 @@ import android.graphics.Color;
 import android.graphics.Paint.Align;
 
 public class LineGraph {
-
+	//The dataset we are adding data to.
 	XYMultipleSeriesDataset dataset;
+	//The renderer we add renderers to.
 	XYMultipleSeriesRenderer renderer;
-
+	//The chart we return
 	GraphicalView chart;
-
+	//The number of datasets that have been added.
 	int numberOfSets = 0;
-
+	//Array of colours that can be used.
 	int[] colours = {Color.parseColor("#CD5C5C"),Color.parseColor("#4169E1"),Color.parseColor("#9ACD32"),Color.parseColor("#8A2BE2")
 			,Color.parseColor("#2897B7"),Color.parseColor("#2F74D0"),Color.parseColor("#6755E3"),Color.parseColor("#9B4EE9")
 			,Color.parseColor("#75D6FF"),Color.parseColor("#79FC4E"),Color.parseColor("#DFDF00"),Color.parseColor("#FF7575")};
+	//Used to iterate through the array of colours.
 	int colourCount = 0;
 
 	String xLabel;
@@ -117,7 +119,6 @@ public class LineGraph {
 
 			String value = entry.getValue();
 			//We changed the margins depending on how big the value is.
-
 			double valuedouble = Double.valueOf(value);
 			if(valuedouble>1000000){
 				renderer.setMargins(new int[] {0, 130, 20, 0});
@@ -128,11 +129,12 @@ public class LineGraph {
 			if(valuedouble>100000000){
 				renderer.setMargins(new int[] {0, 200, 20, 0});
 			} 
-
+			//We don't add the value as it means that the value does not exist.
 			if(value.equals("0"))
 			{
 
 			}else{
+				//We append the date using a stringbuilder for the graph, as the graph uses date format.
 				StringBuilder builder = new StringBuilder();
 
 				String date = entry.getKey();
@@ -141,12 +143,13 @@ public class LineGraph {
 				date = builder.toString();
 
 				Date convertedDate = sdf.parse(date);
+				//We add the date and the value.
 				timeSeries.add(convertedDate, valuedouble);
 			}
 		}
-		/*
-		 * Increase the count of the number of sets, and we add this series to the main series dataset. 
-		 */
+		
+		// Increase the count of the number of sets, and we add this series to the main series dataset. 
+		 
 		numberOfSets++;
 		dataset.addSeries(timeSeries);
 
