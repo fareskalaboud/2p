@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
@@ -30,7 +31,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -170,6 +170,22 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		 */
 		datesSeekBar = (SeekBar)findViewById(R.id.datespinner);
 		datesSeekBar.setVisibility(View.GONE);
+		//We add a touch listener to the lock to change the lock when pressed.
+		lock.setOnTouchListener(new View.OnTouchListener() {        
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+
+				if(isOpen == false){
+					switch(event.getAction()) {
+					case MotionEvent.ACTION_DOWN:
+						lock.setImageResource(R.drawable.lockpressed);
+					case MotionEvent.ACTION_UP:
+						lock.setImageResource(R.drawable.lock);
+					}
+				}
+				return false;
+			}
+		});
 
 		//We set the maximum number of years for the seekbar.
 		datesSeekBar.setMax(numberOfYears-1);

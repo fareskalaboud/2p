@@ -44,10 +44,11 @@ public final class R {
         public static final int ic_launcher=0x7f02000a;
         public static final int ic_perm_group_sync_settings=0x7f02000b;
         public static final int lock=0x7f02000c;
-        public static final int switchindicatorblue=0x7f02000d;
-        public static final int switchindicatorgrey=0x7f02000e;
-        public static final int text=0x7f02000f;
-        public static final int unlock=0x7f020010;
+        public static final int lockpressed=0x7f02000d;
+        public static final int switchindicatorblue=0x7f02000e;
+        public static final int switchindicatorgrey=0x7f02000f;
+        public static final int text=0x7f020010;
+        public static final int unlock=0x7f020011;
     }
     public static final class id {
         public static final int action_settings=0x7f0a0010;
