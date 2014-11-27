@@ -40,7 +40,15 @@
         <item>DT.DOD.DIMF.CD</item>
         <item>SP.DYN.CBRT.IN</item>
         <item>SP.DYN.LE00.IN</item>
+        
+        <item>IS.VEH.PCAR.P3</item>
+        <item>IC.TAX.TOTL.CP.ZS</item>
+        <item>SL.UEM.TOTL.FE.ZS</item>
+        <item>SL.UEM.TOTL.MA.ZS</item>
+        <item>IS.VEH.NVEH.P3</item>
+        
     </string-array>
+    
     <string-array name="indicatorName">
         <item>Life Expectancy at Birth, Total (%)</item>
         <item>Net Migration</item>
@@ -74,6 +82,12 @@
         <item>Use of IMF credit (DOD, current US$)</item>
         <item>Birth rate, crude(per 1000 people)</item>
         <item>Life expectancy at birth, total(years)</item>
+        
+        <item>Passenger cars(per 1000)</item>
+        <item>Total tax rate(%of commercial profits)</item>
+        <item>Unemployment, female (% of female labor force)</item>
+        <item>Unemployment, male (% of male labor force) </item>
+        <item>Motor vehicles(per 1000 pers)</item>
     </string-array>
 
 </resources>
