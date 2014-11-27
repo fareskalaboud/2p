@@ -159,7 +159,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		//Initialise the date text for dual indicators.
 		datetext = (TextView)findViewById(R.id.datetext);
 
-
 		//Initialise the textview for dual indicators of countries with no data.
 		nodata = (TextView)findViewById(R.id.nodata);
 		nodata.setText("");
