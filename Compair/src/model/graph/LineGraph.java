@@ -67,7 +67,7 @@ public class LineGraph {
 		//Sets the size of the labels on X and Y.
 		renderer.setLabelsTextSize(20);
 		//Sets the size of the keys for each graph. 
-		renderer.setLegendTextSize(14);
+		renderer.setLegendTextSize(30);
 		//This is used to set the default number of Labels on the X & Y axis. to increase labels, increase number. 
 		renderer.setYLabels(16);
 

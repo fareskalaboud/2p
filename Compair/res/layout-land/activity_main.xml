@@ -11,52 +11,29 @@
     android:screenOrientation="landscape"
     tools:context="seg2.compair.MainActivity" >
 
-    <Button
-        android:id="@+id/nextButton"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtIntroLine4"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
-        android:background="#0F6699"
-        android:onClick="goToCountrySelector"
-        android:text="@string/next_button"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="24dp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/txtIntroLine1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txtIntroLine4"
-        android:layout_below="@+id/imageView"
-        android:layout_marginTop="10dp"
-        android:text="Compair lets you compare several countries at a time using a number of data on simple line or cubic line graphs"
-        android:textAlignment="center"
-        android:textSize="20dp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/txtIntroLine4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtIntroLine1"
-        android:layout_centerHorizontal="true"
-        android:text="Using this app is easy as pie: \nSelect countries, pick a statistic and see the progress of that statistic over time."
-        android:textAlignment="center"
-        android:textSize="20dp"
-        android:textStyle="bold" />
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/text" />
+        android:layout_marginTop="20dp"
+        android:background="@drawable/text"
+        android:scaleType="center" />
+
+    <Button
+        android:id="@+id/nextButton"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="84dp"
+        android:background="@drawable/custombutton_btn_default_holo_light"
+        android:onClick="goToCountrySelector"
+        android:text="@string/next_button"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="24dp" />
 
 </RelativeLayout>

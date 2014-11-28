@@ -13,19 +13,18 @@
 
     <Button
         android:id="@+id/nextButton"
-        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtIntroLine4"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="14dp"
-        android:background="#0F6699"
         android:onClick="goToCountrySelector"
         android:text="@string/next_button"
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
         android:textSize="24dp"
-        android:textStyle="bold" />
+         android:textColor="#FFFFFF"
+        android:background="@drawable/custombutton_btn_default_holo_light"
+        />
 
     <TextView
         android:id="@+id/txtIntroLine1"
