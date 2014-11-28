@@ -2,8 +2,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="#FFFFFF"
     android:orientation="vertical"
- 
     tools:context="seg2.compair.GraphActivity" >
 
     <TextView
@@ -85,8 +85,10 @@
             android:id="@+id/update"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/custombutton_btn_default_holo_light"
             android:onClick="update"
-            android:text="Update" />
+            android:text="Update"
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/datetext"
@@ -101,7 +103,6 @@
             android:layout_height="wrap_content"
             android:progressDrawable="@drawable/customseekbar_scrubber_progress"
             android:thumb="@drawable/customseekbar_scrubber_control" />
-
     </LinearLayout>
 
 </LinearLayout>

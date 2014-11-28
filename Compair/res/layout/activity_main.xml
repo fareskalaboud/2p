@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#d1ecf7"
+    android:background="#FFFFFF"
     android:focusable="false"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -13,14 +13,6 @@
     tools:context="seg2.compair.MainActivity" >
 
     <ImageView
-        android:id="@+id/background"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@drawable/front_end_background"
-        android:scaleType="center" />
-
-    <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,35 +21,27 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/text" />
 
-    <TextView
-        android:id="@+id/txtIntroLine2"
+    <Button
+        android:id="@+id/nextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtIntroLine1"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="at a time using a number of statistics that "
+        android:background="@drawable/custombutton_btn_default_holo_light"
+        android:onClick="goToCountrySelector"
+        android:text="@string/next_button"
         android:textAlignment="center"
-        android:textSize="24dp"
-        android:textStyle="bold" />
+        android:textColor="#FFFFFF"
+        android:textSize="24dp" />
 
     <TextView
-        android:id="@+id/txtIntroLine3"
+        android:id="@+id/txtIntroLine8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtIntroLine2"
-        android:layout_centerHorizontal="true"
-        android:text="World Bank provides. Compair visualises this "
-        android:textAlignment="center"
-        android:textSize="24dp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/txtIntroLine4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtIntroLine3"
-        android:layout_centerHorizontal="true"
-        android:text="the data on several different graph types."
+        android:layout_above="@+id/nextButton"
+        android:layout_alignLeft="@+id/txtIntroLine7"
+        android:layout_alignParentEnd="false"
+        android:text="see the progress of that statistic over time."
         android:textAlignment="center"
         android:textSize="24dp"
         android:textStyle="bold" />
@@ -66,46 +50,9 @@
         android:id="@+id/txtIntroLine7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtIntroLine6"
-        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/txtIntroLine8"
+        android:layout_alignLeft="@+id/txtIntroLine6"
         android:text="select countries, pick a statistic and"
-        android:textAlignment="center"
-        android:textSize="24dp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/txtIntroLine8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="false"
-        android:layout_below="@+id/txtIntroLine7"
-        android:layout_centerHorizontal="true"
-        android:text="see the progress of that statistic over time."
-        android:textAlignment="center"
-        android:textSize="24dp"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/nextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtIntroLine8"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:onClick="goToCountrySelector"
-        android:text="@string/next_button"
-        android:textAlignment="center"
-        android:textSize="24dp" 
-        android:textColor="#FFFFFF"
-        android:background="@drawable/custombutton_btn_default_holo_light"/>
-
-    <TextView
-        android:id="@+id/txtIntroLine1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/background"
-        android:layout_alignTop="@+id/background"
-        android:text="Compair lets you compare several countries"
         android:textAlignment="center"
         android:textSize="24dp"
         android:textStyle="bold" />
@@ -114,9 +61,53 @@
         android:id="@+id/txtIntroLine6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/background"
-        android:layout_below="@+id/txtIntroLine4"
+        android:layout_above="@+id/txtIntroLine7"
+        android:layout_alignLeft="@+id/txtIntroLine4"
         android:text="Using this app is easy as pie:"
+        android:textAlignment="center"
+        android:textSize="24dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtIntroLine4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txtIntroLine6"
+        android:layout_alignLeft="@+id/txtIntroLine3"
+        android:text="the data on several different graph types."
+        android:textAlignment="center"
+        android:textSize="24dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtIntroLine3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txtIntroLine4"
+        android:layout_alignLeft="@+id/txtIntroLine2"
+        android:text="World Bank provides. Compair visualises this "
+        android:textAlignment="center"
+        android:textSize="24dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtIntroLine2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txtIntroLine3"
+        android:layout_alignLeft="@+id/txtIntroLine1"
+        android:text="at a time using a number of statistics that "
+        android:textAlignment="center"
+        android:textSize="24dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtIntroLine1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txtIntroLine2"
+        android:layout_centerHorizontal="true"
+        android:text="Compair lets you compare several countries"
         android:textAlignment="center"
         android:textSize="24dp"
         android:textStyle="bold" />

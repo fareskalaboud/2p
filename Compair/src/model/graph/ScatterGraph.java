@@ -380,10 +380,11 @@ public class ScatterGraph {
 		renderer.setLabelsColor(Color.DKGRAY);
 
 		renderer.setApplyBackgroundColor(true);
+		
+		//We can set the background and margin colors using the RGB values.
+		renderer.setBackgroundColor(Color.rgb(255, 255, 255));
 
-		renderer.setBackgroundColor(Color.WHITE);
-
-		renderer.setMarginsColor(Color.WHITE);
+		renderer.setMarginsColor(Color.rgb(255, 255, 255));
 
 		renderer.setXLabelsColor(Color.DKGRAY);
 
