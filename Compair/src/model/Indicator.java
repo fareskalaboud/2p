@@ -41,7 +41,7 @@ public class Indicator {
      * Get indicators entry set
      * @return the Entry of the indicators hash map
      */
-    public HashMap<String,String> getValuesIterator() {
+    public HashMap<String, String> getValues() {
         return indicatorValues;
     }
 

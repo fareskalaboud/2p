@@ -14,7 +14,7 @@ public final class R {
     }
     public static final class array {
         public static final int date=0x7f070001;
-        public static final int idicatorID=0x7f070000;
+        public static final int indicatorID=0x7f070000;
         public static final int indicatorName=0x7f070002;
     }
     public static final class attr {
@@ -51,18 +51,21 @@ public final class R {
         public static final int unlock=0x7f020011;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a0010;
+        public static final int action_settings=0x7f0a0013;
         public static final int bottombar=0x7f0a000d;
         public static final int chart=0x7f0a0008;
-        public static final int checkBox1=0x7f0a000e;
-        public static final int code=0x7f0a000f;
+        public static final int checkBox1=0x7f0a0011;
+        public static final int code=0x7f0a0012;
         public static final int datespinner=0x7f0a000c;
         public static final int datetext=0x7f0a000b;
         public static final int graphButton=0x7f0a0003;
         public static final int imageView=0x7f0a0000;
         public static final int listView=0x7f0a0002;
+        public static final int nextButton=0x7f0a0010;
         public static final int nodata=0x7f0a0009;
         public static final int switchindicator=0x7f0a0005;
+        public static final int txtIntroLine1=0x7f0a000e;
+        public static final int txtIntroLine4=0x7f0a000f;
         public static final int txtSelectCountry=0x7f0a0001;
         public static final int update=0x7f0a000a;
         public static final int xlock=0x7f0a0007;
@@ -82,7 +85,9 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f060002;
         public static final int app_name=0x7f060000;
+        public static final int graph_button=0x7f060004;
         public static final int hello_world=0x7f060001;
+        public static final int next_button=0x7f060003;
     }
     public static final class style {
         /** 

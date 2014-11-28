@@ -1,7 +1,6 @@
-Graph Class
-==
-This class will create graph based on different datasets. 
+Graph now implemented with main project from development. 
 
-Currently linegraph y indicator only is working.
+TODO
 
-Need scattergraph class to create data with 2 datasets. 
+Need to add countries objects to the class instead of the code, so for the missing countries and the countries key
+I can use the actual name of the country, rather than the code. 

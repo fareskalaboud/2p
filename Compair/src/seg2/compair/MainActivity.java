@@ -1,9 +1,20 @@
 package seg2.compair;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.*;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.HashMap;
 
 public class MainActivity extends Activity {
@@ -14,15 +25,19 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		Fonts.makeFonts(this);
-		
-		Intent intent = new Intent(getApplicationContext(), CountrySelectActivity.class);
-		startActivity(intent);
 
+        if (!isInternetAvailable()) {
+            new NoInternetAlertDialog(this);
+        }
 	}
 
     public void goToCountrySelector(View view) {
-        Intent intent = new Intent(this, CountrySelectActivity.class);
-        startActivity(intent);
+        if (isInternetAvailable()) {
+            Intent intent = new Intent(this, CountrySelectActivity.class);
+            startActivity(intent);
+        } else {
+            new NoInternetAlertDialog(this);
+        }
     }
 
     @Override
@@ -44,11 +59,21 @@ public class MainActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
+    private boolean isInternetAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        }
+        return  false;
+    }
+
 	// Get indicators that we are using from strings.xml
 	private HashMap<String, String> getIndicators () {
 		//Code to use in different classes
 		//Get indicators
-		String[] indicatorsID = getResources().getStringArray(R.array.idicatorID);
+		String[] indicatorsID = getResources().getStringArray(R.array.indicatorID);
 		String[] indicatorsName = getResources().getStringArray(R.array.indicatorName);
 		HashMap<String, String> indicators = new HashMap<String, String>();
 
@@ -58,4 +83,5 @@ public class MainActivity extends Activity {
 
 		return indicators;
 	}
+
 }

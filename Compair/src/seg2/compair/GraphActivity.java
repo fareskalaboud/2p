@@ -2,10 +2,12 @@ package seg2.compair;
 
 
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import model.Country;
 import model.Indicator;
 import model.download.JSONParser;
 import model.download.JSONParserListener;
@@ -19,6 +21,7 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -120,15 +123,11 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		 * We can put the country objects into an array and iterate through when adding datasets to the graph. 
 		 */
 
-		//We create a fake arraylist, and put countries in for now. 
+		//We get the string array from CountrySelectActivity.
 
-		countries = new ArrayList<String>();
+		countries = getIntent().getStringArrayListExtra("countries");
 
-		countries.add("GB");
-		countries.add("USA");
-		countries.add("AUT");
-		countries.add("AUS");
-		countries.add("CAN");
+		
 
 		//We add the years from 1970 to 2014 into an arraylist. 
 
@@ -432,8 +431,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				//We get the selected index to get the index code. 
 				int IndicatorPosy = yindicator.getSelectedItemPosition();
 				int IndicatorPosx = xindicator.getSelectedItemPosition();
-				IndicatorNamey = getResources().getStringArray(R.array.idicatorID)[IndicatorPosy];
-				IndicatorNamex = getResources().getStringArray(R.array.idicatorID)[IndicatorPosx];
+				IndicatorNamey = getResources().getStringArray(R.array.indicatorID)[IndicatorPosy];
+				IndicatorNamex = getResources().getStringArray(R.array.indicatorID)[IndicatorPosx];
 				//We create the parser object
 				JSONParser parser = new JSONParser(this);
 				//We reset the countriescount
@@ -451,7 +450,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				graph.clear(xLabel,yLabel);
 				//We get the selected index to get the index code. 
 				int IndicatorPos = yindicator.getSelectedItemPosition();
-				IndicatorName = getResources().getStringArray(R.array.idicatorID)[IndicatorPos];
+				IndicatorName = getResources().getStringArray(R.array.indicatorID)[IndicatorPos];
 				//We create the parser object
 				JSONParser parser = new JSONParser(this);
 				//We reset the countriescount
@@ -506,7 +505,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				//We get the indicator to get the data. 
 				Indicator indicator = (Indicator) result.get(IndicatorNamey);
 				//We get the hashmap to iterate through. 
-				HashMap<String,String> hashmap = indicator.getValuesIterator();
+				HashMap<String,String> hashmap = indicator.getValues();
 				//We add the y dataset to the graph.
 				scatterGraph.addYDataSet(hashmap, countries.get(countriescount));
 				//Increment the value to show the next dataset is for the y axis.
@@ -517,7 +516,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				//We get the x axis data from the indicator class.
 				Indicator indicator = (Indicator) result.get(IndicatorNamex);
 				//We get the hashmap to iterate through. 
-				HashMap<String,String> hashmap = indicator.getValuesIterator();
+				HashMap<String,String> hashmap = indicator.getValues();
 				//We add the dataset to the class.
 				scatterGraph.addXDataSet(hashmap, countries.get(countriescount));
 				//We add the data to the graph. We using countriescount to keep track of what countries data we are adding. 
@@ -567,7 +566,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			//We get the indicator to get the data. 
 			Indicator indicator = (Indicator) result.get(IndicatorName);
 			//We get the hashmap to iterate through. 
-			HashMap<String,String> hashmap = indicator.getValuesIterator();
+			HashMap<String,String> hashmap = indicator.getValues();
 
 			//We add the dataset based on the country and indicator. 
 			try {
@@ -599,6 +598,17 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			}
 		}
 	}
+	
+	public class country implements Serializable {
+		private ArrayList<Country> countries;
+		
+		public country(ArrayList<Country> checkedCountries)
+		{
+			this.countries = checkedCountries;
+		}
+		
+	}
+	
 	/**
 	 * Alex's method to check if internet is available. We check before pressing update to make sure there is an internet connection. 
 	 * @return boolean representing if there is an internet connection.

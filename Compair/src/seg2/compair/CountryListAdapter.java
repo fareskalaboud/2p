@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class CountryListAdapter extends ArrayAdapter<Country> {
 
     private ArrayList<Country> countryList;
+    private ArrayList<Country> checkedCountries = new ArrayList<Country>();
 
     public CountryListAdapter(Context context, int textViewResourceId,
                            ArrayList<Country> countryList) {
@@ -24,6 +25,10 @@ public class CountryListAdapter extends ArrayAdapter<Country> {
         this.countryList.addAll(countryList);
     }
 
+    /**
+     * A private singleton class that acts as the view holder for the
+     * countries shown on the list, which have a textview and a checkbox.
+     */
     private class ViewHolder {
         TextView code;
         CheckBox name;
@@ -61,12 +66,14 @@ public class CountryListAdapter extends ArrayAdapter<Country> {
         }
 
         Country country = countryList.get(position);
-        holder.code.setText("");
-        holder.name.setText(country.getName());
+        holder.code.setText("(" + country.getId() + ")");
+        holder.name.setText(country.getName() + " ");
         holder.name.setChecked(country.isSelected());
         holder.name.setTag(country);
 
         return convertView;
 
     }
+
+
 }
