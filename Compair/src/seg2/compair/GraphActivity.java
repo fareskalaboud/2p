@@ -6,6 +6,11 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.model.XYSeries;
+import org.achartengine.renderer.XYMultipleSeriesRenderer;
+import org.achartengine.renderer.XYSeriesRenderer;
+
 import model.Country;
 import model.Indicator;
 import model.download.JSONParser;
@@ -93,7 +98,11 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 	//Boolean that is used to see if the lock is unlocked or locked.
 	boolean isOpen = false;
-	
+	//Boolean that is used to see if the seekbar is visible.
+	boolean seekBarIsVisible = false;
+	//Boolean that is used to see if a graph has been made in the view.
+	boolean graphexist = false;
+
 	//These two strings represent the name of indicators when using dual indicators.
 	String IndicatorNamey;
 	String IndicatorNamex;
@@ -119,18 +128,9 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_graph);
 
-		/*
-		 * I still need to get all countries that are to be compared from the other view. This is so i know what datasets to get. 
-		 * We can put the country objects into an array and iterate through when adding datasets to the graph. 
-		 */
-
 		//We get the string array from CountrySelectActivity.
-
-
 		countries = (ArrayList<Country>) getIntent().getSerializableExtra("countries");
 
-
-		Log.e("SIZE",countries.size()+"");
 		//We set the fonts to lato in the activity.
 		Fonts.makeFonts(this);
 
@@ -239,6 +239,51 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		graph.clear(xLabel,yLabel);
 	}
 
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		//We save the current data when switching orientations.
+		//We save the lockstatus, seekbarstatus, x and y indicators, the update button status and if a graph has been created.
+
+		outState.putBoolean("lock", isOpen);
+		outState.putBoolean("seekbar", seekBarIsVisible);
+		outState.putInt("xindicator", xindicator.getSelectedItemPosition());
+		outState.putInt("yindicator", yindicator.getSelectedItemPosition());
+		outState.putBoolean("update",update.isEnabled());
+		outState.putBoolean("graphexist", graphexist);
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedState) {
+		super.onRestoreInstanceState(savedState);
+		// restore the current data, for instance when changing the screen
+		// orientation
+		isOpen= savedState.getBoolean("lock");
+		seekBarIsVisible = savedState.getBoolean("seekbar");
+		boolean update = savedState.getBoolean("update");
+		graphexist = savedState.getBoolean("graphexist");
+		int xindicatorpos = savedState.getInt("xindicator");
+		int yindicatorpos = savedState.getInt("yindicator");
+
+
+		if(isOpen == true)
+		{
+			setDualIndicator();
+		}
+		if(update == false)
+		{
+			updateGraph();
+		}
+		if(graphexist == true)
+		{
+			updateGraph();
+		}
+
+		xindicator.setSelection(xindicatorpos);
+		yindicator.setSelection(yindicatorpos);
+	}
+
+
 	private class seekBarListener implements SeekBar.OnSeekBarChangeListener{
 
 		@SuppressWarnings("deprecation")
@@ -311,6 +356,32 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		}
 
 	}
+
+	public void setDualIndicator()
+	{
+
+		//We set the textfield to now show a date.
+		datetext.setText("1970");
+		datetext.setTextSize(30f);
+		datetext.setTextColor(Color.DKGRAY);
+		//We set the visibility of the seekbar to visible. 
+		datesSeekBar.setVisibility(View.VISIBLE);
+		//We set the adapter up, and change the  lock image to an unlocked image. 
+		setXAdapterArray();
+		//We change the lock image to an unlocked image.
+		lock.setImageResource(R.drawable.unlock);
+		//We change the colour of the switch indicator, indicating it is now possible to switch.
+		switchindicator.setImageResource(R.drawable.switchindicatorblue);
+		//Remove all views out of the graph if there was any ready for the next graph. 
+		layout.removeAllViews();
+		//Enable x indicator spinner.
+		xindicator.setEnabled(true);
+		//the lock is now open. 
+		isOpen = true;
+		//The seekbar is available.
+		seekBarIsVisible = true;
+
+	}
 	/**
 	 * This method is called if user presses the lock button. 
 	 * @param v The view.
@@ -330,24 +401,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 
-					//We set the textfield to now show a date.
-					datetext.setText("1970");
-					datetext.setTextSize(30f);
-					datetext.setTextColor(Color.DKGRAY);
-					//We set the visibility of the seekbar to visible. 
-					datesSeekBar.setVisibility(View.VISIBLE);
-					//We set the adapter up, and change the  lock image to an unlocked image. 
-					setXAdapterArray();
-					//We change the lock image to an unlocked image.
-					lock.setImageResource(R.drawable.unlock);
-					//We change the colour of the switch indicator, indicating it is now possible to switch.
-					switchindicator.setImageResource(R.drawable.switchindicatorblue);
-					//Remove all views out of the graph if there was any ready for the next graph. 
-					layout.removeAllViews();
-					//Enable x indicator spinner.
-					xindicator.setEnabled(true);
-					//the lock is now open. 
-					isOpen = true;
+					setDualIndicator();
 				}
 			});
 
@@ -373,6 +427,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			xindicator.setEnabled(false);
 			//We prevent the user from seeing anything but date. 
 			isOpen = false;
+			//The seekbar is now not available.
+			seekBarIsVisible = false;
 		} else {
 			//Do nothing as the update method is currently running. 
 		}
@@ -402,13 +458,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		xindicator.setEnabled(false);
 	}
 
-	/**
-	 * This method updates the graph based on the values in the LineGraph object. 
-	 * @param v
-	 */
-	public void update(View v)
+	public void updateGraph()
 	{
-
 		if(isInternetAvailable())
 		{
 			update.setEnabled(false);
@@ -472,10 +523,21 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 					parser.getIndicatorFor(country.getId(), IndicatorName, "1970","2012");
 				}
 			}
-
+			//A graph exists in the view, so we set this to true.
+			graphexist = true;
 		} else{
 			//Do nothing, there is no internet connection. 
 		}
+
+	}
+
+	/**
+	 * This method updates the graph based on the values in the LineGraph object. 
+	 * @param v
+	 */
+	public void update(View v)
+	{
+		updateGraph();
 	}
 
 	@Override
