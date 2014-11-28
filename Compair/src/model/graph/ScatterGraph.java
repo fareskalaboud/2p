@@ -57,13 +57,13 @@ public class ScatterGraph implements Serializable {
 	ArrayList<String> missingx;
 	ArrayList<String> missingy;
 	ArrayList<String> missingxy;
-	
+
 	public String getSets()
 	{
 		return numberOfSets + "";
 	}
 
-	
+
 	/**
 	 * Initialises the hashmaps and the string builder.
 	 */
@@ -394,9 +394,10 @@ public class ScatterGraph implements Serializable {
 
 		renderer.setApplyBackgroundColor(true);
 
-		renderer.setBackgroundColor(Color.WHITE);
+		//We can set the background and margin colors using the RGB values.
+		renderer.setBackgroundColor(Color.rgb(255, 255, 255));
 
-		renderer.setMarginsColor(Color.WHITE);
+		renderer.setMarginsColor(Color.rgb(255, 255, 255));
 
 		renderer.setXLabelsColor(Color.DKGRAY);
 

@@ -97,10 +97,11 @@ public class LineGraph implements Serializable {
 		renderer.setLabelsColor(Color.DKGRAY);
 
 		renderer.setApplyBackgroundColor(true);
+		//We can set the background and margin colors using the RGB values.
+		renderer.setBackgroundColor(Color.rgb(255, 255, 255));
 
-		renderer.setBackgroundColor(Color.WHITE);
 
-		renderer.setMarginsColor(Color.WHITE);
+		renderer.setMarginsColor(Color.rgb(255, 255, 255));
 
 		renderer.setXLabelsColor(Color.DKGRAY);
 
@@ -156,9 +157,9 @@ public class LineGraph implements Serializable {
 				timeSeries.add(convertedDate, valuedouble);
 			}
 		}
-		
+
 		// Increase the count of the number of sets, and we add this series to the main series dataset. 
-		 
+
 		numberOfSets++;
 		dataset.addSeries(timeSeries);
 
@@ -198,6 +199,6 @@ public class LineGraph implements Serializable {
 
 		return chart;
 	}
-	
-	
+
+
 }
