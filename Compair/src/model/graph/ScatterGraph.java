@@ -120,8 +120,8 @@ public class ScatterGraph {
 
 		HashMap<String, String> xDataset = xMap.get(country);
 		HashMap<String, String> yDataset = yMap.get(country);
-		//We add the label as the name of the country. 
-		XYSeries series = new XYSeries(c.getName());
+		//We add the label as the name of the country. We also add a space to add a little bit of padding.
+		XYSeries series = new XYSeries("  " + c.getName());
 		//We get the values as doubles from the hashmaps. 
 		Double x = Double.valueOf(xDataset.get(year));
 		Double y = Double.valueOf(yDataset.get(year));
@@ -141,13 +141,13 @@ public class ScatterGraph {
 			//If the y axis value is greater than a certain value, we need to move the margin.
 
 			if(y>1000000){
-				renderer.setMargins(new int[] {0, 130, 30, 0});
+				renderer.setMargins(new int[] {0, 130, 40, 0});
 			} 
 			if(y>10000000){
-				renderer.setMargins(new int[] {0, 160, 30, 0});
+				renderer.setMargins(new int[] {0, 160, 40, 0});
 			} 
 			if(y>100000000){
-				renderer.setMargins(new int[] {0, 200, 30, 0});
+				renderer.setMargins(new int[] {0, 200, 40, 0});
 			} 
 			//We add these values to the graph. 
 			series.add(x, y);
@@ -355,7 +355,7 @@ public class ScatterGraph {
 		//Sets the size of the labels on X and Y.
 		renderer.setLabelsTextSize(20);
 		//Sets the size of the keys for each graph. 
-		renderer.setLegendTextSize(25);
+		renderer.setLegendTextSize(30);
 		//This is used to set the default number of Labels on the X & Y axis. to increase labels, increase number. 
 		renderer.setYLabels(16);
 
@@ -364,9 +364,9 @@ public class ScatterGraph {
 		renderer.setYTitle(yLabel);
 
 		//Sets the size of the individual points.
-		renderer.setPointSize(8f);
+		renderer.setPointSize(9.5f);
 		//We increase the margin size on the left side of the screen to prevent clipping of the axis. 
-		renderer.setMargins(new int[] {0, 80, 30, 0});
+		renderer.setMargins(new int[] {0, 80, 40, 0});
 
 		renderer.setYLabelsAlign(Align.RIGHT, 0);
 		renderer.setFitLegend(true);

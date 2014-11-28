@@ -134,8 +134,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		//We set the fonts to lato in the activity.
 		Fonts.makeFonts(this);
 
-		//We add the years from 1970 to 2014 into an arraylist. 
-		for(int i = 1970; i<=2014; i++)
+		//We add the years from 1970 to 2012 into an arraylist. 
+		for(int i = 1970; i<=2012; i++)
 		{
 			dates.add(String.valueOf(i));
 		}
@@ -451,8 +451,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				//We iterate through the countries and get the indicators map.
 				for(Country country: countries)
 				{
-					parser.getIndicatorFor(country.getId(), IndicatorNamey, "1970","2014");
-					parser.getIndicatorFor(country.getId(), IndicatorNamex, "1970", "2014");
+					parser.getIndicatorFor(country.getId(), IndicatorNamey, "1970","2012");
+					parser.getIndicatorFor(country.getId(), IndicatorNamex, "1970", "2012");
 				}
 
 			} else {
@@ -469,7 +469,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				//We iterate through the countries and get the indicators map.
 				for(Country country: countries)
 				{
-					parser.getIndicatorFor(country.getId(), IndicatorName, "1970","2014");
+					parser.getIndicatorFor(country.getId(), IndicatorName, "1970","2012");
 				}
 			}
 
