@@ -78,7 +78,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	//The example list of countries.
 	ArrayList<Country> countries;
 	//The count of countries used to add datasets.
-	int countriescount;
+	int countriescount = 0;
 	//The layout we add the graph to, and the loading animation.
 	LinearLayout layout;
 	LinearLayout layoutindicator;
