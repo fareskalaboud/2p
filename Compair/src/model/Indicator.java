@@ -1,8 +1,6 @@
 package model;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * Created by alextelek on 22/11/14.

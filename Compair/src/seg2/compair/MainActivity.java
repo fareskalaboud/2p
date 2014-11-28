@@ -63,7 +63,10 @@ public class MainActivity extends Activity {
 		return false;
     }
 
-	// Get indicators that we are using from strings.xml
+	/**
+	 * Delete when finished. This method is an example created by Alex to show how indicators can be retrieved. 
+	 * @return HashMap of all dates and values of a certain country. 
+	 */
 	private HashMap<String, String> getIndicators () {
 		//Code to use in different classes
 		//Get indicators
