@@ -1,8 +1,10 @@
 package model;
 
-import java.util.Comparator;
+import java.io.Serializable;
 
-public class Country implements  Comparable<Country> {
+public class Country implements  Comparable<Country>,Serializable {
+
+	private static final long serialVersionUID = -1507630908466214585L;
 	private String id;
 	private String capital;
 	private String name;

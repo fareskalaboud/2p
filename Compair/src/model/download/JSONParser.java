@@ -7,9 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by alextelek on 19/11/14.
@@ -24,7 +22,8 @@ public class JSONParser implements DownloadDataListener<JSONArray> {
     public final String TYPE_COUNTRY = "country";
     public final String TYPE_INDICATOR = "indicator";
 
-    private JSONParserListener<HashMap> jsonParserListener;
+    @SuppressWarnings("rawtypes")
+	private JSONParserListener<HashMap> jsonParserListener;
     private String downloadType;
 
     /**
@@ -33,7 +32,8 @@ public class JSONParser implements DownloadDataListener<JSONArray> {
      * @param jsonParserListener the listener which notifies when
      *                           the listener finished
      */
-    public JSONParser(JSONParserListener<HashMap> jsonParserListener) {
+    @SuppressWarnings("rawtypes")
+	public JSONParser(JSONParserListener<HashMap> jsonParserListener) {
         this.jsonParserListener = jsonParserListener;
     }
 
