@@ -32,7 +32,6 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	private JSONParser parser;
 	private ArrayList<Country> checkedCountries = new ArrayList<Country>();
 	private ArrayList<Country> countryList;
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,31 +84,36 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	public void onJSONParseFinished(String type, HashMap result) {
 		dialog.dismiss();
 
-		if (type.equals(parser.TYPE_COUNTRY)) {
-			ListView listView = (ListView)findViewById(R.id.listView);
+		if (result.size() == 0) {
 			countryList = new ArrayList<Country>();
+			new NoInternetAlertDialog(this);
+		} else {
+			if (type.equals(parser.TYPE_COUNTRY)) {
+				ListView listView = (ListView)findViewById(R.id.listView);
+				countryList = new ArrayList<Country>();
 
-			Iterator iterator = result.entrySet().iterator();
-			while (iterator.hasNext()) {
-				Map.Entry pairs = (Map.Entry)iterator.next();
-				countryList.add((Country)pairs.getValue());
+				Iterator iterator = result.entrySet().iterator();
+				while (iterator.hasNext()) {
+					Map.Entry pairs = (Map.Entry)iterator.next();
+					countryList.add((Country)pairs.getValue());
+				}
+
+				Collections.sort(countryList);
+
+				CountryListAdapter clAdapter = new CountryListAdapter(this, R.layout.countrylistview_row, countryList);
+				listView.setAdapter(clAdapter);
+
+				//TODO: Uncomment to get data
+				//            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+				//                @Override
+				//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				//                    parser.getIndicatorFor("GB", "SP.POP.TOTL", "1960", "2014");
+				//                }
+				//            });
+
+			} else if(type.equals(parser.TYPE_INDICATOR)) {
+				System.out.println(result);
 			}
-
-			Collections.sort(countryList);
-
-			CountryListAdapter clAdapter = new CountryListAdapter(this, R.layout.countrylistview_row, countryList);
-			listView.setAdapter(clAdapter);
-
-			//TODO: Uncomment to get data
-			//            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			//                @Override
-			//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			//                    parser.getIndicatorFor("GB", "SP.POP.TOTL", "1960", "2014");
-			//                }
-			//            });
-
-		} else if(type.equals(parser.TYPE_INDICATOR)) {
-			System.out.println(result);
 		}
 	}
 
@@ -129,7 +133,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	}
 
 	public void onClick(View v) {
-		if(isInternetAvailable()) {
+		if(isInternetAvailable() && countryList.size() != 0) {
 			sendCheckedCountriesToGraph();
 			Log.e("DONE","DONE");
 		} else {

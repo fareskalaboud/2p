@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.*;
+
 import java.util.HashMap;
 
 public class MainActivity extends Activity {
@@ -19,8 +20,9 @@ public class MainActivity extends Activity {
 		Fonts.makeFonts(this);
 
         if (!isInternetAvailable()) {
-            new NoInternetAlertDialog(this);
-        }
+			new NoInternetAlertDialog(this);
+		}
+
 	}
 
     public void goToCountrySelector(View view) {
@@ -55,10 +57,10 @@ public class MainActivity extends Activity {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
-        if (networkInfo != null && networkInfo.isConnected()) {
-            return true;
-        }
-        return  false;
+        if (networkInfo != null && networkInfo.isConnected())
+			return true;
+
+		return false;
     }
 
 	/**
