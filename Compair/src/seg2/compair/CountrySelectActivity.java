@@ -43,7 +43,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
             parser = new JSONParser(this);
             parser.getCountries();
         } else {
-            Toast.makeText(getApplicationContext(), "No internet connection, please connect to the internet!", Toast.LENGTH_LONG).show();
+            new NoInternetAlertDialog(this);
         }
     }
 
@@ -75,22 +75,26 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
     public void onJSONParseFinished(String type, HashMap result) {
         dialog.dismiss();
 
-        if (type.equals(parser.TYPE_COUNTRY)) {
-            ListView listView = (ListView)findViewById(R.id.listView);
+        if (result.size() == 0) {
             countryList = new ArrayList<Country>();
+            new NoInternetAlertDialog(this);
+        } else {
+            if (type.equals(parser.TYPE_COUNTRY)) {
+                ListView listView = (ListView)findViewById(R.id.listView);
+                countryList = new ArrayList<Country>();
 
-            Iterator iterator = result.entrySet().iterator();
-            while (iterator.hasNext()) {
-                Map.Entry pairs = (Map.Entry)iterator.next();
-                countryList.add((Country)pairs.getValue());
-            }
+                Iterator iterator = result.entrySet().iterator();
+                while (iterator.hasNext()) {
+                    Map.Entry pairs = (Map.Entry)iterator.next();
+                    countryList.add((Country)pairs.getValue());
+                }
 
-            Collections.sort(countryList);
+                Collections.sort(countryList);
 
-            CountryListAdapter clAdapter = new CountryListAdapter(this, R.layout.countrylistview_row, countryList);
-            listView.setAdapter(clAdapter);
+                CountryListAdapter clAdapter = new CountryListAdapter(this, R.layout.countrylistview_row, countryList);
+                listView.setAdapter(clAdapter);
 
-            //TODO: Uncomment to get data
+                //TODO: Uncomment to get data
 //            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //                @Override
 //                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -98,8 +102,9 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 //                }
 //            });
 
-        } else if(type.equals(parser.TYPE_INDICATOR)) {
-            System.out.println(result);
+            } else if(type.equals(parser.TYPE_INDICATOR)) {
+                System.out.println(result);
+            }
         }
     }
 
@@ -107,14 +112,15 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
-        if (networkInfo != null && networkInfo.isConnected()) {
+        if (networkInfo != null && networkInfo.isConnected())
             return true;
-        }
+
         return  false;
     }
 
     public void onClick(View v) {
-        if(isInternetAvailable()) {
+        System.out.println(countryList.size());
+        if(isInternetAvailable() && countryList.size() != 0) {
             sendCheckedCountriesToGraph();
         } else {
             new NoInternetAlertDialog(this);
