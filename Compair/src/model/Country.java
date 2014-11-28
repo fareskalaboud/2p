@@ -1,8 +1,11 @@
 package model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
-public class Country implements  Comparable<Country>,Serializable {
+public class Country implements Comparable<Country>, Serializable {
 
 	private static final long serialVersionUID = -1507630908466214585L;
 	private String id;
@@ -110,4 +113,23 @@ public class Country implements  Comparable<Country>,Serializable {
 	public int compareTo(Country another) {
 		return name.compareTo(another.name);
 	}
+//
+//    @Override
+//    public int describeContents() {
+//        return 0;
+//    }
+//
+//    @Override
+//    public void writeToParcel(Parcel parcel, int i) {
+//
+//    }
+//
+//    public static final Parcelable.Creator CREATOR = new Creator() {
+//        public Object createFromParcel(Parcel source) {
+//            return new Object();
+//        }
+//        public Object[] newArray(int size) {
+//            return new Object[size];
+//        }
+//    };
 }

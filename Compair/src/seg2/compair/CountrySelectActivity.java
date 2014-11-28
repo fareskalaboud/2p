@@ -113,6 +113,11 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 		}
 	}
 
+    /**
+     * Checks if the user's device is connected to mobile data or a WiFi router.
+     *
+     * @return whether the user's device is connected to mobile data or a WiFi router.
+     */
 	private boolean isInternetAvailable() {
 		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
@@ -153,13 +158,10 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 		Intent intent = new Intent(this,GraphActivity.class);
 		
 		Bundle countrybundle = new Bundle();
-		countrybundle.putParcelableArrayList("countries", (ArrayList<? extends Parcelable>) checkedCountries);
+		countrybundle.putSerializable("countries", checkedCountries);
 		intent.putExtras(countrybundle);
 		startActivity(intent);
 
 		// TODO: Send this in an intent
 	}
-	
-	
-	
 }
