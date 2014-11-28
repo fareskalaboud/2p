@@ -3,6 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
+ 
     tools:context="seg2.compair.GraphActivity" >
 
     <TextView
@@ -19,12 +20,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dip"
-            android:text="@string/xLabel"
-            android:textSize="15sp" />
+            android:text="x"
+            android:textSize="18dp" />
 
         <Spinner
             android:id="@+id/xspinner"
-            android:layout_width="110dp"
+            android:layout_width="240dp"
             android:layout_height="wrap_content" />
 
         <ImageView
@@ -38,12 +39,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dip"
-            android:text="@string/yLabel"
-            android:textSize="15sp" />
+            android:text="y"
+            android:textSize="18dp" />
 
         <Spinner
             android:id="@+id/yspinner"
-            android:layout_width="110dp"
+            android:layout_width="240dp"
             android:layout_height="wrap_content" />
 
         <ImageView
@@ -70,7 +71,7 @@
             android:id="@+id/nodata"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/nodata"
+            android:text="all countries without data"
             android:textSize="10dp" />
     </LinearLayout>
 
@@ -82,18 +83,17 @@
 
         <Button
             android:id="@+id/update"
-            android:layout_width="100dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:onClick="update"
-            android:text="Update"
-            android:textSize="15dp" />
+            android:text="Update" />
 
         <TextView
             android:id="@+id/datetext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="          "
-            android:textSize="15dp" />
+            android:textSize="12dp" />
 
         <SeekBar
             android:id="@+id/datespinner"
@@ -101,6 +101,7 @@
             android:layout_height="wrap_content"
             android:progressDrawable="@drawable/customseekbar_scrubber_progress"
             android:thumb="@drawable/customseekbar_scrubber_control" />
+
     </LinearLayout>
 
 </LinearLayout>
