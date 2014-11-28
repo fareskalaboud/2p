@@ -50,7 +50,7 @@
         android:text="@string/graph_button"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="24dp"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
 </RelativeLayout>

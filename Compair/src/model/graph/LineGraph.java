@@ -77,8 +77,8 @@ public class LineGraph {
 
 		//Sets the size of the individual points.
 		renderer.setPointSize(5f);
-		//We increase the margin size on the left side of the screen to prevent clipping of the axis. 
-		renderer.setMargins(new int[] {0, 80, 20, 0});
+		//We increase the margin size on the left side and bottom of the screen to prevent clipping of the axis. 
+		renderer.setMargins(new int[] {0, 80, 30, 0});
 
 		renderer.setYLabelsAlign(Align.RIGHT, 0);
 		renderer.setFitLegend(true);
@@ -125,13 +125,13 @@ public class LineGraph {
 			//We changed the margins depending on how big the value is.
 			double valuedouble = Double.valueOf(value);
 			if(valuedouble>1000000){
-				renderer.setMargins(new int[] {0, 130, 20, 0});
+				renderer.setMargins(new int[] {0, 130, 30, 0});
 			} 
 			if(valuedouble>10000000){
-				renderer.setMargins(new int[] {0, 160, 20, 0});
+				renderer.setMargins(new int[] {0, 160, 30, 0});
 			} 
 			if(valuedouble>100000000){
-				renderer.setMargins(new int[] {0, 200, 20, 0});
+				renderer.setMargins(new int[] {0, 200, 30, 0});
 			} 
 			//We don't add the value as it means that the value does not exist.
 			if(value.equals("0"))

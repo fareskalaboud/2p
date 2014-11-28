@@ -9,45 +9,37 @@
                 tools:context="seg2.compair.CountrySelectActivity" android:focusable="false"
                 android:screenOrientation="landscape">
 
-    <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:background="@drawable/text"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"/>
-
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Select multiple countries"
-            android:textSize="22dp"
-            android:textStyle="bold"
-            android:id="@+id/txtSelectCountry"
-            android:layout_below="@+id/imageView"
-            android:layout_marginTop="14dp"
-            android:layout_centerHorizontal="true"/>
+        android:id="@+id/txtSelectCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:text="Select multiple countries"
+        android:textSize="22dp"
+        android:textStyle="bold" />
 
     <ListView
-            android:layout_width="match_parent"
-            android:layout_height="235dp"
-            android:id="@+id/listView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/txtSelectCountry"/>
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/txtSelectCountry" />
 
     <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/graph_button"
-            android:textSize="24dp"
-            android:textAlignment="center"
-            android:layout_marginTop="370dp"
-            android:layout_centerHorizontal="true" android:textStyle="bold" android:id="@+id/graphButton"
-            android:background="#0F6699"
-            android:textColor="#FFFFFF"
-            android:onClick="onClick"
-            style="?android:attr/borderlessButtonStyle"/>
+        android:id="@+id/graphButton"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="#0F6699"
+        android:onClick="onClick"
+        android:text="@string/graph_button"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="24dp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

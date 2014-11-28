@@ -141,13 +141,13 @@ public class ScatterGraph {
 			//If the y axis value is greater than a certain value, we need to move the margin.
 
 			if(y>1000000){
-				renderer.setMargins(new int[] {0, 130, 20, 0});
+				renderer.setMargins(new int[] {0, 130, 30, 0});
 			} 
 			if(y>10000000){
-				renderer.setMargins(new int[] {0, 160, 20, 0});
+				renderer.setMargins(new int[] {0, 160, 30, 0});
 			} 
 			if(y>100000000){
-				renderer.setMargins(new int[] {0, 200, 20, 0});
+				renderer.setMargins(new int[] {0, 200, 30, 0});
 			} 
 			//We add these values to the graph. 
 			series.add(x, y);
@@ -366,7 +366,7 @@ public class ScatterGraph {
 		//Sets the size of the individual points.
 		renderer.setPointSize(8f);
 		//We increase the margin size on the left side of the screen to prevent clipping of the axis. 
-		renderer.setMargins(new int[] {0, 80, 20, 0});
+		renderer.setMargins(new int[] {0, 80, 30, 0});
 
 		renderer.setYLabelsAlign(Align.RIGHT, 0);
 		renderer.setFitLegend(true);
