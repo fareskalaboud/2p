@@ -148,24 +148,25 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	 */
 	@SuppressWarnings("unchecked")
 	public void sendCheckedCountriesToGraph() {
-		String s = new String();
+		checkedCountries = new ArrayList<Country>();
+
 		for (Country c : countryList) {
 			if (c.isSelected()) {
 				checkedCountries.add(c);
-				
-				s = s + " : " + c.getName();
 			}
 		}
 
-		System.out.println("Countries checked: " + s);
+		System.out.println(checkedCountries.size());
 
-		Intent intent = new Intent(this,GraphActivity.class);
-		
-		Bundle countrybundle = new Bundle();
-		countrybundle.putSerializable("countries", checkedCountries);
-		intent.putExtras(countrybundle);
-		startActivity(intent);
+		if (checkedCountries.size() >= 1 && checkedCountries.size() < 20) {
+			Intent intent = new Intent(this,GraphActivity.class);
 
-		// TODO: Send this in an intent
+			Bundle countrybundle = new Bundle();
+			countrybundle.putSerializable("countries", checkedCountries);
+			intent.putExtras(countrybundle);
+			startActivity(intent);
+		} else {
+			Toast.makeText(getApplicationContext(), "Please choose at least 1 and most 20 countries", Toast.LENGTH_SHORT).show();
+		}
 	}
 }
