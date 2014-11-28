@@ -58,7 +58,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	//Seekbar for dualindicators
 	SeekBar datesSeekBar;
 
-
 	//Text for the date, invisible default
 	TextView datetext;
 
@@ -97,8 +96,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	//Boolean that is used to see if the seekbar is visible.
 	boolean seekBarIsVisible = false;
 	//Boolean that is used to see if a graph has been made in the view.
-	boolean graphexist = false;
-
+	boolean lineGraphExists = false;
+	boolean scatterGraphExists = false;
 	//These two strings represent the name of indicators when using dual indicators.
 	String IndicatorNamey;
 	String IndicatorNamex;
@@ -107,7 +106,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	//listening for.
 	int axiscount = 0;
 	//This count is used when deciding if the call that the datespinner activates is null and to not be used
-	int accessspinnercount  = 0;
+	int accessseekbarcount  = 0;
 	//Used for the seekbar, to get the correct year and the number of years to display.
 	int numberOfYears;
 	int yearPosition;
@@ -241,14 +240,18 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		//We save the current data when switching orientations.
-		//We save the lockstatus, seekbarstatus, x and y indicators, the update button status and if a graph has been created.
-
+		//We save the lockstatus, seekbarstatus, x and y indicators and if a graph has been created.
+		//We also give the scattergraph and linegraph to easily repaint the view onto the activity.
 		outState.putBoolean("lock", isOpen);
 		outState.putBoolean("seekbar", seekBarIsVisible);
+		outState.putBoolean("lineGraphExists", lineGraphExists);
+		outState.putBoolean("scatterGraphExists", scatterGraphExists);
 		outState.putInt("xindicator", xindicator.getSelectedItemPosition());
 		outState.putInt("yindicator", yindicator.getSelectedItemPosition());
-		outState.putBoolean("update",update.isEnabled());
-		outState.putBoolean("graphexist", graphexist);
+		outState.putInt("yearPosition", datesSeekBar.getProgress());
+		outState.putString("year", year);
+		outState.putSerializable("scattergraph", scatterGraph);
+		outState.putSerializable("linegraph", graph);
 	}
 
 	@Override
@@ -256,26 +259,52 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		super.onRestoreInstanceState(savedState);
 		// restore the current data, for instance when changing the screen
 		// orientation
+		/*
+		 * We get the lock, if the seekbar is visible, if the graphs exists, the position of the indicators
+		 * the year that is currently shown on the textview, the position of the seekbar if it exists, 
+		 * the graph itself as two graphical views.
+		 */
 		isOpen= savedState.getBoolean("lock");
 		seekBarIsVisible = savedState.getBoolean("seekbar");
-		boolean update = savedState.getBoolean("update");
-		graphexist = savedState.getBoolean("graphexist");
+		lineGraphExists = savedState.getBoolean("lineGraphExists");
+		scatterGraphExists = savedState.getBoolean("scatterGraphExists");
 		int xindicatorpos = savedState.getInt("xindicator");
 		int yindicatorpos = savedState.getInt("yindicator");
+		year = savedState.getString("year");
+		int yearPosition = savedState.getInt("yearPosition");
+		graph = (LineGraph) savedState.getSerializable("linegraph");
+		scatterGraph = (ScatterGraph) savedState.getSerializable("scattergraph");
+		//If a linegraph exists, we want to build it again in this view.
+		if(lineGraphExists == true)
+		{
+			//We add the view of the final graph.
+			layout.removeAllViews();
+			layout.addView(graph.getLineView(this), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
+		}
 
+		//if a scatter graph exists, we want to build it again in this view.
+		if(scatterGraphExists == true)
+		{
+			//We add the view of the final graph.
+			layout.removeAllViews();
+			layout.addView(scatterGraph.getScatterGraph(this), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
+			//We set the textview to represent missing data
+			nodata.setText(scatterGraph.getMissingCountries());
 
+			//We set the seekbar to active
+			accessseekbarcount = 1;
+			//We set the spinner position
+			datesSeekBar.setProgress(yearPosition);
+
+			//We get the minimum/maximum values for the axis.
+			xaxisminmax = scatterGraph.getXMinMax();
+			yaxisminmax = scatterGraph.getYMinMax();
+		}
 		if(isOpen == true)
 		{
-			setDualIndicator();
+			setDualIndicator(true, year, false);
 		}
-		if(update == false)
-		{
-			updateGraph();
-		}
-		if(graphexist == true)
-		{
-			updateGraph();
-		}
+
 
 		xindicator.setSelection(xindicatorpos);
 		yindicator.setSelection(yindicatorpos);
@@ -297,7 +326,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 					//get data for year i
 
-					if(accessspinnercount == 0)
+					if(accessseekbarcount == 0)
 					{//Do nothing, the graph has not been created yet to modify with the seekbar.
 					} else {
 						//We remove the old graph from view and set up the renderer and dataset.
@@ -355,11 +384,11 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 	}
 
-	public void setDualIndicator()
+	public void setDualIndicator(boolean scatterexists, String year, boolean removeView)
 	{
 
 		//We set the textfield to now show a date.
-		datetext.setText("1970");
+		datetext.setText(year);
 		datetext.setTextSize(30f);
 		datetext.setTextColor(Color.DKGRAY);
 		//We set the visibility of the seekbar to visible. 
@@ -370,8 +399,16 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		lock.setImageResource(R.drawable.unlock);
 		//We change the colour of the switch indicator, indicating it is now possible to switch.
 		switchindicator.setImageResource(R.drawable.switchindicatorblue);
-		//Remove all views out of the graph if there was any ready for the next graph. 
-		layout.removeAllViews();
+
+		if(removeView == true)
+		{
+			//Remove all views out of the graph if there was any ready for the next graph. 
+			layout.removeAllViews();
+		}
+
+		//Both graphs do not exist currently, as the view is now empty.
+		lineGraphExists = false;
+		scatterGraphExists = scatterexists;
 		//Enable x indicator spinner.
 		xindicator.setEnabled(true);
 		//the lock is now open. 
@@ -399,7 +436,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 
-					setDualIndicator();
+					setDualIndicator(false, "1970", true);
 				}
 			});
 
@@ -407,7 +444,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			alertDialog.show();
 		} else if(update.isEnabled() == true) {
 			//We set the spinner back to 0 for the next instance of using dual indicators.
-			accessspinnercount = 0;
+			accessseekbarcount = 0;
 			//We clear the mising countries textview.
 			nodata.setText("");
 			//We set the x indicator back to the date array, to remove the rest of the indicators. 
@@ -421,6 +458,11 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			datetext.setText("          ");
 			//Remove all views out of the graph if there was any ready for the next graph. 
 			layout.removeAllViews();
+
+			//Both graphs do not exist currently, as the view is now empty.
+			lineGraphExists = false;
+			scatterGraphExists = false;
+
 			//Prevent editing of the xindicator.
 			xindicator.setEnabled(false);
 			//We prevent the user from seeing anything but date. 
@@ -460,7 +502,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	{
 		if(isInternetAvailable())
 		{
-
 			//We prevent the user from rotating the screen, causing issues with the parser sending information after the activity is destroyed.
 			prevOrientation = getRequestedOrientation();
 			//We get the current orientation, then we compare it to the different available orientations.
@@ -477,10 +518,13 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			datesSeekBar.setProgress(0);
 
 			//We reset this count so the spinner has to effect on the graph. 
-			accessspinnercount = 0;
+			accessseekbarcount = 0;
 
 			//We remove the old graph & animation from the view. 
 			layout.removeAllViews();
+			//Both graphs do not exist currently, as the view is now empty.
+			lineGraphExists = false;
+			scatterGraphExists = false;
 
 			//We create the animated logo animation and set the resources. 
 			logoanimated = new ImageView(this);
@@ -534,8 +578,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 					parser.getIndicatorFor(country.getId(), IndicatorName, "1970","2012");
 				}
 			}
-			//A graph exists in the view, so we set this to true.
-			graphexist = true;
+
 		} else{
 			//Do nothing, there is no internet connection. 
 		}
@@ -631,10 +674,12 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 					layout.removeAllViews();
 					layout.addView(scatterGraph.getScatterGraph(getApplicationContext()), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
 
+					//A scatter graph exists now.
+					scatterGraphExists = true;
 					//We set the textview to represent missing data
 					nodata.setText(scatterGraph.getMissingCountries());
 					//The spinner can now be used, since an update has occured. 
-					accessspinnercount = 1;
+					accessseekbarcount = 1;
 					//The update button can now be pressed again.
 					update.setEnabled(true);
 					//The orientation can be changed now.
@@ -678,6 +723,9 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				layout.addView(graph.getLineView(getApplicationContext()), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
 				//The update button can now be pressed again.
 				update.setEnabled(true);
+
+				//A scatter graph exists now.
+				lineGraphExists = true;
 				//The orientation can be changed now.
 				setRequestedOrientation(prevOrientation);
 			}else {

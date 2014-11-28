@@ -1,5 +1,6 @@
 package model.graph;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -24,8 +25,12 @@ import android.graphics.Paint.Align;
  * @author Sean
  */
 
-public class ScatterGraph {
+public class ScatterGraph implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1523766701083062095L;
 	//The dataset and renderer we add data and renderers to
 	XYMultipleSeriesDataset dataset;
 	XYMultipleSeriesRenderer renderer;
@@ -52,6 +57,13 @@ public class ScatterGraph {
 	ArrayList<String> missingx;
 	ArrayList<String> missingy;
 	ArrayList<String> missingxy;
+	
+	public String getSets()
+	{
+		return numberOfSets + "";
+	}
+
+	
 	/**
 	 * Initialises the hashmaps and the string builder.
 	 */
@@ -290,6 +302,7 @@ public class ScatterGraph {
 	 */
 	public String getMissingCountries()
 	{
+		builder = new StringBuilder();
 		//We append the values depending on the countries that have missing values. 
 		try{
 			if(missingxy.size() !=0)
