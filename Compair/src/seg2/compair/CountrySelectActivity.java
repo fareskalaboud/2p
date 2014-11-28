@@ -1,6 +1,5 @@
 package seg2.compair;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -18,6 +17,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,7 +31,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	private JSONParser parser;
 	private ArrayList<Country> checkedCountries = new ArrayList<Country>();
 	private ArrayList<Country> countryList;
-	private ArrayList<String> countryListString = new ArrayList<String>();
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -141,7 +141,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 		for (Country c : countryList) {
 			if (c.isSelected()) {
 				checkedCountries.add(c);
-				countryListString.add(c.getId());
+				
 				s = s + " : " + c.getName();
 			}
 		}
@@ -150,11 +150,14 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 
 		Intent intent = new Intent(this,GraphActivity.class);
 		
-		intent.putStringArrayListExtra("countries", countryListString);
-		
+		Bundle countrybundle = new Bundle();
+		countrybundle.putParcelableArrayList("countries", (ArrayList<? extends Parcelable>) checkedCountries);
+		intent.putExtras(countrybundle);
 		startActivity(intent);
 
 		// TODO: Send this in an intent
 	}
+	
+	
 	
 }

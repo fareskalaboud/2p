@@ -76,7 +76,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	//The name of the indicator. 
 	String IndicatorName;
 	//The example list of countries.
-	ArrayList<String> countries;
+	ArrayList<Country> countries;
 	//The count of countries used to add datasets.
 	int countriescount;
 	//The layout we add the graph to, and the loading animation.
@@ -125,12 +125,15 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 		//We get the string array from CountrySelectActivity.
 
-		countries = getIntent().getStringArrayListExtra("countries");
-
 		
+		countries = (ArrayList<Country>) getIntent().getSerializableExtra("countries");
+		
+		
+		Log.e("SIZE",countries.size()+"");
+		//We set the fonts to lato in the activity.
+		Fonts.makeFonts(this);
 
 		//We add the years from 1970 to 2014 into an arraylist. 
-
 		for(int i = 1970; i<=2014; i++)
 		{
 			dates.add(String.valueOf(i));
@@ -256,7 +259,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 						layout.removeAllViews();
 						scatterGraph.clearAll(xLabel, yLabel);
 						//We add the country data to the graph
-						for(String country: countries)
+						for(Country country: countries)
 						{
 							scatterGraph.addDataToGraph(country, date);
 						}
@@ -351,6 +354,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		} else {
 			//We set the spinner back to 0 for the next instance of using dual indicators.
 			accessspinnercount = 0;
+			//We clear the mising countries textview.
+			nodata.setText("");
 			//We set the x indicator back to the date array, to remove the rest of the indicators. 
 			setXAdapterDate();
 			//We set the lock back to close.
@@ -413,7 +418,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			layout.removeAllViews();
 
 			//We create the animated logo animation and set the resources. 
-
 			logoanimated = new ImageView(this);
 			logoanimated.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
 			final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.rotate);
@@ -422,12 +426,16 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			logoanimated.setImageResource(R.drawable.ic_perm_group_sync_settings);
 			//We add the image to the view. 
 			layout.addView(logoanimated);
+			
 			//We check if the lock is open, for dual indicators. 
 			if(isOpen == true)
 			{
 				//We clear the renderer and datasets.
 				scatterGraph.clearAll(xLabel, yLabel);
-
+				
+				//We clear the mising countries textview.
+				nodata.setText("");
+				
 				//We get the selected index to get the index code. 
 				int IndicatorPosy = yindicator.getSelectedItemPosition();
 				int IndicatorPosx = xindicator.getSelectedItemPosition();
@@ -437,11 +445,11 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				JSONParser parser = new JSONParser(this);
 				//We reset the countriescount
 				countriescount = 0;
-				//We iterate through the countries add get the indicators.
-				for(String country: countries)
+				//We iterate through the countries and get the indicators map.
+				for(Country country: countries)
 				{
-					parser.getIndicatorFor(country, IndicatorNamey, "1970","2014");
-					parser.getIndicatorFor(country, IndicatorNamex, "1970", "2014");
+					parser.getIndicatorFor(country.getId(), IndicatorNamey, "1970","2014");
+					parser.getIndicatorFor(country.getId(), IndicatorNamex, "1970", "2014");
 				}
 
 			} else {
@@ -455,10 +463,10 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				JSONParser parser = new JSONParser(this);
 				//We reset the countriescount
 				countriescount = 0;
-				//We iterate through the countries add get the indicators.
-				for(String country: countries)
+				//We iterate through the countries and get the indicators map.
+				for(Country country: countries)
 				{
-					parser.getIndicatorFor(country, IndicatorName, "1970","2014");
+					parser.getIndicatorFor(country.getId(), IndicatorName, "1970","2014");
 				}
 			}
 
@@ -599,15 +607,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		}
 	}
 	
-	public class country implements Serializable {
-		private ArrayList<Country> countries;
-		
-		public country(ArrayList<Country> checkedCountries)
-		{
-			this.countries = checkedCountries;
-		}
-		
-	}
+	
 	
 	/**
 	 * Alex's method to check if internet is available. We check before pressing update to make sure there is an internet connection. 

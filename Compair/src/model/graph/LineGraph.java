@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import model.Country;
+
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.chart.PointStyle;
@@ -101,15 +103,15 @@ public class LineGraph {
 	/**
 	 * This method defines adding a data set to the graph. 
 	 * @param map The Hashmap we have to iterate. 
-	 * @param label The label of the data. 
+	 * @param c The country of the data. 
 	 * @throws ParseException The date was in the incorrect format (has to just be a year i.e 2009).
 	 */
-	public void addDataSet(HashMap<String,String> map,String label) throws ParseException
+	public void addDataSet(HashMap<String,String> map,Country c) throws ParseException
 	{
 		//We use the SDF to parse the strings into the correct format to create the Date object. 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
-		TimeSeries timeSeries = new TimeSeries(label);
+		TimeSeries timeSeries = new TimeSeries(c.getName());
 		//We iterate through the map, getting the date and value. We put this into a series.
 
 		for (Map.Entry<String, String> entry : map.entrySet()) {

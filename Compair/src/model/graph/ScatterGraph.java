@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+import model.Country;
+
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.chart.PointStyle;
@@ -94,42 +96,46 @@ public class ScatterGraph {
 	/**
 	 * Adds dataset to the X Hashmap to reference later. 
 	 */
-	public void addXDataSet(HashMap<String,String>xDataset,String country)
+	public void addXDataSet(HashMap<String,String>xDataset,Country c)
 	{
-		xMap.put(country, xDataset);
+		xMap.put(c.getId(), xDataset);
 	}
 	/**
 	 * Adds dataset to the Y Hashmap to reference later. 
 	 */
-	public void addYDataSet(HashMap<String,String>yDataset,String country)
+	public void addYDataSet(HashMap<String,String>yDataset,Country c)
 	{
-		yMap.put(country, yDataset);
+		yMap.put(c.getId(), yDataset);
 	}
 	/**
 	 * We add the specific data from the hashmaps given. 
-	 * @param country The country we want to access data for.
+	 * @param c The country we want to access data for.
 	 * @param year The specific year we want the data from.
 	 */
-	public void addDataToGraph(String country,String year)
+	public void addDataToGraph(Country c,String year)
 	{
+		//We get the ID of the country to query through the datasets. 
+		String country = c.getId();
+
 		HashMap<String, String> xDataset = xMap.get(country);
 		HashMap<String, String> yDataset = yMap.get(country);
-
-		XYSeries series = new XYSeries(country);
+		//We add the label as the name of the country. 
+		XYSeries series = new XYSeries(c.getName());
 		//We get the values as doubles from the hashmaps. 
 		Double x = Double.valueOf(xDataset.get(year));
 		Double y = Double.valueOf(yDataset.get(year));
 
 		//We see if the data is not there, if it isn't we do not add it to an arraylist and update the textview accordingly at the end.
+		//We add the name as the name of the country, not the ID
 		if(x==0 && y ==0)
 		{
-			missingxy.add(country);
+			missingxy.add(c.getName());
 		} else if (x==0)
 		{
-			missingx.add(country);
+			missingx.add(c.getName());
 		} else if (y==0)
 		{
-			missingy.add(country);
+			missingy.add(c.getName());
 		} else {
 			//If the y axis value is greater than a certain value, we need to move the margin.
 
