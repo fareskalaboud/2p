@@ -93,7 +93,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 	//Boolean that is used to see if the lock is unlocked or locked.
 	boolean isOpen = false;
-
+	
 	//These two strings represent the name of indicators when using dual indicators.
 	String IndicatorNamey;
 	String IndicatorNamex;
@@ -126,10 +126,10 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 		//We get the string array from CountrySelectActivity.
 
-		
+
 		countries = (ArrayList<Country>) getIntent().getSerializableExtra("countries");
-		
-		
+
+
 		Log.e("SIZE",countries.size()+"");
 		//We set the fonts to lato in the activity.
 		Fonts.makeFonts(this);
@@ -317,8 +317,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	 */
 	public void lock(View v)
 	{
-		//This if statement checks if the lock is already open. 
-		if(isOpen == false){
+		//This if statement checks if the lock is already open and if the update method is running.
+		if(isOpen == false && update.isEnabled() == true){
 			//We create a dialog to confirm the user wants to open the lock and use dual indicators. 
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -353,7 +353,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 			final AlertDialog alertDialog = builder.create();
 			alertDialog.show();
-		} else {
+		} else if(update.isEnabled() == true) {
 			//We set the spinner back to 0 for the next instance of using dual indicators.
 			accessspinnercount = 0;
 			//We clear the mising countries textview.
@@ -373,6 +373,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			xindicator.setEnabled(false);
 			//We prevent the user from seeing anything but date. 
 			isOpen = false;
+		} else {
+			//Do nothing as the update method is currently running. 
 		}
 	}
 	/**
@@ -427,16 +429,16 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			logoanimated.setImageResource(R.drawable.ic_perm_group_sync_settings);
 			//We add the image to the view. 
 			layout.addView(logoanimated);
-			
+
 			//We check if the lock is open, for dual indicators. 
 			if(isOpen == true)
 			{
 				//We clear the renderer and datasets.
 				scatterGraph.clearAll(xLabel, yLabel);
-				
+
 				//We clear the mising countries textview.
 				nodata.setText("");
-				
+
 				//We get the selected index to get the index code. 
 				int IndicatorPosy = yindicator.getSelectedItemPosition();
 				int IndicatorPosx = xindicator.getSelectedItemPosition();
@@ -607,8 +609,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 * Alex's method to check if internet is available. We check before pressing update to make sure there is an internet connection. 
 	 * @return boolean representing if there is an internet connection.
