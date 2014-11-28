@@ -6,11 +6,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.model.XYSeries;
-import org.achartengine.renderer.XYMultipleSeriesRenderer;
-import org.achartengine.renderer.XYSeriesRenderer;
-
 import model.Country;
 import model.Indicator;
 import model.download.JSONParser;
@@ -21,11 +16,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -120,6 +116,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	double[] yaxisminmax;
 	//The default year string for the dual indicators. 
 	String year = "1970";
+	//Value is used in deciding whether to lock orientation for a certain period of time.
+	int prevOrientation;
 
 
 	@SuppressWarnings("unchecked")
@@ -462,6 +460,18 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	{
 		if(isInternetAvailable())
 		{
+			//We prevent the user from rotating the screen, causing issues with the parser sending information after the activity is destroyed.
+			prevOrientation = getRequestedOrientation();
+			//We get the current orientation, then we compare it to the different available orientations.
+			if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+				//If the orientation is landscape, we make sure it stays in landscape.
+				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+			} else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			} else {
+				//If the orientation is going to be changed, we prevent the change.
+				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+			}
 			update.setEnabled(false);
 			datesSeekBar.setProgress(0);
 
@@ -626,6 +636,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 					accessspinnercount = 1;
 					//The update button can now be pressed again.
 					update.setEnabled(true);
+					//The orientation can be changed now.
+					setRequestedOrientation(prevOrientation);
 				}else {
 					//We increase the count for the next call. 
 					countriescount++;
@@ -665,6 +677,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				layout.addView(graph.getLineView(getApplicationContext()), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
 				//The update button can now be pressed again.
 				update.setEnabled(true);
+				//The orientation can be changed now.
+				setRequestedOrientation(prevOrientation);
 			}else {
 				//We increase the count for the next call. 
 				countriescount++;
