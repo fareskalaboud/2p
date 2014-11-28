@@ -36,13 +36,17 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		System.out.println("HI THERE. I'M THE GUY YOU'RE LOOKING FOR.");
 		setContentView(R.layout.activity_countryselect);
+
+		// make sure we have an emty set of checked countries
+		checkedCountries = new ArrayList<Country>();
 
 		// create the progress dialog
 		dialog = new ProgressDialog(this, AlertDialog.THEME_HOLO_DARK);
 		dialog.setMessage("Loading. Please wait...");
 		dialog.setIndeterminate(true);
+		dialog.setCancelable(false);
+		dialog.setCanceledOnTouchOutside(false);
 
 		Fonts.makeFonts(this);
 

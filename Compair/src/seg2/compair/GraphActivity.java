@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.app.ProgressDialog;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
@@ -62,6 +63,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	//Seekbar for dualindicators
 	SeekBar datesSeekBar;
 
+	//progress bar for loading
+	private ProgressDialog dialog;
 
 	//Text for the date, invisible default
 	TextView datetext;
@@ -87,9 +90,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	//The layout we add the graph to, and the loading animation.
 	LinearLayout layout;
 	LinearLayout layoutindicator;
-
-	//The animationed loading animation
-	ImageView logoanimated;
 
 	//ImageView of the lock to unlock the Xaxis.
 	ImageView lock;
@@ -471,15 +471,13 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			//We remove the old graph & animation from the view. 
 			layout.removeAllViews();
 
-			//We create the animated logo animation and set the resources. 
-			logoanimated = new ImageView(this);
-			logoanimated.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
-			final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.rotate);
-
-			logoanimated.startAnimation(animRotate);
-			logoanimated.setImageResource(R.drawable.ic_perm_group_sync_settings);
-			//We add the image to the view. 
-			layout.addView(logoanimated);
+			// create the progress dialog
+			dialog = new ProgressDialog(this, AlertDialog.THEME_HOLO_DARK);
+			dialog.setMessage("Loading. Please wait...");
+			dialog.setIndeterminate(true);
+			dialog.setCancelable(false);
+			dialog.setCanceledOnTouchOutside(false);
+			dialog.show();
 
 			//We check if the lock is open, for dual indicators. 
 			if(isOpen == true)
@@ -526,7 +524,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			//A graph exists in the view, so we set this to true.
 			graphexist = true;
 		} else{
-			//Do nothing, there is no internet connection. 
+			// no internet connection
 		}
 
 	}
@@ -576,65 +574,94 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			//This means that the data that has finished parsing is for the X Axis.
 			if(axiscount == 0)
 			{
-				//We get the indicator to get the data. 
-				Indicator indicator = (Indicator) result.get(IndicatorNamey);
-				//We get the hashmap to iterate through. 
-				HashMap<String,String> hashmap = indicator.getValues();
-				//We add the y dataset to the graph.
-				scatterGraph.addYDataSet(hashmap, countries.get(countriescount));
-				//Increment the value to show the next dataset is for the y axis.
+				if (((Indicator)result.get(IndicatorNamey)).getValues().size() > 0) {
+					System.out.println("HAVE Y");
+					//We get the indicator to get the data.
+					Indicator indicator = (Indicator) result.get(IndicatorNamey);
+					//We get the hashmap to iterate through.
+					HashMap<String,String> hashmap = indicator.getValues();
+					//We add the y dataset to the graph.
+					scatterGraph.addYDataSet(hashmap, countries.get(countriescount));
+					//Increment the value to show the next dataset is for the y axis.
+				} else {
+					// No data for xAxis, so probably no internet at all
+					// show dialog
+					dialog.dismiss();
+					update.setEnabled(true);
+					if (countriescount == 0){
+						System.out.println("show");
+						new NoInternetAlertDialog(this);
+					}
+				}
 				axiscount++;
 			} else {
 				//This means the data that has finished parsing is for the Y Axis.
+				if (((Indicator) result.get(IndicatorNamex)).getValues().size() > 0) {
+					System.out.println("HAVE X");
+					//We get the x axis data from the indicator class.
+					Indicator indicator = (Indicator) result.get(IndicatorNamex);
+					//We get the hashmap to iterate through.
+					HashMap<String,String> hashmap = indicator.getValues();
+					//We add the dataset to the class.
+					scatterGraph.addXDataSet(hashmap, countries.get(countriescount));
+					//We add the data to the graph. We using countriescount to keep track of what countries data we are adding.
+					scatterGraph.addDataToGraph(countries.get(countriescount), year);
 
-				//We get the x axis data from the indicator class.
-				Indicator indicator = (Indicator) result.get(IndicatorNamex);
-				//We get the hashmap to iterate through. 
-				HashMap<String,String> hashmap = indicator.getValues();
-				//We add the dataset to the class.
-				scatterGraph.addXDataSet(hashmap, countries.get(countriescount));
-				//We add the data to the graph. We using countriescount to keep track of what countries data we are adding. 
-				scatterGraph.addDataToGraph(countries.get(countriescount), year);
+					//We compare the count to the size of the arraylist, to see if we have finished adding the data.
+					if(countriescount == (countries.size()-1))
+					{
+						//We add the correct amount of renderers.
+						scatterGraph.addRenderers();
 
-				//We compare the count to the size of the arraylist, to see if we have finished adding the data. 
-				if(countriescount == (countries.size()-1))
-				{
-					//We add the correct amount of renderers. 
-					scatterGraph.addRenderers();
+						//We get the minimum/maximum values for the axis.
+						xaxisminmax = scatterGraph.getXMinMax();
+						yaxisminmax = scatterGraph.getYMinMax();
 
-					//We get the minimum/maximum values for the axis.
-					xaxisminmax = scatterGraph.getXMinMax();
-					yaxisminmax = scatterGraph.getYMinMax();
+						//We now set the minmax for the graph.
 
-					//We now set the minmax for the graph. 
-
-					scatterGraph.setXAxisMinMax(xaxisminmax[0],xaxisminmax[1]);
-					scatterGraph.setYAxisMinMax(yaxisminmax[0],yaxisminmax[1]);
+						scatterGraph.setXAxisMinMax(xaxisminmax[0],xaxisminmax[1]);
+						scatterGraph.setYAxisMinMax(yaxisminmax[0],yaxisminmax[1]);
 
 					/*
 					 * We get the layout for the graph, remove all views from the graph.
-					 * We add the new graph to the layout in the form of a view. 
+					 * We add the new graph to the layout in the form of a view.
 					 * We also set the loading animation to be transparent.
 					 */
-					logoanimated.setImageResource(android.R.color.transparent);
-					layout.removeAllViews();
-					layout.addView(scatterGraph.getScatterGraph(getApplicationContext()), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
+						dialog.dismiss();
+						layout.removeAllViews();
+						layout.addView(scatterGraph.getScatterGraph(getApplicationContext()), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
 
-					//We set the textview to represent missing data
-					nodata.setText(scatterGraph.getMissingCountries());
-					//The spinner can now be used, since an update has occured. 
-					accessspinnercount = 1;
-					//The update button can now be pressed again.
-					update.setEnabled(true);
-				}else {
-					//We increase the count for the next call. 
-					countriescount++;
+						//We set the textview to represent missing data
+						nodata.setText(scatterGraph.getMissingCountries());
+						//The spinner can now be used, since an update has occured.
+						accessspinnercount = 1;
+						//The update button can now be pressed again.
+						update.setEnabled(true);
+					}else {
+						//We increase the count for the next call.
+						countriescount++;
+					}
+				} else {
+					// Make sure we update the countries count even we don't have internet
+					if(countriescount != (countries.size()-1)) {
+						countriescount++;
+					}
 				}
 				//We have finished parsing this countries data, so we reset the count.
 				axiscount = 0;
 			}
 		} else {
 			// This means that the data we are getting is for a single indicator. 
+			// we got result when there is no internet connection,
+			// but the size of the hashmap is empty
+			if (((Indicator)result.get(IndicatorName)).getName() == null) {
+				// reset everything
+				dialog.dismiss();
+				update.setEnabled(true);
+				System.out.println("show --");
+				new NoInternetAlertDialog(this);
+				return;
+			}
 
 			//We get the indicator to get the data. 
 			Indicator indicator = (Indicator) result.get(IndicatorName);
@@ -660,7 +687,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				 * We add the new graph to the layout in the form of a view. 
 				 * We also set the loading animation to be transparent.
 				 */
-				logoanimated.setImageResource(android.R.color.transparent);
+				dialog.dismiss();
 				layout.removeAllViews();
 				layout.addView(graph.getLineView(getApplicationContext()), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
 				//The update button can now be pressed again.
@@ -684,8 +711,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		if (networkInfo != null && networkInfo.isConnected()) {
 			return true;
 		}
-
-		Toast.makeText(getApplicationContext(), "No Internet Connection...", Toast.LENGTH_SHORT).show();
 		return  false;
 	}
 }
