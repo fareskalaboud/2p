@@ -1,5 +1,6 @@
 package model.graph;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,7 +21,11 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
 
-public class LineGraph {
+public class LineGraph implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1843423110498732877L;
 	//The dataset we are adding data to.
 	XYMultipleSeriesDataset dataset;
 	//The renderer we add renderers to.
@@ -193,5 +198,6 @@ public class LineGraph {
 
 		return chart;
 	}
-
+	
+	
 }
