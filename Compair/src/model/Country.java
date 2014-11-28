@@ -1,7 +1,6 @@
 package model;
 
 import java.io.Serializable;
-import java.util.Comparator;
 
 public class Country implements  Comparable<Country>,Serializable {
 

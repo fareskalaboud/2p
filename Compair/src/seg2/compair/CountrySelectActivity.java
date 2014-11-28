@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+@SuppressWarnings("rawtypes")
 public class CountrySelectActivity extends Activity implements JSONParserListener<HashMap>, View.OnClickListener {
 
 	private ProgressDialog dialog;
@@ -136,6 +137,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	 * to the next activity, which graphs the data it obtains
 	 * from it.
 	 */
+	@SuppressWarnings("unchecked")
 	public void sendCheckedCountriesToGraph() {
 		String s = new String();
 		for (Country c : countryList) {

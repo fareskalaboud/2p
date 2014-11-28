@@ -16,7 +16,6 @@ import java.util.ArrayList;
 public class CountryListAdapter extends ArrayAdapter<Country> {
 
     private ArrayList<Country> countryList;
-    private ArrayList<Country> checkedCountries = new ArrayList<Country>();
 
     public CountryListAdapter(Context context, int textViewResourceId,
                            ArrayList<Country> countryList) {

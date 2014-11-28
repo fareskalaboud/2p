@@ -19,8 +19,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dip"
-            android:text="x"
-            android:textSize="15dp" />
+            android:text="@string/xLabel"
+            android:textSize="15sp" />
 
         <Spinner
             android:id="@+id/xspinner"
@@ -38,8 +38,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dip"
-            android:text="y"
-            android:textSize="	15dp" />
+            android:text="@string/yLabel"
+            android:textSize="15sp" />
 
         <Spinner
             android:id="@+id/yspinner"
@@ -70,7 +70,7 @@
             android:id="@+id/nodata"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="all countries without data"
+            android:text="@string/nodata"
             android:textSize="10dp" />
     </LinearLayout>
 
@@ -101,7 +101,6 @@
             android:layout_height="wrap_content"
             android:progressDrawable="@drawable/customseekbar_scrubber_progress"
             android:thumb="@drawable/customseekbar_scrubber_control" />
-
     </LinearLayout>
 
 </LinearLayout>

@@ -2,7 +2,6 @@ package seg2.compair;
 
 
 
-import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,6 +45,7 @@ import android.widget.Toast;
  * @author Sean
  * @author Amrinder
  */
+@SuppressWarnings("rawtypes")
 public class GraphActivity extends Activity implements JSONParserListener<HashMap> {
 
 	//We use this for the dates
@@ -113,6 +113,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	String year = "1970";
 
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -240,6 +241,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 	private class seekBarListener implements SeekBar.OnSeekBarChangeListener{
 
+		@SuppressWarnings("deprecation")
 		@Override
 		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
@@ -371,7 +373,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			xindicator.setEnabled(false);
 			//We prevent the user from seeing anything but date. 
 			isOpen = false;
-
 		}
 	}
 	/**
@@ -502,6 +503,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	 * @param type
 	 * @param result The resulting map of data.
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onJSONParseFinished(String type, HashMap result) {
 		//We check if the lock is opened, and the information is dual indicators or just a single indicator (isOpen is false).
@@ -544,7 +546,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 					scatterGraph.setXAxisMinMax(xaxisminmax[0],xaxisminmax[1]);
 					scatterGraph.setYAxisMinMax(yaxisminmax[0],yaxisminmax[1]);
-
 
 					/*
 					 * We get the layout for the graph, remove all views from the graph.
@@ -606,7 +607,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			}
 		}
 	}
-	
 	
 	
 	/**

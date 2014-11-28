@@ -85,9 +85,15 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f060002;
         public static final int app_name=0x7f060000;
+        public static final int confirmindicator=0x7f060009;
+        public static final int countrylist=0x7f06000a;
         public static final int graph_button=0x7f060004;
         public static final int hello_world=0x7f060001;
+        public static final int multiplecountries=0x7f060008;
         public static final int next_button=0x7f060003;
+        public static final int nodata=0x7f060007;
+        public static final int xLabel=0x7f060005;
+        public static final int yLabel=0x7f060006;
     }
     public static final class style {
         /** 
@@ -110,6 +116,12 @@ public final class R {
         res/values-v11/styles.xml on API 14+ devices.
     
  API 14 theme customizations can go here. 
+
+        Base application theme for API 21+. This theme completely replaces
+        AppBaseTheme from BOTH res/values/styles.xml and
+        res/values-v11/styles.xml on API 21+ devices.
+    
+ API 21 theme customizations can go here. 
          */
         public static final int AppBaseTheme=0x7f080000;
         /**  Application theme. 

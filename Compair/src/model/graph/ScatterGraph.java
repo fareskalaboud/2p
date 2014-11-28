@@ -18,7 +18,6 @@ import org.achartengine.renderer.XYSeriesRenderer;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
-import android.util.Log;
 
 /**
  *This class defines the scatter graph and all the dataset/operations and renderer for it. 
@@ -180,6 +179,7 @@ public class ScatterGraph {
 	 * We get the minimum and maximum value of the y axis, once all data is added to the class.
 	 * @return array with minimum and maximum value. 
 	 */
+	@SuppressWarnings("rawtypes")
 	public double[] getYMinMax()
 	{
 		double[] array = new double[2];
@@ -231,6 +231,7 @@ public class ScatterGraph {
 	 * We get the minimum and maximum value of the x axis, once all data is added to the class.
 	 * @return array with minimum and maximum value. 
 	 */
+	@SuppressWarnings("rawtypes")
 	public double[] getXMinMax()
 	{
 
