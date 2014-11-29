@@ -37,7 +37,7 @@ public class ScatterGraph implements Serializable {
 	//The array to store all colours
 	private int[] colours = {Color.parseColor("#CD5C5C"),Color.parseColor("#4169E1"),Color.parseColor("#9ACD32"),Color.parseColor("#8A2BE2")
 			,Color.parseColor("#2897B7"),Color.parseColor("#2F74D0"),Color.parseColor("#6755E3"),Color.parseColor("#93BF96")
-			,Color.parseColor("#75D6FF"),Color.parseColor("#79FC4E"),Color.parseColor("#DFDF00"),Color.parseColor("#EEF093")
+			,Color.parseColor("#75D6FF"),Color.parseColor("#FE67EB"),Color.parseColor("#DFDF00"),Color.parseColor("#6094DB")
 			,Color.parseColor("#89FC63"),Color.parseColor("#8FFEDD"),Color.parseColor("#BBBBFF"),Color.parseColor("#DFB0FF")
 			,Color.parseColor("#BAD0EF"),Color.parseColor("#7DFDD7"),Color.parseColor("#FFBBF7"),Color.parseColor("#FFA8A8")};
 
@@ -360,7 +360,7 @@ public class ScatterGraph implements Serializable {
 		//Sets the size of the labels on X and Y.
 		renderer.setLabelsTextSize(20);
 		//Sets the size of the keys for each graph. 
-		renderer.setLegendTextSize(30);
+		renderer.setLegendTextSize(25);
 		//This is used to set the default number of Labels on the X & Y axis. to increase labels, increase number. 
 		renderer.setYLabels(16);
 
@@ -369,7 +369,7 @@ public class ScatterGraph implements Serializable {
 		renderer.setYTitle(yLabel);
 
 		//Sets the size of the individual points.
-		renderer.setPointSize(8f);
+		renderer.setPointSize(7f);
 		//We increase the margin size on the left side of the screen to prevent clipping of the axis. 
 		renderer.setMargins(new int[] {0, 80, 40, 0});
 
