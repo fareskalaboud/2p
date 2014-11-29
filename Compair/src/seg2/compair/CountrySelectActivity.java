@@ -14,6 +14,8 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -32,14 +34,30 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	private JSONParser parser;
 	private ArrayList<Country> checkedCountries = new ArrayList<Country>();
 	private ArrayList<Country> countryList;
+	//Value is used in deciding whether to lock orientation for a certain period of time.
+	private int prevOrientation;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_countryselect);
 
-		// make sure we have an emty set of checked countries
+		// make sure we have an empty set of checked countries
 		checkedCountries = new ArrayList<Country>();
+
+		//We prevent the user from rotating the screen, causing issues with the parser sending information after the activity is destroyed.
+		prevOrientation = getRequestedOrientation();
+		//We get the current orientation, then we compare it to the different available orientations.
+		if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+			//If the orientation is landscape, we make sure it stays in landscape.
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		} else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		} else {
+			//If the orientation is going to be changed, we prevent the change.
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+		}
 
 		// create the progress dialog
 		dialog = new ProgressDialog(this, AlertDialog.THEME_HOLO_DARK);
@@ -88,6 +106,9 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	public void onJSONParseFinished(String type, HashMap result) {
 		dialog.dismiss();
 
+		//The orientation can be changed now.
+		setRequestedOrientation(prevOrientation);
+
 		if (result.size() == 0) {
 			countryList = new ArrayList<Country>();
 			new NoInternetAlertDialog(this);
@@ -121,11 +142,11 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 		}
 	}
 
-    /**
-     * Checks if the user's device is connected to mobile data or a WiFi router.
-     *
-     * @return whether the user's device is connected to mobile data or a WiFi router.
-     */
+	/**
+	 * Checks if the user's device is connected to mobile data or a WiFi router.
+	 *
+	 * @return whether the user's device is connected to mobile data or a WiFi router.
+	 */
 	private boolean isInternetAvailable() {
 		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();

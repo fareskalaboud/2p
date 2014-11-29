@@ -76,6 +76,8 @@ public class ScatterGraph implements Serializable {
 		missingx = new ArrayList<String>();
 		missingy = new ArrayList<String>();
 		missingxy = new ArrayList<String>();
+		
+	
 	}
 	/**
 	 * We create the final graph based on values given.
@@ -98,7 +100,7 @@ public class ScatterGraph implements Serializable {
 			//We create ta new renderer, set the colour by iterating through the colours array, set the point style and to fill.
 			XYSeriesRenderer r = new XYSeriesRenderer();
 			r.setColor(colours[colourCount]);
-			r.setPointStyle(PointStyle.DIAMOND);
+			r.setPointStyle(PointStyle.CIRCLE);
 			r.setFillPoints(true);
 			renderer.addSeriesRenderer(r);
 			//Increase the count. 
