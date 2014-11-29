@@ -311,28 +311,23 @@ public final class R {
         public static final int zimbabwe=0x7f020115;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a001a;
+        public static final int action_settings=0x7f0a0015;
         public static final int background=0x7f0a0000;
         public static final int bottombar=0x7f0a000e;
         public static final int chart=0x7f0a0009;
-        public static final int checkBox1=0x7f0a0019;
-        public static final int code=0x7f0a0018;
+        public static final int checkBox1=0x7f0a0014;
+        public static final int code=0x7f0a0013;
         public static final int datespinner=0x7f0a000d;
         public static final int datetext=0x7f0a000c;
-        public static final int flag=0x7f0a0017;
+        public static final int flag=0x7f0a0012;
         public static final int graphButton=0x7f0a0004;
         public static final int imageView=0x7f0a0001;
         public static final int listView=0x7f0a0003;
-        public static final int nextButton=0x7f0a0016;
+        public static final int nextButton=0x7f0a000f;
         public static final int nodata=0x7f0a000a;
         public static final int switchindicator=0x7f0a0006;
         public static final int txtIntroLine1=0x7f0a0010;
-        public static final int txtIntroLine2=0x7f0a000f;
-        public static final int txtIntroLine3=0x7f0a0011;
-        public static final int txtIntroLine4=0x7f0a0012;
-        public static final int txtIntroLine6=0x7f0a0014;
-        public static final int txtIntroLine7=0x7f0a0013;
-        public static final int txtIntroLine8=0x7f0a0015;
+        public static final int txtIntroLine4=0x7f0a0011;
         public static final int txtSelectCountry=0x7f0a0002;
         public static final int update=0x7f0a000b;
         public static final int xlock=0x7f0a0008;
