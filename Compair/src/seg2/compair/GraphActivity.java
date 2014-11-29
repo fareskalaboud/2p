@@ -79,9 +79,9 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	private String xLabel = "x";
 	private String yLabel = "y";
 	//The object to manipulate the line graph. 
-	private LineGraph graph;
+	private LineGraph graph = new LineGraph();
 	//The object to manipulate the scatter graph.
-	private ScatterGraph scatterGraph;
+	private ScatterGraph scatterGraph = new ScatterGraph();
 	//The name of the indicator. 
 	private String IndicatorName;
 	//The example list of countries.
@@ -90,7 +90,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	private int countriescount = 0;
 	//The layout we add the graph to, and the loading animation.
 	private LinearLayout layout;
-	private LinearLayout layoutindicator;
 
 	//ImageView of the lock to unlock the Xaxis.
 	private ImageView lock;
@@ -152,9 +151,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 		//Initialise the layout to add animations and graphs to.
 		layout = (LinearLayout) findViewById(R.id.chart);
-
-		//Initialise the layout to add animations and graphs to.
-		layoutindicator = (LinearLayout) findViewById(R.id.bottombar);
 
 		//We initialise the imageview of the lock.
 		lock = (ImageView)findViewById(R.id.xlock);
@@ -232,10 +228,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				// TODO Auto-generated method stub
 			}
 		});
-		//We initialise the graph class. 
-		graph = new LineGraph();
-		//We initialise the Scatter graph class.
-		scatterGraph = new ScatterGraph();
+		
 		//We initialise the renderer and dataseries.
 		graph.clear(xLabel,yLabel);
 		//We add the list of countries to the scatter graph class.
@@ -529,7 +522,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 			}
 			update.setEnabled(false);
-			datesSeekBar.setProgress(0);
+			
 
 			//We reset this count so the spinner has to effect on the graph. 
 			accessseekbarcount = 0;
@@ -551,6 +544,10 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			//We check if the lock is open, for dual indicators. 
 			if(isOpen == true)
 			{
+				
+				//We set progress of the seekbar to 0
+				datesSeekBar.setProgress(0);
+				
 				//We clear the renderer and datasets.
 				scatterGraph.clearAll(xLabel, yLabel);
 

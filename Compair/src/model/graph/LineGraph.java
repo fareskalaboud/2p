@@ -27,13 +27,12 @@ public class LineGraph implements Serializable {
 	 */
 	private static final long serialVersionUID = -1843423110498732877L;
 	//The dataset we are adding data to.
-	private XYMultipleSeriesDataset dataset;
+	private  XYMultipleSeriesDataset dataset;
 	//The renderer we add renderers to.
-	private XYMultipleSeriesRenderer renderer;
-	//The chart we return
-	private GraphicalView chart;
+	private  XYMultipleSeriesRenderer renderer;
+	
 	//The number of datasets that have been added.
-	private int numberOfSets = 0;
+	private  int numberOfSets = 0;
 	//Array of colours that can be used.
 	private int[] colours = {Color.parseColor("#CD5C5C"),Color.parseColor("#4169E1"),Color.parseColor("#9ACD32"),Color.parseColor("#8A2BE2")
 			,Color.parseColor("#2897B7"),Color.parseColor("#2F74D0"),Color.parseColor("#6755E3"),Color.parseColor("#93BF96")
@@ -42,6 +41,7 @@ public class LineGraph implements Serializable {
 			,Color.parseColor("#BAD0EF"),Color.parseColor("#7DFDD7"),Color.parseColor("#FFBBF7"),Color.parseColor("#FFA8A8")};
 	//Used to iterate through the array of colours.
 	private int colourCount = 0;
+
 
 
 	/**
@@ -178,7 +178,7 @@ public class LineGraph implements Serializable {
 
 	public GraphicalView getLineView(Context c)
 	{
-		chart = ChartFactory.getTimeChartView(c, dataset, renderer,"dd/MM/yyyy");
+		GraphicalView chart = ChartFactory.getTimeChartView(c, dataset, renderer,"dd/MM/yyyy");
 
 		return chart;
 	}
