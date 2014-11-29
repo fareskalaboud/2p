@@ -6,12 +6,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import android.app.ProgressDialog;
-import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.model.XYSeries;
-import org.achartengine.renderer.XYMultipleSeriesRenderer;
-import org.achartengine.renderer.XYSeriesRenderer;
-
 import model.Country;
 import model.Indicator;
 import model.download.JSONParser;
@@ -20,6 +14,7 @@ import model.graph.LineGraph;
 import model.graph.ScatterGraph;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
@@ -28,6 +23,7 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,7 +41,6 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * This class defines the graph ui and the functionality to change indicators. 
@@ -274,11 +269,14 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		graph = (LineGraph) savedState.getSerializable("linegraph");
 		scatterGraph = (ScatterGraph) savedState.getSerializable("scattergraph");
 		//If a linegraph exists, we want to build it again in this view.
+		
+
 		if(lineGraphExists == true)
 		{
 			//We add the view of the final graph.
 			layout.removeAllViews();
 			layout.addView(graph.getLineView(this), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
+			scatterGraphExists = false;
 		}
 
 		//if a scatter graph exists, we want to build it again in this view.
@@ -289,6 +287,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			layout.addView(scatterGraph.getScatterGraph(this), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
 			//We set the textview to represent missing data
 			nodata.setText(scatterGraph.getMissingCountries());
+			lineGraphExists = false;
 
 			//We set the seekbar to active
 			accessseekbarcount = 1;
