@@ -369,7 +369,7 @@ public class ScatterGraph implements Serializable {
 		renderer.setYTitle(yLabel);
 
 		//Sets the size of the individual points.
-		renderer.setPointSize(9.5f);
+		renderer.setPointSize(8f);
 		//We increase the margin size on the left side of the screen to prevent clipping of the axis. 
 		renderer.setMargins(new int[] {0, 80, 40, 0});
 
