@@ -183,7 +183,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 
 		System.out.println(checkedCountries.size());
 
-		if (checkedCountries.size() >= 1 && checkedCountries.size() < 20) {
+		if (checkedCountries.size() >= 1 && checkedCountries.size() <= 20) {
 			Intent intent = new Intent(this,GraphActivity.class);
 
 			Bundle countrybundle = new Bundle();
