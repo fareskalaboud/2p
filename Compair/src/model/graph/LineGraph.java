@@ -3,6 +3,7 @@ package model.graph;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,17 +21,21 @@ import org.achartengine.renderer.XYSeriesRenderer;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
-
+/**
+ *This class defines the line graph and all the dataset/operations and renderer for it. 
+ * @author Sean
+ */
 public class LineGraph implements Serializable {
 	/**
-	 * 
+	 * We have implemented serializable within this method so that when orientation of the screen changes, we can send the information
+	 * to the new activity and resume as it was.
 	 */
 	private static final long serialVersionUID = -1843423110498732877L;
 	//The dataset we are adding data to.
 	private  XYMultipleSeriesDataset dataset;
 	//The renderer we add renderers to.
 	private  XYMultipleSeriesRenderer renderer;
-	
+
 	//The number of datasets that have been added.
 	private  int numberOfSets = 0;
 	//The array to store all colours
@@ -41,6 +46,17 @@ public class LineGraph implements Serializable {
 			,Color.parseColor("#BAD0EF"),Color.parseColor("#7DFDD7"),Color.parseColor("#FFBBF7"),Color.parseColor("#FFA8A8")};
 	//Used to iterate through the array of colours.
 	private int colourCount = 0;
+	//Used to create the missing datasets string.
+	private StringBuilder builder;
+	//Used to store the missing countries.
+	private ArrayList<String> missingcountries;
+	/**
+	 * We intialise the missing countries arraylist.
+	 */
+	public LineGraph()
+	{
+		missingcountries = new ArrayList<String>();
+	}
 
 	/**
 	 * This class resets the dataset and the renderer. We add the default properties to the renderer. 
@@ -56,6 +72,9 @@ public class LineGraph implements Serializable {
 		dataset = new XYMultipleSeriesDataset();
 
 		renderer = new XYMultipleSeriesRenderer();
+
+		//We reset the missingcountries arraylist.
+		missingcountries = new ArrayList<String>();
 
 		renderer.setAxisTitleTextSize(20);
 
@@ -106,10 +125,15 @@ public class LineGraph implements Serializable {
 		TimeSeries timeSeries = new TimeSeries(c.getName());
 		//We iterate through the map, getting the date and value. We put this into a series.
 
+		int datasetcount = 0;
+		int nodatacount = 0;
+
 		for (Map.Entry<String, String> entry : map.entrySet()) {
 			/*
 			 * We use a string builder to automatically add the month and day to the date, to parse it in the correct form. 
 			 */
+			//We get the total number of data within the hashmap by creating the value by iterating.
+			datasetcount++;
 
 			String value = entry.getValue();
 			//We changed the margins depending on how big the value is.
@@ -126,13 +150,12 @@ public class LineGraph implements Serializable {
 			//We don't add the value as it means that the value does not exist.
 			if(value.equals("0"))
 			{
-
+				nodatacount++;
 			}else{
 				//We append the date using a stringbuilder for the graph, as the graph uses date format.
 				StringBuilder builder = new StringBuilder();
 
 				String date = entry.getKey();
-
 				builder.append("01-01-" + date);
 				date = builder.toString();
 
@@ -141,6 +164,12 @@ public class LineGraph implements Serializable {
 				timeSeries.add(convertedDate, valuedouble);
 			}
 		}
+
+		if(datasetcount == nodatacount)
+		{
+			missingcountries.add(c.getName());
+		}
+
 		// Increase the count of the number of sets, and we add this series to the main series dataset. 
 		numberOfSets++;
 		dataset.addSeries(timeSeries);
@@ -179,5 +208,26 @@ public class LineGraph implements Serializable {
 		GraphicalView chart = ChartFactory.getTimeChartView(c, dataset, renderer,"dd/MM/yyyy");
 
 		return chart;
+	}
+	/**
+	 * We create the string representing the countries missing the entire dataset.
+	 * @return String representing the countries missing a dataset, dataset should be entered before calling this method.
+	 */
+	public String getMissingDatasets()
+	{
+		//We initialise the stringbuilder
+		builder = new StringBuilder();
+		//if there are actually missing datasets, then we create the string.
+		if(missingcountries.size() > 0)
+		{
+			//We append the first part.
+			builder.append("Countries missing dataset: ");
+			//We iterate through the entire arraylist, adding the countries to the list.
+			for(String country: missingcountries)
+			{
+				builder.append(country +",");
+			}
+		}
+		return builder.toString();
 	}
 }

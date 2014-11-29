@@ -117,7 +117,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	//Value is used in deciding whether to lock orientation for a certain period of time.
 	private int prevOrientation;
 
-
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -223,7 +222,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				// TODO Auto-generated method stub
 			}
 		});
-		
+
 		//We initialise the renderer and dataseries.
 		graph.clear(xLabel,yLabel);
 		//We add the list of countries to the scatter graph class.
@@ -269,7 +268,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		graph = (LineGraph) savedState.getSerializable("linegraph");
 		scatterGraph = (ScatterGraph) savedState.getSerializable("scattergraph");
 		//If a linegraph exists, we want to build it again in this view.
-		
+
 
 		if(lineGraphExists == true)
 		{
@@ -277,6 +276,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			layout.removeAllViews();
 			layout.addView(graph.getLineView(this), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
 			scatterGraphExists = false;
+			//We set the text to represent any missing countries.
+			nodata.setText(graph.getMissingDatasets());
 		}
 
 		//if a scatter graph exists, we want to build it again in this view.
@@ -382,12 +383,12 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		}
 
 	}
-/**
- * This method handles changing the UI to support dual indicators.
- * @param scatterexists Does a scattergraph already exist in viewport.
- * @param year The year that we want to set the date text at (Usually 1970).
- * @param removeView Do we want to remove all views out of graph(Usually yes, unless orientation change).
- */
+	/**
+	 * This method handles changing the UI to support dual indicators.
+	 * @param scatterexists Does a scattergraph already exist in viewport.
+	 * @param year The year that we want to set the date text at (Usually 1970).
+	 * @param removeView Do we want to remove all views out of graph(Usually yes, unless orientation change).
+	 */
 	public void setDualIndicator(boolean scatterexists, String year, boolean removeView)
 	{
 
@@ -501,9 +502,9 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		xindicator.setAdapter(adapter);
 		xindicator.setEnabled(false);
 	}
-/**
- * Method handles updating the graph with new indicators.Handles all UI changes.
- */
+	/**
+	 * Method handles updating the graph with new indicators.Handles all UI changes.
+	 */
 	public void updateGraph()
 	{
 		if(isInternetAvailable())
@@ -521,7 +522,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 			}
 			update.setEnabled(false);
-			
+
 
 			//We reset this count so the spinner has to effect on the graph. 
 			accessseekbarcount = 0;
@@ -543,14 +544,14 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			//We check if the lock is open, for dual indicators. 
 			if(isOpen == true)
 			{
-				
+
 				//We set progress of the seekbar to 0
 				datesSeekBar.setProgress(0);
-				
+
 				//We clear the renderer and datasets.
 				scatterGraph.clearAll(xLabel, yLabel);
 
-				//We clear the mising countries textview.
+				//We clear the missing countries textview.
 				nodata.setText("");
 
 				//We get the selected index to get the index code. 
@@ -570,7 +571,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				}
 
 			} else {
-
+				//We clear the missing countries textview.
+				nodata.setText("");
 				//We clear the renderer and datasets.
 				graph.clear(xLabel,yLabel);
 				//We get the selected index to get the index code. 
@@ -758,8 +760,10 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				//The update button can now be pressed again.
 				update.setEnabled(true);
 
-				//A scatter graph exists now.
+				//A line graph exists now.
 				lineGraphExists = true;
+
+				nodata.setText(graph.getMissingDatasets());
 				//The orientation can be changed now.
 				setRequestedOrientation(prevOrientation);
 			}else {
