@@ -27,36 +27,30 @@ public class LineGraph implements Serializable {
 	 */
 	private static final long serialVersionUID = -1843423110498732877L;
 	//The dataset we are adding data to.
-	XYMultipleSeriesDataset dataset;
+	private XYMultipleSeriesDataset dataset;
 	//The renderer we add renderers to.
-	XYMultipleSeriesRenderer renderer;
+	private XYMultipleSeriesRenderer renderer;
 	//The chart we return
-	GraphicalView chart;
+	private GraphicalView chart;
 	//The number of datasets that have been added.
-	int numberOfSets = 0;
+	private int numberOfSets = 0;
 	//Array of colours that can be used.
-	int[] colours = {Color.parseColor("#CD5C5C"),Color.parseColor("#4169E1"),Color.parseColor("#9ACD32"),Color.parseColor("#8A2BE2")
+	private int[] colours = {Color.parseColor("#CD5C5C"),Color.parseColor("#4169E1"),Color.parseColor("#9ACD32"),Color.parseColor("#8A2BE2")
 			,Color.parseColor("#2897B7"),Color.parseColor("#2F74D0"),Color.parseColor("#6755E3"),Color.parseColor("#9B4EE9")
 			,Color.parseColor("#75D6FF"),Color.parseColor("#79FC4E"),Color.parseColor("#DFDF00"),Color.parseColor("#FF7575")
 			,Color.parseColor("#89FC63"),Color.parseColor("#8FFEDD"),Color.parseColor("#BBBBFF"),Color.parseColor("#DFB0FF")
 			,Color.parseColor("#BAD0EF"),Color.parseColor("#7DFDD7"),Color.parseColor("#FFBBF7"),Color.parseColor("#FFA8A8")};
 	//Used to iterate through the array of colours.
-	int colourCount = 0;
+	private int colourCount = 0;
 
-	String xLabel;
-	String yLabel;
 
 	/**
 	 * This class resets the dataset and the renderer. We add the default properties to the renderer. 
 	 * @param xLabel The label on the X Axis
 	 * @param yLabel The Label on the Y Axis
 	 */
-
 	public void clear(String xLabel, String yLabel)
 	{
-
-		this.xLabel = xLabel;
-		this.yLabel = yLabel;
 		//We reset these counts. They tell later methods the amount of colours or sets that are needed. 
 		colourCount = 0;
 		numberOfSets = 0;
@@ -87,26 +81,18 @@ public class LineGraph implements Serializable {
 
 		renderer.setYLabelsAlign(Align.RIGHT, 0);
 		renderer.setFitLegend(true);
-
 		//The grid layout on the chart. 
 		renderer.setShowGrid(true);
 		renderer.setGridColor(Color.LTGRAY);
 		//Set the colours of the labels and the axis. 
 		renderer.setAxesColor(Color.DKGRAY);
-
 		renderer.setLabelsColor(Color.DKGRAY);
-
 		renderer.setApplyBackgroundColor(true);
 		//We can set the background and margin colors using the RGB values.
 		renderer.setBackgroundColor(Color.rgb(255, 255, 255));
-
-
 		renderer.setMarginsColor(Color.rgb(255, 255, 255));
-
 		renderer.setXLabelsColor(Color.DKGRAY);
-
 		renderer.setYLabelsColor(0, Color.DKGRAY);
-
 	}
 	/**
 	 * This method defines adding a data set to the graph. 
@@ -157,12 +143,9 @@ public class LineGraph implements Serializable {
 				timeSeries.add(convertedDate, valuedouble);
 			}
 		}
-
 		// Increase the count of the number of sets, and we add this series to the main series dataset. 
-
 		numberOfSets++;
 		dataset.addSeries(timeSeries);
-
 	}
 
 
@@ -199,6 +182,4 @@ public class LineGraph implements Serializable {
 
 		return chart;
 	}
-
-
 }
