@@ -127,7 +127,7 @@ public class ScatterGraph implements Serializable {
 		HashMap<String, String> xDataset = xMap.get(country);
 		HashMap<String, String> yDataset = yMap.get(country);
 		//We add the label as the name of the country. We also add a space to add a little bit of padding.
-		XYSeries series = new XYSeries("  " + c.getName());
+		XYSeries series = new XYSeries(" " + c.getName() + "  ");
 		//We get the values as doubles from the hashmaps. 
 		Double x = Double.valueOf(xDataset.get(year));
 		Double y = Double.valueOf(yDataset.get(year));
