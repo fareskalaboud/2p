@@ -24,11 +24,10 @@ import android.graphics.Paint.Align;
  *This class defines the scatter graph and all the dataset/operations and renderer for it. 
  * @author Sean
  */
-
 public class ScatterGraph implements Serializable {
-
 	/**
-	 * 
+	 * We have implemented serializable within this method so that when orientation of the screen changes, we can send the information
+	 * to the new activity and resume as it was.
 	 */
 	private static final long serialVersionUID = 1523766701083062095L;
 	//The dataset and renderer we add data and renderers to
@@ -387,6 +386,5 @@ public class ScatterGraph implements Serializable {
 		renderer.setMarginsColor(Color.rgb(255, 255, 255));
 		renderer.setXLabelsColor(Color.DKGRAY);
 		renderer.setYLabelsColor(0, Color.DKGRAY);
-
 	}
 }

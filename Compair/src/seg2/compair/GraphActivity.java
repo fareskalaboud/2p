@@ -1,7 +1,5 @@
 package seg2.compair;
 
-
-
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -268,8 +266,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		graph = (LineGraph) savedState.getSerializable("linegraph");
 		scatterGraph = (ScatterGraph) savedState.getSerializable("scattergraph");
 		//If a linegraph exists, we want to build it again in this view.
-
-
 		if(lineGraphExists == true)
 		{
 			//We add the view of the final graph.
