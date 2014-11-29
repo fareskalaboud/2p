@@ -42,8 +42,6 @@ public class LineGraph implements Serializable {
 	//Used to iterate through the array of colours.
 	private int colourCount = 0;
 
-
-
 	/**
 	 * This class resets the dataset and the renderer. We add the default properties to the renderer. 
 	 * @param xLabel The label on the X Axis
