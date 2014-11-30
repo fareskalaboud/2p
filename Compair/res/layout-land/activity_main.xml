@@ -26,14 +26,29 @@
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="84dp"
-        android:background="@drawable/custombutton_btn_default_holo_light"
+        android:layout_marginBottom="7dp"
+        android:background="#0F6699"
         android:onClick="goToCountrySelector"
         android:text="@string/next_button"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="24dp" />
+        android:textSize="24dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtIntroLine1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/imageView"
+        android:layout_marginRight="7dp"
+        android:text="Compair lets you compare several countries at a time using a variety of statistics provided by the World Bank. 
+Compair contains tools to visualise and compare this data using multiple graph types.\n
+Using this app is easy as pie:
+Select the countries you want, pick the statistics you want to compare and see the progress of thaat statistic over time."
+        android:textAlignment="center"
+        android:textSize="15dp" />
 
 </RelativeLayout>

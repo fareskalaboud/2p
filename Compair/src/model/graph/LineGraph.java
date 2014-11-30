@@ -1,7 +1,9 @@
 package model.graph;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,39 +21,50 @@ import org.achartengine.renderer.XYSeriesRenderer;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
-
-public class LineGraph {
+/**
+ *This class defines the line graph and all the dataset/operations and renderer for it. 
+ * @author Sean
+ */
+public class LineGraph implements Serializable {
+	/**
+	 * We have implemented serializable within this method so that when orientation of the screen changes, we can send the information
+	 * to the new activity and resume as it was.
+	 */
+	private static final long serialVersionUID = -1843423110498732877L;
 	//The dataset we are adding data to.
-	XYMultipleSeriesDataset dataset;
+	private  XYMultipleSeriesDataset dataset;
 	//The renderer we add renderers to.
-	XYMultipleSeriesRenderer renderer;
-	//The chart we return
-	GraphicalView chart;
+	private  XYMultipleSeriesRenderer renderer;
+
 	//The number of datasets that have been added.
-	int numberOfSets = 0;
-	//Array of colours that can be used.
-	int[] colours = {Color.parseColor("#CD5C5C"),Color.parseColor("#4169E1"),Color.parseColor("#9ACD32"),Color.parseColor("#8A2BE2")
-			,Color.parseColor("#2897B7"),Color.parseColor("#2F74D0"),Color.parseColor("#6755E3"),Color.parseColor("#9B4EE9")
-			,Color.parseColor("#75D6FF"),Color.parseColor("#79FC4E"),Color.parseColor("#DFDF00"),Color.parseColor("#FF7575")
+	private  int numberOfSets = 0;
+	//The array to store all colours
+	private int[] colours = {Color.parseColor("#CD5C5C"),Color.parseColor("#4169E1"),Color.parseColor("#9ACD32"),Color.parseColor("#8A2BE2")
+			,Color.parseColor("#2897B7"),Color.parseColor("#2F74D0"),Color.parseColor("#6755E3"),Color.parseColor("#93BF96")
+			,Color.parseColor("#75D6FF"),Color.parseColor("#FE67EB"),Color.parseColor("#DFDF00"),Color.parseColor("#6094DB")
 			,Color.parseColor("#89FC63"),Color.parseColor("#8FFEDD"),Color.parseColor("#BBBBFF"),Color.parseColor("#DFB0FF")
 			,Color.parseColor("#BAD0EF"),Color.parseColor("#7DFDD7"),Color.parseColor("#FFBBF7"),Color.parseColor("#FFA8A8")};
 	//Used to iterate through the array of colours.
-	int colourCount = 0;
-
-	String xLabel;
-	String yLabel;
+	private int colourCount = 0;
+	//Used to create the missing datasets string.
+	private StringBuilder builder;
+	//Used to store the missing countries.
+	private ArrayList<String> missingcountries;
+	/**
+	 * We intialise the missing countries arraylist.
+	 */
+	public LineGraph()
+	{
+		missingcountries = new ArrayList<String>();
+	}
 
 	/**
 	 * This class resets the dataset and the renderer. We add the default properties to the renderer. 
 	 * @param xLabel The label on the X Axis
 	 * @param yLabel The Label on the Y Axis
 	 */
-
 	public void clear(String xLabel, String yLabel)
 	{
-
-		this.xLabel = xLabel;
-		this.yLabel = yLabel;
 		//We reset these counts. They tell later methods the amount of colours or sets that are needed. 
 		colourCount = 0;
 		numberOfSets = 0;
@@ -60,6 +73,9 @@ public class LineGraph {
 
 		renderer = new XYMultipleSeriesRenderer();
 
+		//We reset the missingcountries arraylist.
+		missingcountries = new ArrayList<String>();
+
 		renderer.setAxisTitleTextSize(20);
 
 		//Sets the size of the Chart title(I don't think there is a title).
@@ -67,7 +83,7 @@ public class LineGraph {
 		//Sets the size of the labels on X and Y.
 		renderer.setLabelsTextSize(20);
 		//Sets the size of the keys for each graph. 
-		renderer.setLegendTextSize(30);
+		renderer.setLegendTextSize(24);
 		//This is used to set the default number of Labels on the X & Y axis. to increase labels, increase number. 
 		renderer.setYLabels(16);
 
@@ -82,25 +98,18 @@ public class LineGraph {
 
 		renderer.setYLabelsAlign(Align.RIGHT, 0);
 		renderer.setFitLegend(true);
-
 		//The grid layout on the chart. 
 		renderer.setShowGrid(true);
 		renderer.setGridColor(Color.LTGRAY);
 		//Set the colours of the labels and the axis. 
 		renderer.setAxesColor(Color.DKGRAY);
-
 		renderer.setLabelsColor(Color.DKGRAY);
-
 		renderer.setApplyBackgroundColor(true);
 		//We can set the background and margin colors using the RGB values.
 		renderer.setBackgroundColor(Color.rgb(255, 255, 255));
-
 		renderer.setMarginsColor(Color.rgb(255, 255, 255));
-
 		renderer.setXLabelsColor(Color.DKGRAY);
-
 		renderer.setYLabelsColor(0, Color.DKGRAY);
-
 	}
 	/**
 	 * This method defines adding a data set to the graph. 
@@ -116,10 +125,15 @@ public class LineGraph {
 		TimeSeries timeSeries = new TimeSeries(c.getName());
 		//We iterate through the map, getting the date and value. We put this into a series.
 
+		int datasetcount = 0;
+		int nodatacount = 0;
+
 		for (Map.Entry<String, String> entry : map.entrySet()) {
 			/*
 			 * We use a string builder to automatically add the month and day to the date, to parse it in the correct form. 
 			 */
+			//We get the total number of data within the hashmap by creating the value by iterating.
+			datasetcount++;
 
 			String value = entry.getValue();
 			//We changed the margins depending on how big the value is.
@@ -136,13 +150,12 @@ public class LineGraph {
 			//We don't add the value as it means that the value does not exist.
 			if(value.equals("0"))
 			{
-
+				nodatacount++;
 			}else{
 				//We append the date using a stringbuilder for the graph, as the graph uses date format.
 				StringBuilder builder = new StringBuilder();
 
 				String date = entry.getKey();
-
 				builder.append("01-01-" + date);
 				date = builder.toString();
 
@@ -152,11 +165,14 @@ public class LineGraph {
 			}
 		}
 
-		// Increase the count of the number of sets, and we add this series to the main series dataset. 
+		if(datasetcount == nodatacount)
+		{
+			missingcountries.add(c.getName());
+		}
 
+		// Increase the count of the number of sets, and we add this series to the main series dataset. 
 		numberOfSets++;
 		dataset.addSeries(timeSeries);
-
 	}
 
 
@@ -189,9 +205,29 @@ public class LineGraph {
 
 	public GraphicalView getLineView(Context c)
 	{
-		chart = ChartFactory.getTimeChartView(c, dataset, renderer,"dd/MM/yyyy");
+		GraphicalView chart = ChartFactory.getTimeChartView(c, dataset, renderer,"dd/MM/yyyy");
 
 		return chart;
 	}
-
+	/**
+	 * We create the string representing the countries missing the entire dataset.
+	 * @return String representing the countries missing a dataset, dataset should be entered before calling this method.
+	 */
+	public String getMissingDatasets()
+	{
+		//We initialise the stringbuilder
+		builder = new StringBuilder();
+		//if there are actually missing datasets, then we create the string.
+		if(missingcountries.size() > 0)
+		{
+			//We append the first part.
+			builder.append("Countries missing dataset: ");
+			//We iterate through the entire arraylist, adding the countries to the list.
+			for(String country: missingcountries)
+			{
+				builder.append(country +",");
+			}
+		}
+		return builder.toString();
+	}
 }

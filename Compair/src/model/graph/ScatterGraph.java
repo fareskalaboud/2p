@@ -1,5 +1,6 @@
 package model.graph;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -23,37 +24,41 @@ import android.graphics.Paint.Align;
  *This class defines the scatter graph and all the dataset/operations and renderer for it. 
  * @author Sean
  */
-
-public class ScatterGraph {
-
+public class ScatterGraph implements Serializable {
+	/**
+	 * We have implemented serializable within this method so that when orientation of the screen changes, we can send the information
+	 * to the new activity and resume as it was.
+	 */
+	private static final long serialVersionUID = 1523766701083062095L;
 	//The dataset and renderer we add data and renderers to
-	XYMultipleSeriesDataset dataset;
-	XYMultipleSeriesRenderer renderer;
-	//Number of sets in the graph
-	int numberOfSets = 0;
+	private XYMultipleSeriesDataset dataset;
+	private XYMultipleSeriesRenderer renderer;
 	//The array to store all colours
-	int[] colours = {Color.parseColor("#CD5C5C"),Color.parseColor("#4169E1"),Color.parseColor("#9ACD32"),Color.parseColor("#8A2BE2")
-			,Color.parseColor("#2897B7"),Color.parseColor("#2F74D0"),Color.parseColor("#6755E3"),Color.parseColor("#9B4EE9")
-			,Color.parseColor("#75D6FF"),Color.parseColor("#79FC4E"),Color.parseColor("#DFDF00"),Color.parseColor("#FF7575")
+	private int[] colours = {Color.parseColor("#CD5C5C"),Color.parseColor("#4169E1"),Color.parseColor("#9ACD32"),Color.parseColor("#8A2BE2")
+			,Color.parseColor("#2897B7"),Color.parseColor("#2F74D0"),Color.parseColor("#6755E3"),Color.parseColor("#93BF96")
+			,Color.parseColor("#75D6FF"),Color.parseColor("#FE67EB"),Color.parseColor("#DFDF00"),Color.parseColor("#6094DB")
 			,Color.parseColor("#89FC63"),Color.parseColor("#8FFEDD"),Color.parseColor("#BBBBFF"),Color.parseColor("#DFB0FF")
 			,Color.parseColor("#BAD0EF"),Color.parseColor("#7DFDD7"),Color.parseColor("#FFBBF7"),Color.parseColor("#FFA8A8")};
-	//The colour count to see which colour to add from the above array
-	int colourCount = 0;
-	//The x and y labels for the graphs
-	String xLabel;
-	String yLabel;
+
+	//This hashmap will store the country and assign it a colour.
+	private HashMap<String,Integer> colorMap;
+	//We use this color count to select a colour from the array above to assign to the country.
+	private int colourcount = 0;
+
 	//The x and y maps to store the data, access later when changing years. 
-	HashMap<String,HashMap<String,String>> xMap;
-	HashMap<String,HashMap<String,String>> yMap;
+	private HashMap<String,HashMap<String,String>> xMap;
+	private HashMap<String,HashMap<String,String>> yMap;
 
 	//This stringbuilder is used to create the missing countries string.
-	StringBuilder builder;
+	private StringBuilder builder;
 	//We store the missing values in the seperate arraylists
-	ArrayList<String> missingx;
-	ArrayList<String> missingy;
-	ArrayList<String> missingxy;
+	private ArrayList<String> missingx;
+	private ArrayList<String> missingy;
+	private ArrayList<String> missingxy;
+
+
 	/**
-	 * Initialises the hashmaps and the string builder.
+	 * Initialises the hashmaps, the string builder, the missing countries arrays, the countries array and the colorMap.
 	 */
 	public ScatterGraph()
 	{
@@ -64,6 +69,9 @@ public class ScatterGraph {
 		missingx = new ArrayList<String>();
 		missingy = new ArrayList<String>();
 		missingxy = new ArrayList<String>();
+		
+		colorMap = new HashMap<String,Integer>();
+
 	}
 	/**
 	 * We create the final graph based on values given.
@@ -77,23 +85,20 @@ public class ScatterGraph {
 		return view;
 	}
 	/**
-	 * adds all renderers once datasets are added. Call this method once all datasets are added. 
+	 * We add the list of countries from the graph activity into this class to correctly select colours.
+	 * @param countries The list of countries.
 	 */
-	public void addRenderers(){
-
-		for(int i = 0;i<numberOfSets;i++)
+	public void addCountryList(ArrayList<Country> countries)
+	{
+		
+		for(Country c: countries)
 		{
-			//We create ta new renderer, set the colour by iterating through the colours array, set the point style and to fill.
-			XYSeriesRenderer r = new XYSeriesRenderer();
-			r.setColor(colours[colourCount]);
-			r.setPointStyle(PointStyle.DIAMOND);
-			r.setFillPoints(true);
-			renderer.addSeriesRenderer(r);
-			//Increase the count. 
-			colourCount++;
+			String country = c.getId();
+			colorMap.put(country, colours[colourcount]);
+			colourcount++;
 		}
-
 	}
+	
 	/**
 	 * Adds dataset to the X Hashmap to reference later. 
 	 */
@@ -121,7 +126,7 @@ public class ScatterGraph {
 		HashMap<String, String> xDataset = xMap.get(country);
 		HashMap<String, String> yDataset = yMap.get(country);
 		//We add the label as the name of the country. We also add a space to add a little bit of padding.
-		XYSeries series = new XYSeries("  " + c.getName());
+		XYSeries series = new XYSeries(" " + c.getName() + "  ");
 		//We get the values as doubles from the hashmaps. 
 		Double x = Double.valueOf(xDataset.get(year));
 		Double y = Double.valueOf(yDataset.get(year));
@@ -151,10 +156,15 @@ public class ScatterGraph {
 			} 
 			//We add these values to the graph. 
 			series.add(x, y);
-			//Incremement th enumber of sets. 
-			numberOfSets++;
 			//We add the series to the dataset.
 			dataset.addSeries(series);
+			
+			//We create ta new renderer, set the colour by selecting the colour in the hashmap, set the point style and to fill.
+			XYSeriesRenderer r = new XYSeriesRenderer();
+			r.setColor(colorMap.get(country));
+			r.setPointStyle(PointStyle.CIRCLE);
+			r.setFillPoints(true);
+			renderer.addSeriesRenderer(r);
 		}
 	}
 	/**
@@ -236,7 +246,6 @@ public class ScatterGraph {
 	@SuppressWarnings("rawtypes")
 	public double[] getXMinMax()
 	{
-
 		double[] array = new double[2];
 		//The min and max values.
 		double max = 0;
@@ -281,7 +290,6 @@ public class ScatterGraph {
 		array[1] = max;
 
 		return array;
-
 	}
 
 	/**
@@ -290,6 +298,7 @@ public class ScatterGraph {
 	 */
 	public String getMissingCountries()
 	{
+		builder = new StringBuilder();
 		//We append the values depending on the countries that have missing values. 
 		try{
 			if(missingxy.size() !=0)
@@ -329,15 +338,10 @@ public class ScatterGraph {
 	 */
 	public void clearAll(String xLabel,String yLabel)
 	{
-		this.xLabel = xLabel;
-		this.yLabel = yLabel;
-
 		//We reset these counts. They tell later methods the amount of colours or sets that are needed. 
-		colourCount = 0;
-		numberOfSets = 0;
+		colourcount = 0;
 
 		//We remove data from the missing country datastructures and builder.
-
 		missingxy.clear();
 		missingx.clear();
 		missingy.clear();
@@ -355,7 +359,7 @@ public class ScatterGraph {
 		//Sets the size of the labels on X and Y.
 		renderer.setLabelsTextSize(20);
 		//Sets the size of the keys for each graph. 
-		renderer.setLegendTextSize(30);
+		renderer.setLegendTextSize(25);
 		//This is used to set the default number of Labels on the X & Y axis. to increase labels, increase number. 
 		renderer.setYLabels(16);
 
@@ -364,33 +368,23 @@ public class ScatterGraph {
 		renderer.setYTitle(yLabel);
 
 		//Sets the size of the individual points.
-		renderer.setPointSize(9.5f);
+		renderer.setPointSize(7f);
 		//We increase the margin size on the left side of the screen to prevent clipping of the axis. 
 		renderer.setMargins(new int[] {0, 80, 40, 0});
 
 		renderer.setYLabelsAlign(Align.RIGHT, 0);
 		renderer.setFitLegend(true);
-
 		//The grid layout on the chart. 
 		renderer.setShowGrid(true);
 		renderer.setGridColor(Color.LTGRAY);
 		//Set the colours of the labels and the axis. 
 		renderer.setAxesColor(Color.DKGRAY);
-
 		renderer.setLabelsColor(Color.DKGRAY);
-
 		renderer.setApplyBackgroundColor(true);
-		
 		//We can set the background and margin colors using the RGB values.
 		renderer.setBackgroundColor(Color.rgb(255, 255, 255));
-
 		renderer.setMarginsColor(Color.rgb(255, 255, 255));
-
 		renderer.setXLabelsColor(Color.DKGRAY);
-
 		renderer.setYLabelsColor(0, Color.DKGRAY);
-
 	}
-
-
 }

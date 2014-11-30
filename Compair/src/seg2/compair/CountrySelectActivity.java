@@ -14,6 +14,8 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -32,17 +34,37 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	private JSONParser parser;
 	private ArrayList<Country> checkedCountries = new ArrayList<Country>();
 	private ArrayList<Country> countryList;
+	//Value is used in deciding whether to lock orientation for a certain period of time.
+	private int prevOrientation;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		System.out.println("HI THERE. I'M THE GUY YOU'RE LOOKING FOR.");
 		setContentView(R.layout.activity_countryselect);
+
+		// make sure we have an empty set of checked countries
+		checkedCountries = new ArrayList<Country>();
+
+		//We prevent the user from rotating the screen, causing issues with the parser sending information after the activity is destroyed.
+		prevOrientation = getRequestedOrientation();
+		//We get the current orientation, then we compare it to the different available orientations.
+		if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+			//If the orientation is landscape, we make sure it stays in landscape.
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		} else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		} else {
+			//If the orientation is going to be changed, we prevent the change.
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+		}
 
 		// create the progress dialog
 		dialog = new ProgressDialog(this, AlertDialog.THEME_HOLO_DARK);
 		dialog.setMessage("Loading. Please wait...");
 		dialog.setIndeterminate(true);
+		dialog.setCancelable(false);
+		dialog.setCanceledOnTouchOutside(false);
 
 		Fonts.makeFonts(this);
 
@@ -84,6 +106,9 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	public void onJSONParseFinished(String type, HashMap result) {
 		dialog.dismiss();
 
+		//The orientation can be changed now.
+		setRequestedOrientation(prevOrientation);
+
 		if (result.size() == 0) {
 			countryList = new ArrayList<Country>();
 			new NoInternetAlertDialog(this);
@@ -117,11 +142,11 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 		}
 	}
 
-    /**
-     * Checks if the user's device is connected to mobile data or a WiFi router.
-     *
-     * @return whether the user's device is connected to mobile data or a WiFi router.
-     */
+	/**
+	 * Checks if the user's device is connected to mobile data or a WiFi router.
+	 *
+	 * @return whether the user's device is connected to mobile data or a WiFi router.
+	 */
 	private boolean isInternetAvailable() {
 		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
@@ -148,24 +173,25 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	 */
 	@SuppressWarnings("unchecked")
 	public void sendCheckedCountriesToGraph() {
-		String s = new String();
+		checkedCountries = new ArrayList<Country>();
+
 		for (Country c : countryList) {
 			if (c.isSelected()) {
 				checkedCountries.add(c);
-				
-				s = s + " : " + c.getName();
 			}
 		}
 
-		System.out.println("Countries checked: " + s);
+		System.out.println(checkedCountries.size());
 
-		Intent intent = new Intent(this,GraphActivity.class);
-		
-		Bundle countrybundle = new Bundle();
-		countrybundle.putSerializable("countries", checkedCountries);
-		intent.putExtras(countrybundle);
-		startActivity(intent);
+		if (checkedCountries.size() >= 1 && checkedCountries.size() <= 20) {
+			Intent intent = new Intent(this,GraphActivity.class);
 
-		// TODO: Send this in an intent
+			Bundle countrybundle = new Bundle();
+			countrybundle.putSerializable("countries", checkedCountries);
+			intent.putExtras(countrybundle);
+			startActivity(intent);
+		} else {
+			Toast.makeText(getApplicationContext(), "Please choose at least 1 and most 20 countries", Toast.LENGTH_SHORT).show();
+		}
 	}
 }

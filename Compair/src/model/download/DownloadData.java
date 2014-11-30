@@ -80,12 +80,11 @@ public class DownloadData extends AsyncTask<String, String, JSONArray> {
                 return new JSONArray(content.toString());
             } catch (JSONException e) {
                 Log.e("JSON parse", "Error while converting string to json");
+                return null;
             }
         } else {
             return null;
         }
-
-        return null;
     }
 
     @Override

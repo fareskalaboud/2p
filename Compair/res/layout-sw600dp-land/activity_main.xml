@@ -19,12 +19,13 @@
         android:layout_below="@+id/txtIntroLine4"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="14dp"
-        android:background="@drawable/custombutton_btn_default_holo_light"
+        android:background="#0F6699"
         android:onClick="goToCountrySelector"
         android:text="@string/next_button"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="24dp" />
+        android:textSize="24dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txtIntroLine1"

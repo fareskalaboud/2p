@@ -1,7 +1,5 @@
 package seg2.compair;
 
-
-
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +12,7 @@ import model.graph.LineGraph;
 import model.graph.ScatterGraph;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
@@ -22,6 +21,7 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,7 +39,6 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * This class defines the graph ui and the functionality to change indicators. 
@@ -50,75 +49,71 @@ import android.widget.Toast;
 public class GraphActivity extends Activity implements JSONParserListener<HashMap> {
 
 	//We use this for the dates
-	ArrayList<String> dates = new ArrayList<String>();
+	private ArrayList<String> dates = new ArrayList<String>();
 
 	//Spinners for the x indicators and the y indicators
-	Spinner xindicator;
-	Spinner yindicator;
+	private Spinner xindicator;
+	private Spinner yindicator;
 	//Seekbar for dualindicators
-	SeekBar datesSeekBar;
+	private SeekBar datesSeekBar;
 
+	//progress bar for loading
+	private ProgressDialog dialog;
 
 	//Text for the date, invisible default
-	TextView datetext;
+	private TextView datetext;
 
 	//Texview for any country that does not have data when using dual indicators.
-	TextView nodata;
+	private TextView nodata;
 
 	//Update button
-	Button update;
+	private Button update;
 	//The labels for the x and y axis. 
-	String xLabel = "x";
-	String yLabel = "y";
+	private String xLabel = "x";
+	private String yLabel = "y";
 	//The object to manipulate the line graph. 
-	LineGraph graph;
+	private LineGraph graph = new LineGraph();
 	//The object to manipulate the scatter graph.
-	ScatterGraph scatterGraph;
+	private ScatterGraph scatterGraph = new ScatterGraph();
 	//The name of the indicator. 
-	String IndicatorName;
+	private String IndicatorName;
 	//The example list of countries.
-	ArrayList<Country> countries;
+	private ArrayList<Country> countries;
 	//The count of countries used to add datasets.
-	int countriescount = 0;
+	private int countriescount = 0;
 	//The layout we add the graph to, and the loading animation.
-	LinearLayout layout;
-	LinearLayout layoutindicator;
-
-	//The animationed loading animation
-	ImageView logoanimated;
+	private LinearLayout layout;
 
 	//ImageView of the lock to unlock the Xaxis.
-	ImageView lock;
+	private ImageView lock;
 	//ImageView of the switch indicator.
-	ImageView switchindicator;
+	private ImageView switchindicator;
 
 	//Boolean that is used to see if the lock is unlocked or locked.
-	boolean isOpen = false;
+	private boolean isOpen = false;
 	//Boolean that is used to see if the seekbar is visible.
-	boolean seekBarIsVisible = false;
+	private boolean seekBarIsVisible = false;
 	//Boolean that is used to see if a graph has been made in the view.
-	boolean graphexist = false;
-
+	private boolean lineGraphExists = false;
+	private boolean scatterGraphExists = false;
 	//These two strings represent the name of indicators when using dual indicators.
-	String IndicatorNamey;
-	String IndicatorNamex;
+	private String IndicatorNamey;
+	private String IndicatorNamex;
 
 	//This is the axiscount, we use this when using dual indicators to tell what axis information we are 
 	//listening for.
-	int axiscount = 0;
+	private int axiscount = 0;
 	//This count is used when deciding if the call that the datespinner activates is null and to not be used
-	int accessspinnercount  = 0;
+	private int accessseekbarcount  = 0;
 	//Used for the seekbar, to get the correct year and the number of years to display.
-	int numberOfYears;
-	int yearPosition;
+	private int numberOfYears;
 	//The minimum and maximum value for the scattergraph in two arrays.
-	double[] xaxisminmax;
-	double[] yaxisminmax;
+	private double[] xaxisminmax;
+	private double[] yaxisminmax;
 	//The default year string for the dual indicators. 
-	String year = "1970";
+	private String year = "1970";
 	//Value is used in deciding whether to lock orientation for a certain period of time.
-	int prevOrientation;
-
+	private int prevOrientation;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -149,9 +144,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		//Initialise the layout to add animations and graphs to.
 		layout = (LinearLayout) findViewById(R.id.chart);
 
-		//Initialise the layout to add animations and graphs to.
-		layoutindicator = (LinearLayout) findViewById(R.id.bottombar);
-
 		//We initialise the imageview of the lock.
 		lock = (ImageView)findViewById(R.id.xlock);
 		//We initialise the imageview of the switch indicator. 
@@ -163,7 +155,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		//Initialise the textview for dual indicators of countries with no data.
 		nodata = (TextView)findViewById(R.id.nodata);
 		nodata.setText("");
-
 
 		/*
 		 * This spinner is kept invisible till unlocked when the dual indicators are unlocked. 
@@ -229,26 +220,29 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				// TODO Auto-generated method stub
 			}
 		});
-		//We initialise the graph class. 
-		graph = new LineGraph();
-		//We initialise the Scatter graph class.
-		scatterGraph = new ScatterGraph();
+
 		//We initialise the renderer and dataseries.
 		graph.clear(xLabel,yLabel);
+		//We add the list of countries to the scatter graph class.
+		scatterGraph.addCountryList(countries);
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		//We save the current data when switching orientations.
-		//We save the lockstatus, seekbarstatus, x and y indicators, the update button status and if a graph has been created.
-
+		//We save the lockstatus, seekbarstatus, x and y indicators and if a graph has been created.
+		//We also give the scattergraph and linegraph to easily repaint the view onto the activity.
 		outState.putBoolean("lock", isOpen);
 		outState.putBoolean("seekbar", seekBarIsVisible);
+		outState.putBoolean("lineGraphExists", lineGraphExists);
+		outState.putBoolean("scatterGraphExists", scatterGraphExists);
 		outState.putInt("xindicator", xindicator.getSelectedItemPosition());
 		outState.putInt("yindicator", yindicator.getSelectedItemPosition());
-		outState.putBoolean("update",update.isEnabled());
-		outState.putBoolean("graphexist", graphexist);
+		outState.putInt("yearPosition", datesSeekBar.getProgress());
+		outState.putString("year", year);
+		outState.putSerializable("scattergraph", scatterGraph);
+		outState.putSerializable("linegraph", graph);
 	}
 
 	@Override
@@ -256,32 +250,65 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		super.onRestoreInstanceState(savedState);
 		// restore the current data, for instance when changing the screen
 		// orientation
+		/*
+		 * We get the lock, if the seekbar is visible, if the graphs exists, the position of the indicators
+		 * the year that is currently shown on the textview, the position of the seekbar if it exists, 
+		 * the graph itself as two graphical views.
+		 */
 		isOpen= savedState.getBoolean("lock");
 		seekBarIsVisible = savedState.getBoolean("seekbar");
-		boolean update = savedState.getBoolean("update");
-		graphexist = savedState.getBoolean("graphexist");
+		lineGraphExists = savedState.getBoolean("lineGraphExists");
+		scatterGraphExists = savedState.getBoolean("scatterGraphExists");
 		int xindicatorpos = savedState.getInt("xindicator");
 		int yindicatorpos = savedState.getInt("yindicator");
+		year = savedState.getString("year");
+		int yearPosition = savedState.getInt("yearPosition");
+		graph = (LineGraph) savedState.getSerializable("linegraph");
+		scatterGraph = (ScatterGraph) savedState.getSerializable("scattergraph");
+		//If a linegraph exists, we want to build it again in this view.
+		if(lineGraphExists == true)
+		{
+			//We add the view of the final graph.
+			layout.removeAllViews();
+			layout.addView(graph.getLineView(this), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
+			scatterGraphExists = false;
+			//We set the text to represent any missing countries.
+			nodata.setText(graph.getMissingDatasets());
+		}
 
+		//if a scatter graph exists, we want to build it again in this view.
+		if(scatterGraphExists == true)
+		{
+			//We add the view of the final graph.
+			layout.removeAllViews();
+			layout.addView(scatterGraph.getScatterGraph(this), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
+			//We set the textview to represent missing data
+			nodata.setText(scatterGraph.getMissingCountries());
+			lineGraphExists = false;
 
+			//We set the seekbar to active
+			accessseekbarcount = 1;
+			//We set the spinner position
+			datesSeekBar.setProgress(yearPosition);
+
+			//We get the minimum/maximum values for the axis.
+			xaxisminmax = scatterGraph.getXMinMax();
+			yaxisminmax = scatterGraph.getYMinMax();
+		}
 		if(isOpen == true)
 		{
-			setDualIndicator();
+			setDualIndicator(true, year, false);
 		}
-		if(update == false)
-		{
-			updateGraph();
-		}
-		if(graphexist == true)
-		{
-			updateGraph();
-		}
+
 
 		xindicator.setSelection(xindicatorpos);
 		yindicator.setSelection(yindicatorpos);
 	}
 
-
+	/**
+	 * Class defines the time seekbar, changing the graph everytime the time changes.
+	 * @author Sean
+	 */
 	private class seekBarListener implements SeekBar.OnSeekBarChangeListener{
 
 		@SuppressWarnings("deprecation")
@@ -297,7 +324,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 					//get data for year i
 
-					if(accessspinnercount == 0)
+					if(accessseekbarcount == 0)
 					{//Do nothing, the graph has not been created yet to modify with the seekbar.
 					} else {
 						//We remove the old graph from view and set up the renderer and dataset.
@@ -308,8 +335,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 						{
 							scatterGraph.addDataToGraph(country, date);
 						}
-						//We add all renderers.
-						scatterGraph.addRenderers();
 						//We set the minimum and maximum values for the graphs. This is to prevent them from changing each time the slider changes. 
 						scatterGraph.setXAxisMinMax(xaxisminmax[0],xaxisminmax[1]);
 						scatterGraph.setYAxisMinMax(yaxisminmax[0],yaxisminmax[1]);
@@ -354,12 +379,17 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		}
 
 	}
-
-	public void setDualIndicator()
+	/**
+	 * This method handles changing the UI to support dual indicators.
+	 * @param scatterexists Does a scattergraph already exist in viewport.
+	 * @param year The year that we want to set the date text at (Usually 1970).
+	 * @param removeView Do we want to remove all views out of graph(Usually yes, unless orientation change).
+	 */
+	public void setDualIndicator(boolean scatterexists, String year, boolean removeView)
 	{
 
 		//We set the textfield to now show a date.
-		datetext.setText("1970");
+		datetext.setText(year);
 		datetext.setTextSize(30f);
 		datetext.setTextColor(Color.DKGRAY);
 		//We set the visibility of the seekbar to visible. 
@@ -370,8 +400,16 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		lock.setImageResource(R.drawable.unlock);
 		//We change the colour of the switch indicator, indicating it is now possible to switch.
 		switchindicator.setImageResource(R.drawable.switchindicatorblue);
-		//Remove all views out of the graph if there was any ready for the next graph. 
-		layout.removeAllViews();
+
+		if(removeView == true)
+		{
+			//Remove all views out of the graph if there was any ready for the next graph. 
+			layout.removeAllViews();
+		}
+
+		//Both graphs do not exist currently, as the view is now empty.
+		lineGraphExists = false;
+		scatterGraphExists = scatterexists;
 		//Enable x indicator spinner.
 		xindicator.setEnabled(true);
 		//the lock is now open. 
@@ -399,7 +437,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 
-					setDualIndicator();
+					setDualIndicator(false, "1970", true);
 				}
 			});
 
@@ -407,7 +445,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			alertDialog.show();
 		} else if(update.isEnabled() == true) {
 			//We set the spinner back to 0 for the next instance of using dual indicators.
-			accessspinnercount = 0;
+			accessseekbarcount = 0;
 			//We clear the mising countries textview.
 			nodata.setText("");
 			//We set the x indicator back to the date array, to remove the rest of the indicators. 
@@ -421,6 +459,11 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			datetext.setText("          ");
 			//Remove all views out of the graph if there was any ready for the next graph. 
 			layout.removeAllViews();
+
+			//Both graphs do not exist currently, as the view is now empty.
+			lineGraphExists = false;
+			scatterGraphExists = false;
+
 			//Prevent editing of the xindicator.
 			xindicator.setEnabled(false);
 			//We prevent the user from seeing anything but date. 
@@ -455,7 +498,9 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		xindicator.setAdapter(adapter);
 		xindicator.setEnabled(false);
 	}
-
+	/**
+	 * Method handles updating the graph with new indicators.Handles all UI changes.
+	 */
 	public void updateGraph()
 	{
 		if(isInternetAvailable())
@@ -473,31 +518,36 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 			}
 			update.setEnabled(false);
-			datesSeekBar.setProgress(0);
+
 
 			//We reset this count so the spinner has to effect on the graph. 
-			accessspinnercount = 0;
+			accessseekbarcount = 0;
 
 			//We remove the old graph & animation from the view. 
 			layout.removeAllViews();
+			//Both graphs do not exist currently, as the view is now empty.
+			lineGraphExists = false;
+			scatterGraphExists = false;
 
-			//We create the animated logo animation and set the resources. 
-			logoanimated = new ImageView(this);
-			logoanimated.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
-			final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.rotate);
-
-			logoanimated.startAnimation(animRotate);
-			logoanimated.setImageResource(R.drawable.ic_perm_group_sync_settings);
-			//We add the image to the view. 
-			layout.addView(logoanimated);
+			// create the progress dialog
+			dialog = new ProgressDialog(this, AlertDialog.THEME_HOLO_DARK);
+			dialog.setMessage("Loading. Please wait...");
+			dialog.setIndeterminate(true);
+			dialog.setCancelable(false);
+			dialog.setCanceledOnTouchOutside(false);
+			dialog.show();
 
 			//We check if the lock is open, for dual indicators. 
 			if(isOpen == true)
 			{
+
+				//We set progress of the seekbar to 0
+				datesSeekBar.setProgress(0);
+
 				//We clear the renderer and datasets.
 				scatterGraph.clearAll(xLabel, yLabel);
 
-				//We clear the mising countries textview.
+				//We clear the missing countries textview.
 				nodata.setText("");
 
 				//We get the selected index to get the index code. 
@@ -517,7 +567,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				}
 
 			} else {
-
+				//We clear the missing countries textview.
+				nodata.setText("");
 				//We clear the renderer and datasets.
 				graph.clear(xLabel,yLabel);
 				//We get the selected index to get the index code. 
@@ -533,12 +584,10 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 					parser.getIndicatorFor(country.getId(), IndicatorName, "1970","2012");
 				}
 			}
-			//A graph exists in the view, so we set this to true.
-			graphexist = true;
-		} else{
-			//Do nothing, there is no internet connection. 
-		}
 
+		} else{
+			// no internet connection
+		}
 	}
 
 	/**
@@ -586,67 +635,96 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			//This means that the data that has finished parsing is for the X Axis.
 			if(axiscount == 0)
 			{
-				//We get the indicator to get the data. 
-				Indicator indicator = (Indicator) result.get(IndicatorNamey);
-				//We get the hashmap to iterate through. 
-				HashMap<String,String> hashmap = indicator.getValues();
-				//We add the y dataset to the graph.
-				scatterGraph.addYDataSet(hashmap, countries.get(countriescount));
-				//Increment the value to show the next dataset is for the y axis.
+				if (((Indicator)result.get(IndicatorNamey)).getValues().size() > 0) {
+					System.out.println("HAVE Y");
+					//We get the indicator to get the data.
+					Indicator indicator = (Indicator) result.get(IndicatorNamey);
+					//We get the hashmap to iterate through.
+					HashMap<String,String> hashmap = indicator.getValues();
+					//We add the y dataset to the graph.
+					scatterGraph.addYDataSet(hashmap, countries.get(countriescount));
+					//Increment the value to show the next dataset is for the y axis.
+				} else {
+					// No data for xAxis, so probably no internet at all
+					// show dialog
+					dialog.dismiss();
+					update.setEnabled(true);
+					if (countriescount == 0){
+						System.out.println("show");
+						new NoInternetAlertDialog(this);
+					}
+				}
 				axiscount++;
 			} else {
 				//This means the data that has finished parsing is for the Y Axis.
+				if (((Indicator) result.get(IndicatorNamex)).getValues().size() > 0) {
+					System.out.println("HAVE X");
+					//We get the x axis data from the indicator class.
+					Indicator indicator = (Indicator) result.get(IndicatorNamex);
+					//We get the hashmap to iterate through.
+					HashMap<String,String> hashmap = indicator.getValues();
+					//We add the dataset to the class.
+					scatterGraph.addXDataSet(hashmap, countries.get(countriescount));
+					//We add the data to the graph. We using countriescount to keep track of what countries data we are adding.
+					scatterGraph.addDataToGraph(countries.get(countriescount), year);
 
-				//We get the x axis data from the indicator class.
-				Indicator indicator = (Indicator) result.get(IndicatorNamex);
-				//We get the hashmap to iterate through. 
-				HashMap<String,String> hashmap = indicator.getValues();
-				//We add the dataset to the class.
-				scatterGraph.addXDataSet(hashmap, countries.get(countriescount));
-				//We add the data to the graph. We using countriescount to keep track of what countries data we are adding. 
-				scatterGraph.addDataToGraph(countries.get(countriescount), year);
+					//We compare the count to the size of the arraylist, to see if we have finished adding the data.
+					if(countriescount == (countries.size()-1))
+					{
 
-				//We compare the count to the size of the arraylist, to see if we have finished adding the data. 
-				if(countriescount == (countries.size()-1))
-				{
-					//We add the correct amount of renderers. 
-					scatterGraph.addRenderers();
+						//We get the minimum/maximum values for the axis.
+						xaxisminmax = scatterGraph.getXMinMax();
+						yaxisminmax = scatterGraph.getYMinMax();
 
-					//We get the minimum/maximum values for the axis.
-					xaxisminmax = scatterGraph.getXMinMax();
-					yaxisminmax = scatterGraph.getYMinMax();
+						//We now set the minmax for the graph.
 
-					//We now set the minmax for the graph. 
+						scatterGraph.setXAxisMinMax(xaxisminmax[0],xaxisminmax[1]);
+						scatterGraph.setYAxisMinMax(yaxisminmax[0],yaxisminmax[1]);
 
-					scatterGraph.setXAxisMinMax(xaxisminmax[0],xaxisminmax[1]);
-					scatterGraph.setYAxisMinMax(yaxisminmax[0],yaxisminmax[1]);
+						/*
+						 * We get the layout for the graph, remove all views from the graph.
+						 * We add the new graph to the layout in the form of a view.
+						 * We also set the loading animation to be transparent.
+						 */
+						dialog.dismiss();
+						layout.removeAllViews();
+						layout.addView(scatterGraph.getScatterGraph(getApplicationContext()), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
 
-					/*
-					 * We get the layout for the graph, remove all views from the graph.
-					 * We add the new graph to the layout in the form of a view. 
-					 * We also set the loading animation to be transparent.
-					 */
-					logoanimated.setImageResource(android.R.color.transparent);
-					layout.removeAllViews();
-					layout.addView(scatterGraph.getScatterGraph(getApplicationContext()), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
-
-					//We set the textview to represent missing data
-					nodata.setText(scatterGraph.getMissingCountries());
-					//The spinner can now be used, since an update has occured. 
-					accessspinnercount = 1;
-					//The update button can now be pressed again.
-					update.setEnabled(true);
-					//The orientation can be changed now.
-					setRequestedOrientation(prevOrientation);
-				}else {
-					//We increase the count for the next call. 
-					countriescount++;
+						//A scatter graph exists now.
+						scatterGraphExists = true;
+						//We set the textview to represent missing data
+						nodata.setText(scatterGraph.getMissingCountries());
+						//The spinner can now be used, since an update has occured.
+						accessseekbarcount = 1;
+						//The update button can now be pressed again.
+						update.setEnabled(true);
+						//The orientation can be changed now.
+						setRequestedOrientation(prevOrientation);
+					}else {
+						//We increase the count for the next call.
+						countriescount++;
+					}
+				} else {
+					// Make sure we update the countries count even we don't have internet
+					if(countriescount != (countries.size()-1)) {
+						countriescount++;
+					}
 				}
 				//We have finished parsing this countries data, so we reset the count.
 				axiscount = 0;
 			}
 		} else {
 			// This means that the data we are getting is for a single indicator. 
+			// we got result when there is no internet connection,
+			// but the size of the hashmap is empty
+			if (((Indicator)result.get(IndicatorName)).getName() == null) {
+				// reset everything
+				dialog.dismiss();
+				update.setEnabled(true);
+				System.out.println("show --");
+				new NoInternetAlertDialog(this);
+				return;
+			}
 
 			//We get the indicator to get the data. 
 			Indicator indicator = (Indicator) result.get(IndicatorName);
@@ -672,11 +750,16 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				 * We add the new graph to the layout in the form of a view. 
 				 * We also set the loading animation to be transparent.
 				 */
-				logoanimated.setImageResource(android.R.color.transparent);
+				dialog.dismiss();
 				layout.removeAllViews();
 				layout.addView(graph.getLineView(getApplicationContext()), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
 				//The update button can now be pressed again.
 				update.setEnabled(true);
+
+				//A line graph exists now.
+				lineGraphExists = true;
+
+				nodata.setText(graph.getMissingDatasets());
 				//The orientation can be changed now.
 				setRequestedOrientation(prevOrientation);
 			}else {
@@ -698,8 +781,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		if (networkInfo != null && networkInfo.isConnected()) {
 			return true;
 		}
-
-		Toast.makeText(getApplicationContext(), "No Internet Connection...", Toast.LENGTH_SHORT).show();
 		return  false;
 	}
 }
