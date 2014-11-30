@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.*;
 
+import introduction.IntroductionActivity;
+
 import java.util.HashMap;
 
 public class MainActivity extends Activity {
@@ -33,6 +35,11 @@ public class MainActivity extends Activity {
 		if(skipintro.equals("skipintro"))
 		{
 			Intent intent = new Intent(this, CountrySelectActivity.class);
+			startActivity(intent);
+		} else {
+
+			//We start the introductionActivity since the user has not done the introduction.
+			Intent intent = new Intent(this,IntroductionActivity.class);
 			startActivity(intent);
 		}
 
