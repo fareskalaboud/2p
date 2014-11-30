@@ -22,15 +22,6 @@
         android:layout_marginTop="28dp"
         android:src="@drawable/picture1" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        android:layout_above="@+id/imageView3"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="65dp"
-        android:src="@drawable/picture2" />
-
     <TextView
         android:id="@+id/TextView01"
         android:layout_width="wrap_content"
@@ -42,5 +33,13 @@
         android:text="@string/fragment2desc"
         android:textColor="#404040"
         android:textSize="28dp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_above="@+id/imageView3"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/picture2" />
 
 </RelativeLayout>

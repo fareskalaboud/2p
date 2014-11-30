@@ -24,14 +24,6 @@
         android:background="@drawable/custombutton_btn_default_holo_light"
         android:text="Got it" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="460dp"
-        android:layout_height="460dp"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:src="@drawable/picture3" />
-
     <TextView
         android:id="@+id/TextView01"
         android:layout_width="wrap_content"
@@ -43,5 +35,14 @@
         android:text="@string/fragment3desc"
         android:textColor="#404040"
         android:textSize="28dp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="460dp"
+        android:layout_height="460dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/endtut"
+        android:src="@drawable/picture3" />
 
 </RelativeLayout>
