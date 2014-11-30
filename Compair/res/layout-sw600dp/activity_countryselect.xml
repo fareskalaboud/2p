@@ -18,7 +18,7 @@
         android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="14dp"
-        android:text="Select multiple countries"
+        android:text="@string/selectcountries"
         android:textSize="22dp"
         android:textStyle="bold" />
 
@@ -33,17 +33,14 @@
 
     <Button
         android:id="@+id/graphButton"
-        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="#0F6699"
+        android:background="@drawable/custombutton_btn_default_holo_light"
         android:onClick="onClick"
         android:text="@string/graph_button"
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="24dp"
-        android:textStyle="bold" />
+        android:textSize="28dp" />
 
 </RelativeLayout>

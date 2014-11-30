@@ -10,8 +10,15 @@
     <string name="yLabel">y</string>
     <string name="nodata">all countries without data</string>
     <string name="multiplecountries">Select multiple countries</string>
-    <string name="confirmindicator">Are you sure you want to unlock the X Axis? \n This will change the graph to a scatter graph.</string>
+    <string name="confirmindicator">Are you sure you want to unlock the X Axis?\nThis will change the graph to a scatter graph.</string>
     <string name="countrylist">TextView</string>
+    <string name="confirmcountries">We recommend selecting no more than 8 countries to prevent long loading times.\nConfirm if you want to continue.</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="start">Compair lets you compare several countries at a time using a variety of statistics provided by the World Bank. 
+Compair contains tools to visualise and compare this data using multiple graph types.\nUsing this app is easy as pie:
+Select the countries you want, pick the statistics you want to compare and see the progress of that statistic over time."</string>
+    <string name="selectcountries">Select countries</string>
 
     <string-array name="indicatorID">
         <item>SP.DYN.LE00.IN</item>

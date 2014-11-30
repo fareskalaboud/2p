@@ -3,9 +3,11 @@ package seg2.compair;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.*;
 
 import java.util.HashMap;
@@ -14,27 +16,45 @@ public class MainActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
 		Fonts.makeFonts(this);
 
-        if (!isInternetAvailable()) {
+		if (!isInternetAvailable()) {
 			new NoInternetAlertDialog(this);
+		}
+
+		//We check if the user has already seen the introduction, and we skip it since we don't need to show the user on start-up again.
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+		String skipintro = preferences.getString("com.SEG2.skipintro", "noskip");
+
+		if(skipintro.equals("skipintro"))
+		{
+			Intent intent = new Intent(this, CountrySelectActivity.class);
+			startActivity(intent);
 		}
 
 	}
 
-    public void goToCountrySelector(View view) {
-        if (isInternetAvailable()) {
-            Intent intent = new Intent(this, CountrySelectActivity.class);
-            startActivity(intent);
-        } else {
-            new NoInternetAlertDialog(this);
-        }
-    }
+	public void goToCountrySelector(View view) {
+		if (isInternetAvailable()) {
+			Intent intent = new Intent(this, CountrySelectActivity.class);
+			startActivity(intent);
 
-    @Override
+			//We write into sharedpreferences that the user has already seen the intro.
+			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+			SharedPreferences.Editor editor = preferences.edit();
+			editor.putString("com.SEG2.skipintro","skipintro");
+			editor.apply();
+
+		} else {
+			new NoInternetAlertDialog(this);
+		}
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
@@ -53,15 +73,15 @@ public class MainActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-    private boolean isInternetAvailable() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+	private boolean isInternetAvailable() {
+		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
-        if (networkInfo != null && networkInfo.isConnected())
+		if (networkInfo != null && networkInfo.isConnected())
 			return true;
 
 		return false;
-    }
+	}
 
 	/**
 	 * Delete when finished. This method is an example created by Alex to show how indicators can be retrieved. 

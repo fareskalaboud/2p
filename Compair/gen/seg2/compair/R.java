@@ -317,19 +317,21 @@ public final class R {
         public static final int zimbabwe=0x7f02011b;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a0014;
+        public static final int action_settings=0x7f0a0016;
         public static final int bottombar=0x7f0a000d;
         public static final int chart=0x7f0a0008;
-        public static final int checkBox1=0x7f0a0013;
-        public static final int code=0x7f0a0012;
+        public static final int checkBox1=0x7f0a0015;
+        public static final int code=0x7f0a0014;
+        public static final int confirmcountries=0x7f0a0011;
         public static final int datespinner=0x7f0a000c;
         public static final int datetext=0x7f0a000b;
-        public static final int flag=0x7f0a0011;
+        public static final int flag=0x7f0a0013;
         public static final int graphButton=0x7f0a0003;
         public static final int imageView=0x7f0a0000;
         public static final int listView=0x7f0a0002;
         public static final int nextButton=0x7f0a000e;
         public static final int nodata=0x7f0a0009;
+        public static final int showmessage=0x7f0a0012;
         public static final int switchindicator=0x7f0a0005;
         public static final int txtIntroLine1=0x7f0a000f;
         public static final int txtIntroLine4=0x7f0a0010;
@@ -343,8 +345,9 @@ public final class R {
         public static final int activity_countryselect=0x7f030000;
         public static final int activity_graph=0x7f030001;
         public static final int activity_main=0x7f030002;
-        public static final int confirmindicator_dialog=0x7f030003;
-        public static final int countrylistview_row=0x7f030004;
+        public static final int confirmcountrycount_dialog=0x7f030003;
+        public static final int confirmindicator_dialog=0x7f030004;
+        public static final int countrylistview_row=0x7f030005;
     }
     public static final class menu {
         public static final int main=0x7f090000;
@@ -352,6 +355,9 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f060002;
         public static final int app_name=0x7f060000;
+        public static final int cancel=0x7f06000d;
+        public static final int confirm=0x7f06000c;
+        public static final int confirmcountries=0x7f06000b;
         public static final int confirmindicator=0x7f060009;
         public static final int countrylist=0x7f06000a;
         public static final int graph_button=0x7f060004;
@@ -359,6 +365,8 @@ public final class R {
         public static final int multiplecountries=0x7f060008;
         public static final int next_button=0x7f060003;
         public static final int nodata=0x7f060007;
+        public static final int selectcountries=0x7f06000f;
+        public static final int start=0x7f06000e;
         public static final int xLabel=0x7f060005;
         public static final int yLabel=0x7f060006;
     }

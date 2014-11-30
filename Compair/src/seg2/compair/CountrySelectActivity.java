@@ -13,17 +13,21 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -36,6 +40,10 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	private ArrayList<Country> countryList;
 	//Value is used in deciding whether to lock orientation for a certain period of time.
 	private int prevOrientation;
+	//Checkbox that is used in the alert dialog to not show alert dialog again.
+	private CheckBox showmessage;
+	//We check here for any user preferences.
+	private SharedPreferences preferences;
 
 
 	@Override
@@ -160,7 +168,6 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	public void onClick(View v) {
 		if(isInternetAvailable() && countryList.size() != 0) {
 			sendCheckedCountriesToGraph();
-			Log.e("DONE","DONE");
 		} else {
 			new NoInternetAlertDialog(this);
 		}
@@ -171,7 +178,6 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	 * to the next activity, which graphs the data it obtains
 	 * from it.
 	 */
-	@SuppressWarnings("unchecked")
 	public void sendCheckedCountriesToGraph() {
 		checkedCountries = new ArrayList<Country>();
 
@@ -181,17 +187,68 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 			}
 		}
 
-		System.out.println(checkedCountries.size());
+		int checkedCountriesSize = checkedCountries.size();
+		if (checkedCountriesSize >= 1 && checkedCountriesSize <= 20) {
 
-		if (checkedCountries.size() >= 1 && checkedCountries.size() <= 20) {
-			Intent intent = new Intent(this,GraphActivity.class);
+			if(checkedCountriesSize > 8)
+			{
 
-			Bundle countrybundle = new Bundle();
-			countrybundle.putSerializable("countries", checkedCountries);
-			intent.putExtras(countrybundle);
-			startActivity(intent);
+				//We check if the user has chosen not to see the dialog box that warns them about exceeding the recommended number of countries.
+				preferences = PreferenceManager.getDefaultSharedPreferences(this);
+				String showdialog = preferences.getString("com.SEG2.showdialog", "showdialog");
+
+				if(showdialog.equals("showdialog"))
+				{
+
+					//We create a dialog box telling the user that the recommended limit of countries has been exceeded.
+					AlertDialog.Builder builder = new AlertDialog.Builder(this);
+					LayoutInflater inflater = this.getLayoutInflater();
+					builder.setView(inflater.inflate(R.layout.confirmcountrycount_dialog, null));
+					builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int id) {
+							//If the checkbox is checked, it means the user does not want to see the message again. We add this to preference for the next start-up.
+							if(showmessage.isChecked())
+							{
+								SharedPreferences.Editor editor = preferences.edit();
+								editor.putString("com.SEG2.showdialog", "dontshowdialog");
+								editor.apply();
+							}
+							startIntent();
+						}
+					});
+					builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.dismiss();
+						}
+					});
+
+					// creates the dialog
+					final AlertDialog alertDialog = builder.create();
+					alertDialog.show();
+					showmessage = (CheckBox) alertDialog.findViewById(R.id.showmessage);
+				} else {
+					startIntent();
+				}
+
+			} else {
+				startIntent();
+			}
+
 		} else {
 			Toast.makeText(getApplicationContext(), "Please choose at least 1 and most 20 countries", Toast.LENGTH_SHORT).show();
 		}
+	}
+	/**
+	 * This method starts the graph activity class using the array of countries.
+	 */
+	public void startIntent()
+	{
+		Intent intent = new Intent(this,GraphActivity.class);
+		Bundle countrybundle = new Bundle();
+		countrybundle.putSerializable("countries", checkedCountries);
+		intent.putExtras(countrybundle);
+		startActivity(intent);
 	}
 }

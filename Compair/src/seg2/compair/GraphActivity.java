@@ -21,7 +21,6 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -245,6 +244,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		outState.putSerializable("linegraph", graph);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onRestoreInstanceState(Bundle savedState) {
 		super.onRestoreInstanceState(savedState);
