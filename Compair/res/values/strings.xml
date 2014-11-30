@@ -15,9 +15,7 @@
     <string name="confirmcountries">We recommend selecting no more than 8 countries to prevent long loading times.\nConfirm if you want to continue.</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
-    <string name="start">Compair lets you compare several countries at a time using a variety of statistics provided by the World Bank. 
-Compair contains tools to visualise and compare this data using multiple graph types.\nUsing this app is easy as pie:
-Select the countries you want, pick the statistics you want to compare and see the progress of that statistic over time."</string>
+    <string name="start">Thank you for downloading Compair!\n\nCompair allows you to compare multiple countries datasets provided by the world bank.\n\nThe app has some interesting features so make sure to explore the different tools.</string>
     <string name="selectcountries">Select countries</string>
 
     <string-array name="indicatorID">
