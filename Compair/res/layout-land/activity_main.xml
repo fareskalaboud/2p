@@ -29,7 +29,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="7dp"
-        android:background="#0F6699"
+        android:background="@drawable/custombutton_btn_default_holo_light"
         android:onClick="goToCountrySelector"
         android:text="@string/next_button"
         android:textAlignment="center"
