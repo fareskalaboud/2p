@@ -7,8 +7,16 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
                 tools:context="seg2.compair.CountrySelectActivity" android:focusable="false"
-                android:background="@drawable/front_end_background"
-                android:screenOrientation="landscape">
+                android:background="#D2ECF6">
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bg"
+            android:background="@drawable/front_end_background"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"/>
 
     <ImageView
             android:layout_width="wrap_content"
