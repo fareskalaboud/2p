@@ -3,10 +3,11 @@ package seg2.compair;
 import java.lang.reflect.Array;
 import java.util.*;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.widget.EditText;
+import android.widget.*;
 import model.Country;
 import model.download.JSONParser;
 import model.download.JSONParserListener;
@@ -25,8 +26,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.Toast;
 
 @SuppressWarnings("rawtypes")
 public class CountrySelectActivity extends Activity implements JSONParserListener<HashMap>, View.OnClickListener {
@@ -70,6 +69,8 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 
 //		Fonts.makeFonts(this);
 
+        configureRadioButtons();
+
 		if (isInternetAvailable()) {
 			dialog.show();
 
@@ -95,7 +96,32 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 		}
 	}
 
-	@Override
+    private void configureRadioButtons() {
+        final RadioButton countryRadioButton = (RadioButton) findViewById(R.id.countryRadioButton);
+        final RadioButton allianceRadioButton = (RadioButton) findViewById(R.id.allianceRadioButton);
+
+        countryRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    countryRadioButton.setTextColor(new Color().rgb(0, 178, 255));
+                    allianceRadioButton.setTextColor(Color.BLACK);
+                }
+            }
+        });
+
+        allianceRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    allianceRadioButton.setTextColor(new Color().rgb(0, 178, 255));
+                    countryRadioButton.setTextColor(Color.BLACK);
+                }
+            }
+        });
+    }
+
+    @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);

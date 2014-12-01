@@ -68,23 +68,28 @@
         android:textSize="24dp"
         android:textStyle="bold" />
 
-    <RadioButton
+    <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Countries"
-            android:layout_marginRight="10dp"
-            android:textSize="25dp"
-            android:id="@+id/countryRadioButton"
             android:layout_alignTop="@+id/imageView"
-            android:layout_alignEnd="@+id/filter"/>
+            android:layout_alignEnd="@+id/filter">
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Countries"
+                android:layout_marginRight="10dp"
+                android:textSize="25dp"
+                android:id="@+id/countryRadioButton"/>
 
-    <RadioButton android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:text="Alliances"
-                 android:textSize="25dp"
-                 android:id="@+id/allianceRadioButton"
-                 android:layout_below="@+id/countryRadioButton"
-                 android:layout_alignStart="@+id/countryRadioButton"
-                 android:layout_marginRight="10dp"/>
+        <RadioButton android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Alliances"
+                     android:textSize="25dp"
+                     android:id="@+id/allianceRadioButton"
+                     android:layout_below="@+id/countryRadioButton"
+                     android:layout_alignStart="@+id/countryRadioButton"
+                     android:layout_marginRight="10dp"/>
+    </RadioGroup>
+
 
 </RelativeLayout>
