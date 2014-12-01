@@ -1,10 +1,7 @@
 package seg2.compair;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.lang.reflect.Array;
+import java.util.*;
 
 import android.graphics.Typeface;
 import android.text.Editable;
@@ -38,6 +35,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	private JSONParser parser;
 	private ArrayList<Country> checkedCountries = new ArrayList<Country>();
 	private ArrayList<Country> countryList;
+
 	//Value is used in deciding whether to lock orientation for a certain period of time.
 	private int prevOrientation;
     private CountryListAdapter clAdapter;
@@ -136,9 +134,27 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 				ListView listView = (ListView)findViewById(R.id.listView);
 				countryList = new ArrayList<Country>();
 
+				// alliances
+				ArrayList<String> natoCountriesString = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.NATO)));
+				ArrayList<String> scoCountriesString = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.SCO)));
+				ArrayList<String> bricsCountriesString = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.BRICS)));
+				ArrayList<String> aseanCountriesString = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.ASEAN)));
+
+				ArrayList<Country> natoCountries = new ArrayList<Country>();
+				ArrayList<Country> scoCountries = new ArrayList<Country>();
+				ArrayList<Country> bricsCountries = new ArrayList<Country>();
+				ArrayList<Country> aseanCountries = new ArrayList<Country>();
+
 				Iterator iterator = result.entrySet().iterator();
 				while (iterator.hasNext()) {
 					Map.Entry pairs = (Map.Entry)iterator.next();
+
+					Country currentCountry = (Country)pairs.getValue();
+					if (natoCountriesString.contains(currentCountry.getId())) natoCountries.add(currentCountry);
+					if (scoCountriesString.contains(currentCountry.getId())) scoCountries.add(currentCountry);
+					if (bricsCountriesString.contains(currentCountry.getId())) bricsCountries.add(currentCountry);
+					if (aseanCountriesString.contains(currentCountry.getId())) aseanCountries.add(currentCountry);
+
 					countryList.add((Country)pairs.getValue());
 				}
 
@@ -159,6 +175,21 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 				System.out.println(result);
 			}
 		}
+	}
+
+	private createAlliances(HashMap map) {
+		ArrayList<String> natoCountries = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.NATO)));
+		ArrayList<String> scoCountries = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.SCO)));
+		ArrayList<String> bricsCountries = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.BRICS)));
+		ArrayList<String> aseanCountries = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.ASEAN)));
+
+		ArrayList<Country> nato = new ArrayList<Country>();
+		ArrayList<Country> sco = new ArrayList<Country>();
+		ArrayList<Country> brics = new ArrayList<Country>();
+		ArrayList<Country> asean = new ArrayList<Country>();
+
+
+
 	}
 
 	/**
