@@ -124,9 +124,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		//We get the string array from CountrySelectActivity.
 		countries = (ArrayList<Country>) getIntent().getSerializableExtra("countries");
 
-		//We set the fonts to lato in the activity.
-		Fonts.makeFonts(this);
-
 		//We add the years from 1970 to 2012 into an arraylist. 
 		for(int i = 1970; i<=2012; i++)
 		{
