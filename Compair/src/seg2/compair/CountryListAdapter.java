@@ -19,6 +19,16 @@ public class CountryListAdapter extends ArrayAdapter<Country> implements Filtera
     private Context context;
     private Filter filter;
 
+    /**
+     * The constructor of the custom ListView adapter, which uses
+     * Country objects instead of Strings.
+     *
+     * @param context The activity in which the ListView is.
+     * @param textViewResourceId The textview's resource ID.
+     * @param countryList an ArrayList of Country objects that
+     *                    were created from data obtained from
+     *                    the World Bank API.
+     */
     public CountryListAdapter(Context context, int textViewResourceId,
                               ArrayList<Country> countryList) {
         super(context, textViewResourceId, countryList);
@@ -28,7 +38,7 @@ public class CountryListAdapter extends ArrayAdapter<Country> implements Filtera
     }
 
     /**
-     * A private singleton class that acts as the view holder for the
+     * ViewHolder is a singleton class that acts as the view holder for the
      * countries shown on the list, which have a textview and a checkbox.
      */
     private class ViewHolder {
@@ -90,6 +100,11 @@ public class CountryListAdapter extends ArrayAdapter<Country> implements Filtera
         return convertView;
     }
 
+    /**
+     * Returns the countryList for the filter.
+     * @return an ArrayList of Country objects that contains
+     * all the countries obtained from the API.
+     */
     public ArrayList<Country> getCountryList() {
         return countryList;
     }

@@ -23,6 +23,12 @@ public class MainActivity extends Activity {
 
 	}
 
+    /**
+     * An intent that moves on to the next Activity.
+     * It first checks for an available internet connection.
+     *
+     * @param view
+     */
     public void goToCountrySelector(View view) {
         if (isInternetAvailable()) {
             Intent intent = new Intent(this, CountrySelectActivity.class);

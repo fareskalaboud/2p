@@ -14,11 +14,23 @@ public class NoInternetAlertDialog {
 
     Activity activity;
 
+    /**
+     * The NoInternetAlertDialog class represents an
+     * alert dialog on the Activity passed into the
+     * class in the constructor to warn the user that
+     * they require an internet connection to use the app.
+     * @param activity the Activity that the dialog will
+     *                 appear on.
+     */
     public NoInternetAlertDialog(Activity activity) {
         this.activity = activity;
         openAlert(new View(activity.getApplicationContext()));
     }
 
+    /**
+     * Opens the alert view.
+     * @param view Unused view that is required for the method
+     */
     private void openAlert(View view) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity, AlertDialog.THEME_HOLO_DARK);
 
