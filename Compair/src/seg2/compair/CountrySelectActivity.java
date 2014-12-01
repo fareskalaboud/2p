@@ -133,7 +133,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 			new NoInternetAlertDialog(this);
 		} else {
 			if (type.equals(parser.TYPE_COUNTRY)) {
-				ListView listView = (ListView)findViewById(R.id.listView);
+				ListView listView = (ListView)findViewById(R.id.countryListView);
 				countryList = new ArrayList<Country>();
 
 				Iterator iterator = result.entrySet().iterator();
