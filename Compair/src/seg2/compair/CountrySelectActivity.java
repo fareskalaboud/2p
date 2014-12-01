@@ -177,21 +177,6 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 		}
 	}
 
-	private createAlliances(HashMap map) {
-		ArrayList<String> natoCountries = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.NATO)));
-		ArrayList<String> scoCountries = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.SCO)));
-		ArrayList<String> bricsCountries = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.BRICS)));
-		ArrayList<String> aseanCountries = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.ASEAN)));
-
-		ArrayList<Country> nato = new ArrayList<Country>();
-		ArrayList<Country> sco = new ArrayList<Country>();
-		ArrayList<Country> brics = new ArrayList<Country>();
-		ArrayList<Country> asean = new ArrayList<Country>();
-
-
-
-	}
-
 	/**
 	 * Checks if the user's device is connected to mobile data or a WiFi router.
 	 *
