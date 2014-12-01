@@ -95,5 +95,61 @@
         <item>Unemployment, male (% of male labor force) </item>
         <item>Motor vehicles(per 1000 pers)</item>
     </string-array>
-
+    <string-array name="NATO">
+        <item>ALB</item>
+        <item>BEL</item>
+        <item>BGR</item>
+        <item>CAN</item>
+        <item>HRV</item>
+        <item>CZE</item>
+        <item>DNK</item>
+        <item>EST</item>
+        <item>FRA</item>
+        <item>DEU</item>
+        <item>GRC</item>
+        <item>HUN</item>
+        <item>IRL</item>
+        <item>ITA</item>
+        <item>LVA</item>
+        <item>LTU</item>
+        <item>LUX</item>
+        <item>NLD</item>
+        <item>NOR</item>
+        <item>POL</item>
+        <item>PRT</item>
+        <item>ROU</item>
+        <item>SVK</item>
+        <item>SVN</item>
+        <item>ESP</item>
+        <item>TUR</item>
+        <item>GBR</item>
+        <item>USA</item>
+    </string-array>
+    <string-array name="SCO">
+        <item>CHN</item>
+        <item>KAZ</item>
+        <item>KGZ</item>
+        <item>RUS</item>
+        <item>TJK</item>
+        <item>UZB</item>
+    </string-array>
+    <string-array name="BRICS">
+        <item>BRA</item>
+        <item>RUS</item>
+        <item>IND</item>
+        <item>CHN</item>
+        <item>ZAF</item>
+    </string-array>
+    <string-array name="ASEAN">
+        <item>BRN</item>
+        <item>KHM</item>
+        <item>IDN</item>
+        <item>LAO</item>
+        <item>MYS</item>
+        <item>MMR</item>
+        <item>PHL</item>
+        <item>SGP</item>
+        <item>THA</item>
+        <item>VNM</item>
+    </string-array>
 </resources>
