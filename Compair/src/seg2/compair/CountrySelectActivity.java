@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import android.graphics.Typeface;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
@@ -69,7 +70,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 		dialog.setCancelable(false);
 		dialog.setCanceledOnTouchOutside(false);
 
-		Fonts.makeFonts(this);
+//		Fonts.makeFonts(this);
 
 		if (isInternetAvailable()) {
 			dialog.show();
@@ -78,8 +79,9 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 			parser.getCountries();
 
             EditText filter = (EditText) findViewById(R.id.filter);
-            filter.addTextChangedListener(new TextWatcher() {
+            filter.setTypeface(Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf"));
 
+            filter.addTextChangedListener(new TextWatcher() {
                 public void afterTextChanged(Editable s) {
                 }
 
