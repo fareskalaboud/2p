@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 import model.Country;
 import model.download.JSONParser;
 import model.download.JSONParserListener;
@@ -36,9 +39,9 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	private ArrayList<Country> countryList;
 	//Value is used in deciding whether to lock orientation for a certain period of time.
 	private int prevOrientation;
+    private CountryListAdapter clAdapter;
 
-
-	@Override
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_countryselect);
@@ -73,6 +76,20 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 
 			parser = new JSONParser(this);
 			parser.getCountries();
+
+            EditText filter = (EditText) findViewById(R.id.filter);
+            filter.addTextChangedListener(new TextWatcher() {
+
+                public void afterTextChanged(Editable s) {
+                }
+
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    clAdapter.getFilter().filter(s.toString());
+                }
+            });
 		} else {
 			Toast.makeText(getApplicationContext(), "No internet connection, please connect to the internet!", Toast.LENGTH_LONG).show();
 		}
@@ -125,7 +142,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 
 				Collections.sort(countryList);
 
-				CountryListAdapter clAdapter = new CountryListAdapter(this, R.layout.countrylistview_row, countryList);
+				clAdapter = new CountryListAdapter(this, R.layout.countrylistview_row, countryList);
 				listView.setAdapter(clAdapter);
 
 				//TODO: Uncomment to get data

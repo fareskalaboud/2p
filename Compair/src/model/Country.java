@@ -102,6 +102,16 @@ public class Country implements Comparable<Country>, Serializable {
         this.selected = selected;
     }
 
+    /**
+     * The toString method of Country, which returns
+     * the country's name.
+     * @return the country's name
+     */
+    @Override
+    public String toString() {
+        return name;
+    }
+
 	/**
 	 * Custom comparator class to sort the array of coutries
 	 * @param another the other country class

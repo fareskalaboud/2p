@@ -38,14 +38,21 @@
             android:layout_marginTop="14dp"
             android:layout_centerHorizontal="true"/>
 
+    <EditText android:id="@+id/filter"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:hint="@string/icon_search"
+              android:inputType="textVisiblePassword"
+              android:layout_below="@id/txtSelectCountry"/>
+
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="235dp"
+        android:layout_height="205dp"
         android:layout_above="@+id/graphButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/txtSelectCountry" />
+        android:layout_below="@+id/filter" />
 
     <Button
         android:id="@+id/graphButton"

@@ -12,6 +12,7 @@
     <string name="multiplecountries">Select multiple countries</string>
     <string name="confirmindicator">Are you sure you want to unlock the X Axis? \n This will change the graph to a scatter graph.</string>
     <string name="countrylist">TextView</string>
+    <string name="icon_search">&#xf002; Search countries</string>
 
     <string-array name="indicatorID">
         <item>SP.DYN.LE00.IN</item>

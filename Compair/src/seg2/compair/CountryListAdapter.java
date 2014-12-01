@@ -5,10 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.*;
 import model.Country;
 
 import java.util.ArrayList;
@@ -16,10 +13,11 @@ import java.util.ArrayList;
 /**
  * Created by faresalaboud on 22/11/14.
  */
-public class CountryListAdapter extends ArrayAdapter<Country> {
+public class CountryListAdapter extends ArrayAdapter<Country> implements Filterable {
 
     private ArrayList<Country> countryList;
     private Context context;
+    private Filter filter;
 
     public CountryListAdapter(Context context, int textViewResourceId,
                               ArrayList<Country> countryList) {
@@ -37,6 +35,14 @@ public class CountryListAdapter extends ArrayAdapter<Country> {
         TextView code;
         CheckBox name;
         ImageView flag;
+    }
+
+    @Override
+    public Filter getFilter() {
+        if (filter == null){
+            filter = new CountryFilter(this);
+        }
+        return filter;
     }
 
     @Override
@@ -82,6 +88,9 @@ public class CountryListAdapter extends ArrayAdapter<Country> {
         }
 
         return convertView;
+    }
 
+    public ArrayList<Country> getCountryList() {
+        return countryList;
     }
 }
