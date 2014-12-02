@@ -1,6 +1,5 @@
 package seg2.compair;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 import android.graphics.Color;
@@ -21,7 +20,6 @@ import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,14 +31,24 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	private ProgressDialog dialog;
 	private ListView countriesListView;
 	private ListView alliancesListView;
+	private RadioButton countryRadioButton;
+	private RadioButton allianceRadioButton;
+	private CountryListAdapter clAdapter;
+	private Button graphButton;
+	private EditText filterWidget;
 
 	private JSONParser parser;
 	private ArrayList<Country> checkedCountries = new ArrayList<Country>();
 	private ArrayList<Country> countryList;
 
+	private final ArrayList<String> alliancesName = new ArrayList<String>() {{add("NATO"); add("SCO"); add("BRICS"); add("ASEAN");}};
+	private ArrayList<Country> natoCountries = new ArrayList<Country>();
+	private ArrayList<Country> scoCountries = new ArrayList<Country>();
+	private ArrayList<Country> bricsCountries = new ArrayList<Country>();
+	private ArrayList<Country> aseanCountries = new ArrayList<Country>();
+
 	//Value is used in deciding whether to lock orientation for a certain period of time.
 	private int prevOrientation;
-    private CountryListAdapter clAdapter;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +63,8 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 		countriesListView.setVisibility(View.VISIBLE);
 		alliancesListView = (ListView) findViewById(R.id.allianceListView);
 		alliancesListView.setVisibility(View.GONE);
+		graphButton = (Button) findViewById(R.id.graphButton);
+		filterWidget = (EditText) findViewById(R.id.filter);
 
 		//We prevent the user from rotating the screen, causing issues with the parser sending information after the activity is destroyed.
 		prevOrientation = getRequestedOrientation();
@@ -86,10 +96,9 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 			parser = new JSONParser(this);
 			parser.getCountries();
 
-            EditText filter = (EditText) findViewById(R.id.filter);
-            filter.setTypeface(Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf"));
+            filterWidget.setTypeface(Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf"));
 
-            filter.addTextChangedListener(new TextWatcher() {
+            filterWidget.addTextChangedListener(new TextWatcher() {
                 public void afterTextChanged(Editable s) {
                 }
 
@@ -106,8 +115,10 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	}
 
     private void configureRadioButtons() {
-        final RadioButton countryRadioButton = (RadioButton) findViewById(R.id.countryRadioButton);
-        final RadioButton allianceRadioButton = (RadioButton) findViewById(R.id.allianceRadioButton);
+        countryRadioButton = (RadioButton) findViewById(R.id.countryRadioButton);
+		countryRadioButton.setChecked(true);
+		countryRadioButton.setTextColor(new Color().rgb(0, 178, 255));
+        allianceRadioButton = (RadioButton) findViewById(R.id.allianceRadioButton);
 
         countryRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -115,6 +126,10 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
                 if (isChecked) {
                     countryRadioButton.setTextColor(new Color().rgb(0, 178, 255));
                     allianceRadioButton.setTextColor(Color.BLACK);
+					countriesListView.setVisibility(View.VISIBLE);
+					alliancesListView.setVisibility(View.GONE);
+					graphButton.setVisibility(View.VISIBLE);
+					filterWidget.setEnabled(true);
                 }
             }
         });
@@ -125,6 +140,10 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
                 if (isChecked) {
                     allianceRadioButton.setTextColor(new Color().rgb(0, 178, 255));
                     countryRadioButton.setTextColor(Color.BLACK);
+					alliancesListView.setVisibility(View.VISIBLE);
+					countriesListView.setVisibility(View.GONE);
+					graphButton.setVisibility(View.GONE);
+					filterWidget.setEnabled(false);
                 }
             }
         });
@@ -166,7 +185,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 			new NoInternetAlertDialog(this);
 		} else {
 			if (type.equals(parser.TYPE_COUNTRY)) {
-				ListView listView = (ListView)findViewById(R.id.countryListView);
+				countriesListView = (ListView)findViewById(R.id.countryListView);
 				countryList = new ArrayList<Country>();
 
 				// alliances
@@ -175,10 +194,10 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 				ArrayList<String> bricsCountriesString = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.BRICS)));
 				ArrayList<String> aseanCountriesString = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.ASEAN)));
 
-				ArrayList<Country> natoCountries = new ArrayList<Country>();
-				ArrayList<Country> scoCountries = new ArrayList<Country>();
-				ArrayList<Country> bricsCountries = new ArrayList<Country>();
-				ArrayList<Country> aseanCountries = new ArrayList<Country>();
+				natoCountries = new ArrayList<Country>();
+				scoCountries = new ArrayList<Country>();
+				bricsCountries = new ArrayList<Country>();
+				aseanCountries = new ArrayList<Country>();
 
 				Iterator iterator = result.entrySet().iterator();
 				while (iterator.hasNext()) {
@@ -193,10 +212,15 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 					countryList.add((Country)pairs.getValue());
 				}
 
+				// Sort the countries by name and
+				// pass these to the listView
 				Collections.sort(countryList);
-
 				clAdapter = new CountryListAdapter(this, R.layout.countrylistview_row, countryList);
-				listView.setAdapter(clAdapter);
+				countriesListView.setAdapter(clAdapter);
+
+				// Set the alliances to the other list view, so when the
+				// the user switches it can see all the alliances we have
+				setUpAlliancesListView();
 
 				//TODO: Uncomment to get data
 				//            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -210,6 +234,23 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 				System.out.println(result);
 			}
 		}
+	}
+
+	// Method for setting up the alliancesList view with an adapter and listener
+	private void setUpAlliancesListView() {
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, alliancesName);
+		alliancesListView.setAdapter(adapter);
+		alliancesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				String allianceName = alliancesName.get(position);
+
+				if (allianceName.equals("NATO")) presentNextView(natoCountries);
+				else if (allianceName.equals("SCO")) presentNextView(scoCountries);
+				else if (allianceName.equals("BRICS")) presentNextView(bricsCountries);
+				else presentNextView(aseanCountries);
+			}
+		});
 	}
 
 	/**
@@ -254,14 +295,18 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 		System.out.println(checkedCountries.size());
 
 		if (checkedCountries.size() >= 1 && checkedCountries.size() <= 20) {
-			Intent intent = new Intent(this,GraphActivity.class);
-
-			Bundle countrybundle = new Bundle();
-			countrybundle.putSerializable("countries", checkedCountries);
-			intent.putExtras(countrybundle);
-			startActivity(intent);
+			presentNextView(checkedCountries);
 		} else {
 			Toast.makeText(getApplicationContext(), "Please choose at least 1 and most 20 countries", Toast.LENGTH_SHORT).show();
 		}
+	}
+
+	private void presentNextView(ArrayList<Country> countries) {
+		Intent intent = new Intent(this,GraphActivity.class);
+
+		Bundle countrybundle = new Bundle();
+		countrybundle.putSerializable("countries", countries);
+		intent.putExtras(countrybundle);
+		startActivity(intent);
 	}
 }
