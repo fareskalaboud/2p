@@ -50,6 +50,11 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	//Value is used in deciding whether to lock orientation for a certain period of time.
 	private int prevOrientation;
 
+	/**
+	 * Overridden method from Activity, it's called
+	 * when the this view is created and presented to the view
+	 * @param savedInstanceState
+	 */
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -114,6 +119,8 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 		}
 	}
 
+	// Configure radio buttons with selected listeners to
+	// show to proper list view
     private void configureRadioButtons() {
         countryRadioButton = (RadioButton) findViewById(R.id.countryRadioButton);
 		countryRadioButton.setChecked(true);
@@ -149,6 +156,11 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
         });
     }
 
+	/**
+	 * Create options on the menu
+	 * @param menu the menu we want to create
+	 * @return true
+	 */
     @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -156,6 +168,11 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 		return true;
 	}
 
+	/**
+	 * Overridden method from Activity
+	 * @param item the menuItem selected from the options
+	 * @return boolean true, if the item exist
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
@@ -222,14 +239,6 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 				// the user switches it can see all the alliances we have
 				setUpAlliancesListView();
 
-				//TODO: Uncomment to get data
-				//            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-				//                @Override
-				//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				//                    parser.getIndicatorFor("GB", "SP.POP.TOTL", "1960", "2014");
-				//                }
-				//            });
-
 			} else if(type.equals(parser.TYPE_INDICATOR)) {
 				System.out.println(result);
 			}
@@ -268,6 +277,12 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 		return  false;
 	}
 
+	/**
+	 * Included method from ListAdapter
+	 * This method will be executed when
+	 * a list is clicked on the List View
+	 * @param v the current view
+	 */
 	public void onClick(View v) {
 		if(isInternetAvailable() && countryList.size() != 0) {
 			sendCheckedCountriesToGraph();
@@ -292,8 +307,6 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 			}
 		}
 
-		System.out.println(checkedCountries.size());
-
 		if (checkedCountries.size() >= 1 && checkedCountries.size() <= 20) {
 			presentNextView(checkedCountries);
 		} else {
@@ -301,6 +314,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 		}
 	}
 
+	// present the next view with an array of countries
 	private void presentNextView(ArrayList<Country> countries) {
 		Intent intent = new Intent(this,GraphActivity.class);
 
