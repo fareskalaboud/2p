@@ -87,7 +87,7 @@ public class ScatterGraph implements Serializable {
 	 */
 	public void addCountryList(ArrayList<Country> countries)
 	{
-		
+
 		for(Country c: countries)
 		{
 			String country = c.getId();
@@ -95,7 +95,7 @@ public class ScatterGraph implements Serializable {
 			colourcount++;
 		}
 	}
-	
+
 	/**
 	 * Adds dataset to the X Hashmap to reference later. 
 	 */
@@ -149,7 +149,7 @@ public class ScatterGraph implements Serializable {
 			series.add(x, y);
 			//We add the series to the dataset.
 			dataset.addSeries(series);
-			
+
 			//We create ta new renderer, set the colour by selecting the colour in the hashmap, set the point style and to fill.
 			XYSeriesRenderer r = new XYSeriesRenderer();
 			r.setColor(colorMap.get(country));
@@ -290,17 +290,29 @@ public class ScatterGraph implements Serializable {
 	public String getMissingCountries()
 	{
 		builder = new StringBuilder();
-		//We append the values depending on the countries that have missing values. 
-			if(missing.size() !=0)
+
+		//The size of the array
+		int size = missing.size();
+		//if there are actually missing data, then we create the string.
+		if(size > 0)
+		{
+			//We append the first part.
+			builder.append(" Some countries are missing data: ");
+			//We iterate through the entire arraylist, adding the countries to the list.
+
+			for(int i = 0; i<size; i++)
 			{
-				builder.append(" Some countries are missing data: ");
-				for(String x: missing)
+				//If this is the final country, then we want to put a fullstop instead.
+				if(i+1 == size)
 				{
-					builder.append(x+",");
+					builder.append(" and " + missing.get(i) + ".");
+				} else {
+					builder.append(missing.get(i) + ",");
 				}
 			}
-			
-		
+		}
+
+
 		return builder.toString();
 	}
 	/**
@@ -315,7 +327,7 @@ public class ScatterGraph implements Serializable {
 
 		//We remove data from the missing country datastructures and builder.
 		missing.clear();
-	
+
 		//We recreate the builder for the missing countries, the dataset and renderer. We set default renderer properties.
 		builder = new StringBuilder();
 

@@ -217,15 +217,25 @@ public class LineGraph implements Serializable {
 	{
 		//We initialise the stringbuilder
 		builder = new StringBuilder();
+
+		//The size of the array
+		int size = missingcountries.size();
 		//if there are actually missing datasets, then we create the string.
-		if(missingcountries.size() > 0)
+		if(size > 0)
 		{
 			//We append the first part.
 			builder.append("Some countries are missing a dataset: ");
 			//We iterate through the entire arraylist, adding the countries to the list.
-			for(String country: missingcountries)
+
+			for(int i = 0; i<size; i++)
 			{
-				builder.append(country +",");
+				//If this is the final country, then we want to put a fullstop instead.
+				if(i+1 == size)
+				{
+					builder.append(" and " + missingcountries.get(i) + ".");
+				} else {
+					builder.append(missingcountries.get(i) + ",");
+				}
 			}
 		}
 		return builder.toString();
