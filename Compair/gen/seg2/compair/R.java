@@ -330,8 +330,8 @@ public final class R {
         public static final int zimbabwe=0x7f020124;
     }
     public static final class id {
-        public static final int TextView01=0x7f0a001e;
-        public static final int action_settings=0x7f0a0022;
+        public static final int TextView01=0x7f0a0020;
+        public static final int action_settings=0x7f0a0024;
         public static final int allianceListView=0x7f0a0004;
         public static final int allianceRadioButton=0x7f0a0007;
         public static final int background=0x7f0a0014;
@@ -339,29 +339,31 @@ public final class R {
         public static final int bottombar=0x7f0a0013;
         public static final int chart=0x7f0a000e;
         public static final int checkBox1=0x7f0a001a;
-        public static final int code=0x7f0a001b;
+        public static final int code=0x7f0a001d;
+        public static final int confirmcountries=0x7f0a001b;
         public static final int countryListView=0x7f0a0001;
         public static final int countryRadioButton=0x7f0a0006;
         public static final int datespinner=0x7f0a0012;
         public static final int datetext=0x7f0a0011;
-        public static final int endtut=0x7f0a0020;
+        public static final int endtut=0x7f0a0022;
         public static final int filter=0x7f0a0003;
         public static final int flag=0x7f0a0018;
         public static final int graphButton=0x7f0a0002;
         public static final int imageView=0x7f0a0009;
-        public static final int imageView1=0x7f0a001c;
-        public static final int imageView2=0x7f0a001d;
-        public static final int imageView3=0x7f0a001f;
+        public static final int imageView1=0x7f0a001e;
+        public static final int imageView2=0x7f0a001f;
+        public static final int imageView3=0x7f0a0021;
         public static final int name=0x7f0a0019;
         public static final int nextButton=0x7f0a0015;
         public static final int nodata=0x7f0a000f;
         public static final int radioGroup1=0x7f0a0005;
+        public static final int showmessage=0x7f0a001c;
         public static final int switchindicator=0x7f0a000b;
         public static final int txtIntroLine1=0x7f0a0016;
         public static final int txtIntroLine2=0x7f0a0017;
         public static final int txtSelectCountry=0x7f0a0008;
         public static final int update=0x7f0a0010;
-        public static final int viewpager=0x7f0a0021;
+        public static final int viewpager=0x7f0a0023;
         public static final int xlock=0x7f0a000d;
         public static final int xspinner=0x7f0a000a;
         public static final int yspinner=0x7f0a000c;
@@ -371,12 +373,13 @@ public final class R {
         public static final int activity_graph=0x7f030001;
         public static final int activity_main=0x7f030002;
         public static final int alliancelistview_row=0x7f030003;
-        public static final int confirmindicator_dialog=0x7f030004;
-        public static final int countrylistview_row=0x7f030005;
-        public static final int fragment1_layout=0x7f030006;
-        public static final int fragment2_layout=0x7f030007;
-        public static final int fragment3_layout=0x7f030008;
-        public static final int viewpager_layout=0x7f030009;
+        public static final int confirmcountrycount_dialog=0x7f030004;
+        public static final int confirmindicator_dialog=0x7f030005;
+        public static final int countrylistview_row=0x7f030006;
+        public static final int fragment1_layout=0x7f030007;
+        public static final int fragment2_layout=0x7f030008;
+        public static final int fragment3_layout=0x7f030009;
+        public static final int viewpager_layout=0x7f03000a;
     }
     public static final class menu {
         public static final int main=0x7f090000;
@@ -384,11 +387,14 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f060002;
         public static final int app_name=0x7f060000;
+        public static final int cancel=0x7f060010;
+        public static final int confirm=0x7f06000f;
+        public static final int confirmcountries=0x7f06000e;
         public static final int confirmindicator=0x7f060009;
         public static final int countrylist=0x7f06000a;
-        public static final int fragment1desc=0x7f06000f;
-        public static final int fragment2desc=0x7f06000e;
-        public static final int fragment3desc=0x7f060010;
+        public static final int fragment1desc=0x7f060012;
+        public static final int fragment2desc=0x7f060011;
+        public static final int fragment3desc=0x7f060013;
         public static final int graph_button=0x7f060004;
         public static final int hello_world=0x7f060001;
         public static final int icon_search=0x7f06000b;

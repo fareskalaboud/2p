@@ -1,12 +1,12 @@
 package seg2.compair;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.widget.*;
 import model.Country;
 import model.download.JSONParser;
 import model.download.JSONParserListener;
@@ -14,16 +14,32 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.Toast;
 
 @SuppressWarnings("rawtypes")
 public class CountrySelectActivity extends Activity implements JSONParserListener<HashMap>, View.OnClickListener {
@@ -49,13 +65,17 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 
 	//Value is used in deciding whether to lock orientation for a certain period of time.
 	private int prevOrientation;
+	//Checkbox that is used in the alert dialog to not show alert dialog again.
+	private CheckBox showmessage;
+	//We check here for any user preferences.
+	private SharedPreferences preferences;
 
 	/**
 	 * Overridden method from Activity, it's called
 	 * when the this view is created and presented to the view
 	 * @param savedInstanceState
 	 */
-    @Override
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_countryselect);
@@ -91,9 +111,9 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 		dialog.setCancelable(false);
 		dialog.setCanceledOnTouchOutside(false);
 
-//		Fonts.makeFonts(this);
+		//		Fonts.makeFonts(this);
 
-        configureRadioButtons();
+		configureRadioButtons();
 
 		if (isInternetAvailable()) {
 			dialog.show();
@@ -101,21 +121,21 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 			parser = new JSONParser(this);
 			parser.getCountries();
 
-            filterWidget.setTypeface(Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf"));
+			filterWidget.setTypeface(Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf"));
 
-            filterWidget.addTextChangedListener(new TextWatcher() {
-                public void afterTextChanged(Editable s) {
-                }
+			filterWidget.addTextChangedListener(new TextWatcher() {
+				public void afterTextChanged(Editable s) {
+				}
 
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                }
+				public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+				}
 
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if(clAdapter != null) {
-                        clAdapter.getFilter().filter(s.toString());
-                    }
-                }
-            });
+				public void onTextChanged(CharSequence s, int start, int before, int count) {
+					if(clAdapter != null) {
+						clAdapter.getFilter().filter(s.toString());
+					}
+				}
+			});
 		} else {
 			Toast.makeText(getApplicationContext(), "No internet connection, please connect to the internet!", Toast.LENGTH_LONG).show();
 		}
@@ -123,48 +143,48 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 
 	// Configure radio buttons with selected listeners to
 	// show to proper list view
-    private void configureRadioButtons() {
-        countryRadioButton = (RadioButton) findViewById(R.id.countryRadioButton);
+	private void configureRadioButtons() {
+		countryRadioButton = (RadioButton) findViewById(R.id.countryRadioButton);
 		countryRadioButton.setChecked(true);
 		countryRadioButton.setTextColor(new Color().rgb(0, 178, 255));
-        allianceRadioButton = (RadioButton) findViewById(R.id.allianceRadioButton);
+		allianceRadioButton = (RadioButton) findViewById(R.id.allianceRadioButton);
 
-        countryRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    countryRadioButton.setTextColor(new Color().rgb(0, 178, 255));
-                    allianceRadioButton.setTextColor(Color.BLACK);
+		countryRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if (isChecked) {
+					countryRadioButton.setTextColor(new Color().rgb(0, 178, 255));
+					allianceRadioButton.setTextColor(Color.BLACK);
 					countriesListView.setVisibility(View.VISIBLE);
 					alliancesListView.setVisibility(View.GONE);
 					graphButton.setVisibility(View.VISIBLE);
-                    filterWidget.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+					filterWidget.setVisibility(View.VISIBLE);
+				}
+			}
+		});
 
-        allianceRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    allianceRadioButton.setTextColor(new Color().rgb(0, 178, 255));
-                    countryRadioButton.setTextColor(Color.BLACK);
+		allianceRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if (isChecked) {
+					allianceRadioButton.setTextColor(new Color().rgb(0, 178, 255));
+					countryRadioButton.setTextColor(Color.BLACK);
 					alliancesListView.setVisibility(View.VISIBLE);
 					countriesListView.setVisibility(View.GONE);
 					graphButton.setVisibility(View.GONE);
 					filterWidget.setEnabled(false);
-                    filterWidget.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
-    }
+					filterWidget.setVisibility(View.INVISIBLE);
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create options on the menu
 	 * @param menu the menu we want to create
 	 * @return true
 	 */
-    @Override
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
@@ -310,8 +330,55 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 			}
 		}
 
-		if (checkedCountries.size() >= 1 && checkedCountries.size() <= 20) {
-			presentNextView(checkedCountries);
+		int checkedCountriesSize = checkedCountries.size();
+		if (checkedCountriesSize >= 1 && checkedCountriesSize <= 20) {
+
+			if(checkedCountriesSize > 8)
+			{
+
+				//We check if the user has chosen not to see the dialog box that warns them about exceeding the recommended number of countries.
+				preferences = PreferenceManager.getDefaultSharedPreferences(this);
+				String showdialog = preferences.getString("com.SEG2.showdialog", "showdialog");
+
+				if(showdialog.equals("showdialog"))
+				{
+
+					//We create a dialog box telling the user that the recommended limit of countries has been exceeded.
+					AlertDialog.Builder builder = new AlertDialog.Builder(this);
+					LayoutInflater inflater = this.getLayoutInflater();
+					builder.setView(inflater.inflate(R.layout.confirmcountrycount_dialog, null));
+					builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int id) {
+							//If the checkbox is checked, it means the user does not want to see the message again. We add this to preference for the next start-up.
+							if(showmessage.isChecked())
+							{
+								SharedPreferences.Editor editor = preferences.edit();
+								editor.putString("com.SEG2.showdialog", "dontshowdialog");
+								editor.apply();
+							}
+							startIntent();
+						}
+					});
+					builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.dismiss();
+						}
+					});
+
+					// creates the dialog
+					final AlertDialog alertDialog = builder.create();
+					alertDialog.show();
+					showmessage = (CheckBox) alertDialog.findViewById(R.id.showmessage);
+				} else {
+					startIntent();
+				}
+
+			} else {
+				startIntent();
+			}
+
 		} else {
 			Toast.makeText(getApplicationContext(), "Please choose at least 1 and most 20 countries", Toast.LENGTH_SHORT).show();
 		}
@@ -323,6 +390,18 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 
 		Bundle countrybundle = new Bundle();
 		countrybundle.putSerializable("countries", countries);
+		intent.putExtras(countrybundle);
+		startActivity(intent);
+	}
+
+	/**
+	 * This method starts the graph activity class using the array of countries.
+	 */
+	public void startIntent()
+	{
+		Intent intent = new Intent(this,GraphActivity.class);
+		Bundle countrybundle = new Bundle();
+		countrybundle.putSerializable("countries", checkedCountries);
 		intent.putExtras(countrybundle);
 		startActivity(intent);
 	}
