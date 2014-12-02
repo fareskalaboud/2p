@@ -86,8 +86,6 @@
                      android:text="Alliances"
                      android:textSize="25dp"
                      android:id="@+id/allianceRadioButton"
-                     android:layout_below="@+id/countryRadioButton"
-                     android:layout_alignStart="@+id/countryRadioButton"
                      android:layout_marginRight="10dp"/>
     </RadioGroup>
 
