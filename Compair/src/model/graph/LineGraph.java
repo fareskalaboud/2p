@@ -221,7 +221,7 @@ public class LineGraph implements Serializable {
 		if(missingcountries.size() > 0)
 		{
 			//We append the first part.
-			builder.append("Countries missing dataset: ");
+			builder.append("Some countries are missing a dataset: ");
 			//We iterate through the entire arraylist, adding the countries to the list.
 			for(String country: missingcountries)
 			{

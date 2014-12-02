@@ -2,16 +2,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
     android:background="#D2ECF6"
+    android:orientation="vertical"
     tools:context="seg2.compair.GraphActivity" >
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="25dp"
-            android:text="Choose the X and Y axes below."
-            android:layout_margin="10dp"    />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Choose the X and Y axes below."
+        android:textSize="25dp" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -57,7 +57,6 @@
             android:layout_height="40dp"
             android:onClick="lock"
             android:src="@drawable/lock" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -71,14 +70,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
-
-        <TextView
-                android:layout_marginLeft="10dp"
-            android:id="@+id/nodata"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="all countries without data"
-            android:textSize="14dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -92,8 +83,8 @@
             android:id="@+id/update"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
             android:onClick="update"
             android:text="Update" />
 
@@ -107,8 +98,8 @@
         <SeekBar
             android:id="@+id/datespinner"
             android:layout_width="match_parent"
-            android:layout_marginRight="10dp"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:progressDrawable="@drawable/customseekbar_scrubber_progress"
             android:thumb="@drawable/customseekbar_scrubber_control" />
     </LinearLayout>

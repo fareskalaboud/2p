@@ -63,8 +63,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	//Text for the date, invisible default
 	private TextView datetext;
 
-	//Texview for any country that does not have data when using dual indicators.
-	private TextView nodata;
 
 	//Update button
 	private Button update;
@@ -149,9 +147,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		//Initialise the date text for dual indicators.
 		datetext = (TextView)findViewById(R.id.datetext);
 
-		//Initialise the textview for dual indicators of countries with no data.
-		nodata = (TextView)findViewById(R.id.nodata);
-		nodata.setText("");
+
 
 		/*
 		 * This spinner is kept invisible till unlocked when the dual indicators are unlocked. 
@@ -269,8 +265,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			layout.removeAllViews();
 			layout.addView(graph.getLineView(this), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
 			scatterGraphExists = false;
-			//We set the text to represent any missing countries.
-			nodata.setText(graph.getMissingDatasets());
+
 		}
 
 		//if a scatter graph exists, we want to build it again in this view.
@@ -279,8 +274,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			//We add the view of the final graph.
 			layout.removeAllViews();
 			layout.addView(scatterGraph.getScatterGraph(this), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
-			//We set the textview to represent missing data
-			nodata.setText(scatterGraph.getMissingCountries());
 			lineGraphExists = false;
 
 			//We set the seekbar to active
@@ -300,6 +293,36 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 		xindicator.setSelection(xindicatorpos);
 		yindicator.setSelection(yindicatorpos);
+	}
+
+	/**
+	 * This method creates a dialog box with a confirm button. 
+	 * @param message The message that we want to tell the user. 
+	 */
+	public void createMissingDialog(String message)
+	{
+		//We create a dialog to confirm the user wants to open the lock and use dual indicators. 
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		LayoutInflater inflater = this.getLayoutInflater();
+		builder.setView(inflater.inflate(R.layout.confirmindicator_dialog, null));
+
+		builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener(){
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+				dialog.dismiss();
+			}
+		});
+
+		final AlertDialog alertDialog = builder.create();
+
+		alertDialog.show();
+		TextView description = (TextView)alertDialog.findViewById(R.id.description);
+		description.setText(message);
+
+
 	}
 
 	/**
@@ -338,8 +361,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 						//We add the view of the final graph.
 						layout.addView(scatterGraph.getScatterGraph(getApplicationContext()), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
 
-						//We set the textview to represent missing data
-						nodata.setText(scatterGraph.getMissingCountries());
 					}
 				}
 			}
@@ -438,13 +459,20 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				}
 			});
 
+			builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+
+					dialog.dismiss();
+				}
+			});
+
 			final AlertDialog alertDialog = builder.create();
 			alertDialog.show();
 		} else if(update.isEnabled() == true) {
 			//We set the spinner back to 0 for the next instance of using dual indicators.
 			accessseekbarcount = 0;
-			//We clear the mising countries textview.
-			nodata.setText("");
 			//We set the x indicator back to the date array, to remove the rest of the indicators. 
 			setXAdapterDate();
 			//We set the lock back to close.
@@ -544,9 +572,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				//We clear the renderer and datasets.
 				scatterGraph.clearAll(xLabel, yLabel);
 
-				//We clear the missing countries textview.
-				nodata.setText("");
-
 				//We get the selected index to get the index code. 
 				int IndicatorPosy = yindicator.getSelectedItemPosition();
 				int IndicatorPosx = xindicator.getSelectedItemPosition();
@@ -564,8 +589,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				}
 
 			} else {
-				//We clear the missing countries textview.
-				nodata.setText("");
+
 				//We clear the renderer and datasets.
 				graph.clear(xLabel,yLabel);
 				//We get the selected index to get the index code. 
@@ -689,8 +713,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 						//A scatter graph exists now.
 						scatterGraphExists = true;
-						//We set the textview to represent missing data
-						nodata.setText(scatterGraph.getMissingCountries());
+						//We create a dialog to represent missing data
+						createMissingDialog(scatterGraph.getMissingCountries());
 						//The spinner can now be used, since an update has occured.
 						accessseekbarcount = 1;
 						//The update button can now be pressed again.
@@ -756,7 +780,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				//A line graph exists now.
 				lineGraphExists = true;
 
-				nodata.setText(graph.getMissingDatasets());
+				createMissingDialog(graph.getMissingDatasets());
 				//The orientation can be changed now.
 				setRequestedOrientation(prevOrientation);
 			}else {
