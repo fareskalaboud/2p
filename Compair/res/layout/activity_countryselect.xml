@@ -39,18 +39,15 @@
 
     <Button
         android:id="@+id/graphButton"
-        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="#0F6699"
+        android:background="@drawable/custombutton_btn_default_holo_light"
         android:onClick="onClick"
         android:text="@string/graph_button"
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="24dp"
-        android:textStyle="bold" />
+        android:textSize="24dp" />
 
     <RadioGroup
         android:id="@+id/radioGroup1"
