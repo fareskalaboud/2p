@@ -31,6 +31,9 @@ import android.view.View;
 public class CountrySelectActivity extends Activity implements JSONParserListener<HashMap>, View.OnClickListener {
 
 	private ProgressDialog dialog;
+	private ListView countriesListView;
+	private ListView alliancesListView;
+
 	private JSONParser parser;
 	private ArrayList<Country> checkedCountries = new ArrayList<Country>();
 	private ArrayList<Country> countryList;
@@ -46,6 +49,12 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 
 		// make sure we have an empty set of checked countries
 		checkedCountries = new ArrayList<Country>();
+
+		// register widgets
+		countriesListView = (ListView) findViewById(R.id.countryListView);
+		countriesListView.setVisibility(View.VISIBLE);
+		alliancesListView = (ListView) findViewById(R.id.allianceListView);
+		alliancesListView.setVisibility(View.GONE);
 
 		//We prevent the user from rotating the screen, causing issues with the parser sending information after the activity is destroyed.
 		prevOrientation = getRequestedOrientation();
