@@ -106,7 +106,9 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
                 }
 
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    clAdapter.getFilter().filter(s.toString());
+                    if(clAdapter != null) {
+                        clAdapter.getFilter().filter(s.toString());
+                    }
                 }
             });
 		} else {
