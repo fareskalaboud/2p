@@ -13,6 +13,11 @@
     <string name="confirmindicator">Are you sure you want to unlock the X Axis? \n This will change the graph to a scatter graph.</string>
     <string name="countrylist">TextView</string>
     <string name="icon_search">&#xf002; Search countries</string>
+    <string name="start">Thank you for downloading Compair!\n\nCompair allows you to compare multiple countries datasets provided by the world bank.\n\nThe app has some interesting features so make sure to explore the different tools.</string>
+    <string name="selectcountries">Select countries</string>
+    <string name="fragment2desc"> The graph has extensive interactivity and features, so take time to explore!</string>
+    <string name="fragment1desc"> Thank you for downloading Compair!\n\nCompair allows you to compare multiple countries datasets provided by the world bank.\n\nSwipe to continue.</string>
+    <string name="fragment3desc"> The application works on both Android tablets and phones, however we recommend using a tablet to display the data.</string>
 
     <string-array name="indicatorID">
         <item>SP.DYN.LE00.IN</item>
@@ -152,4 +157,5 @@
         <item>THA</item>
         <item>VNM</item>
     </string-array>
+
 </resources>
