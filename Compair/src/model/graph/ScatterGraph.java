@@ -52,9 +52,8 @@ public class ScatterGraph implements Serializable {
 	//This stringbuilder is used to create the missing countries string.
 	private StringBuilder builder;
 	//We store the missing values in the seperate arraylists
-	private ArrayList<String> missingx;
-	private ArrayList<String> missingy;
-	private ArrayList<String> missingxy;
+	private ArrayList<String> missing;
+
 
 
 	/**
@@ -66,10 +65,8 @@ public class ScatterGraph implements Serializable {
 		yMap = new HashMap<String,HashMap<String,String>>();
 		builder = new StringBuilder();
 
-		missingx = new ArrayList<String>();
-		missingy = new ArrayList<String>();
-		missingxy = new ArrayList<String>();
-		
+		missing = new ArrayList<String>();
+
 		colorMap = new HashMap<String,Integer>();
 
 	}
@@ -133,15 +130,9 @@ public class ScatterGraph implements Serializable {
 
 		//We see if the data is not there, if it isn't we do not add it to an arraylist and update the textview accordingly at the end.
 		//We add the name as the name of the country, not the ID
-		if(x==0 && y ==0)
+		if(x==0 || y ==0)
 		{
-			missingxy.add(c.getName());
-		} else if (x==0)
-		{
-			missingx.add(c.getName());
-		} else if (y==0)
-		{
-			missingy.add(c.getName());
+			missing.add(c.getName());
 		} else {
 			//If the y axis value is greater than a certain value, we need to move the margin.
 
@@ -300,35 +291,16 @@ public class ScatterGraph implements Serializable {
 	{
 		builder = new StringBuilder();
 		//We append the values depending on the countries that have missing values. 
-		try{
-			if(missingxy.size() !=0)
+			if(missing.size() !=0)
 			{
-				builder.append(" Countries missing (x,y): ");
-				for(String x: missingxy)
+				builder.append(" Some countries are missing data: ");
+				for(String x: missing)
 				{
 					builder.append(x+",");
 				}
 			}
-			if(missingx.size() !=0)
-			{
-				builder.append(" Countries missing (x): ");
-				for(String x: missingx)
-				{
-					builder.append(x+",");
-				}
-			}
-			if(missingy.size() !=0)
-			{
-				builder.append(" Countries missing (y): ");
-				for(String x: missingy)
-				{
-					builder.append(x+",");
-				}
-			}
-		} catch (NullPointerException e)
-		{
-
-		}
+			
+		
 		return builder.toString();
 	}
 	/**
@@ -342,9 +314,8 @@ public class ScatterGraph implements Serializable {
 		colourcount = 0;
 
 		//We remove data from the missing country datastructures and builder.
-		missingxy.clear();
-		missingx.clear();
-		missingy.clear();
+		missing.clear();
+	
 		//We recreate the builder for the missing countries, the dataset and renderer. We set default renderer properties.
 		builder = new StringBuilder();
 
