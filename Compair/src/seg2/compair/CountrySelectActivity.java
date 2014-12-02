@@ -138,7 +138,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 					countriesListView.setVisibility(View.VISIBLE);
 					alliancesListView.setVisibility(View.GONE);
 					graphButton.setVisibility(View.VISIBLE);
-					filterWidget.setEnabled(true);
+                    filterWidget.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -153,6 +153,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 					countriesListView.setVisibility(View.GONE);
 					graphButton.setVisibility(View.GONE);
 					filterWidget.setEnabled(false);
+                    filterWidget.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -249,7 +250,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 
 	// Method for setting up the alliancesList view with an adapter and listener
 	private void setUpAlliancesListView() {
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, alliancesName);
+		AllianceListAdapter adapter = new AllianceListAdapter(this, R.layout.alliancelistview_row, alliancesName);
 		alliancesListView.setAdapter(adapter);
 		alliancesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
