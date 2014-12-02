@@ -38,7 +38,12 @@ public class ScatterGraph implements Serializable {
 			,Color.parseColor("#2897B7"),Color.parseColor("#2F74D0"),Color.parseColor("#6755E3"),Color.parseColor("#93BF96")
 			,Color.parseColor("#75D6FF"),Color.parseColor("#FE67EB"),Color.parseColor("#DFDF00"),Color.parseColor("#6094DB")
 			,Color.parseColor("#89FC63"),Color.parseColor("#8FFEDD"),Color.parseColor("#BBBBFF"),Color.parseColor("#DFB0FF")
-			,Color.parseColor("#BAD0EF"),Color.parseColor("#7DFDD7"),Color.parseColor("#FFBBF7"),Color.parseColor("#FFA8A8")};
+			,Color.parseColor("#BAD0EF"),Color.parseColor("#7DFDD7"),Color.parseColor("#FFBBF7"),Color.parseColor("#FFA8A8")
+			,Color.parseColor("#FFB60B"),Color.parseColor("#FFAC62"),Color.parseColor("#CF8D72"),Color.parseColor("#CB59E8")
+			,Color.parseColor("#A5D3CA"),Color.parseColor("#FF8E8E"),Color.parseColor("#67C7E2"),Color.parseColor("#A5D3CA")
+			,Color.parseColor("#FFA8FF"),Color.parseColor("#9191FF"),Color.parseColor("#DECF9C"),Color.parseColor("#FF9331")
+			,Color.parseColor("#C17753"),Color.parseColor("#990099"),Color.parseColor("#4A9586"),Color.parseColor("#F70000")
+			,Color.parseColor("#FFE920"),Color.parseColor("#E0E04E"),Color.parseColor("#C48484"),Color.parseColor("#25A0C5")};
 
 	//This hashmap will store the country and assign it a colour.
 	private HashMap<String,Integer> colorMap;
