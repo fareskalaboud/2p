@@ -59,7 +59,7 @@ public class ScatterGraph implements Serializable {
 	//We store the missing values in the seperate arraylists
 	private ArrayList<String> missing;
 
-
+	private double[] panLimits;
 
 	/**
 	 * Initialises the hashmaps, the string builder, the missing countries arrays, the countries array and the colorMap.
@@ -73,6 +73,8 @@ public class ScatterGraph implements Serializable {
 		missing = new ArrayList<String>();
 
 		colorMap = new HashMap<String,Integer>();
+		
+		panLimits = new double[4];
 
 	}
 	/**
@@ -171,7 +173,11 @@ public class ScatterGraph implements Serializable {
 	public void setXAxisMinMax(double min,double max)
 	{
 		renderer.setXAxisMin(min);
+		panLimits[0] = min;
 		renderer.setXAxisMax(max);
+		panLimits[1] = max;
+
+
 	}
 	/**
 	 * We set the minimum and maximium values of the Y Axis
@@ -181,7 +187,19 @@ public class ScatterGraph implements Serializable {
 	public void setYAxisMinMax(double min,double max)
 	{
 		renderer.setYAxisMin(min);
+		panLimits[2] = min;
 		renderer.setYAxisMax(max);
+		panLimits[3] = max;
+		
+		setPanLimits();
+	
+	}
+	/**
+	 * Sets the panlimits based on the min max values of the axis.
+	 */
+	public void setPanLimits()
+	{
+		renderer.setPanLimits(panLimits);
 	}
 	/**
 	 * We get the minimum and maximum value of the y axis, once all data is added to the class.
@@ -332,6 +350,9 @@ public class ScatterGraph implements Serializable {
 
 		//We remove data from the missing country datastructures and builder.
 		missing.clear();
+		
+		//We reset the pan limits array
+		panLimits = new double[4];
 
 		//We recreate the builder for the missing countries, the dataset and renderer. We set default renderer properties.
 		builder = new StringBuilder();
@@ -366,8 +387,8 @@ public class ScatterGraph implements Serializable {
 		renderer.setShowGrid(true);
 		renderer.setGridColor(Color.LTGRAY);
 		//Set the colours of the labels and the axis. 
-		renderer.setAxesColor(Color.DKGRAY);
-		renderer.setLabelsColor(Color.DKGRAY);
+		renderer.setAxesColor(Color.WHITE);
+		renderer.setLabelsColor(Color.WHITE);
 		renderer.setApplyBackgroundColor(true);
 		//We can set the background and margin colors using the RGB values.
 		renderer.setBackgroundColor(Color.rgb(59, 59, 59));

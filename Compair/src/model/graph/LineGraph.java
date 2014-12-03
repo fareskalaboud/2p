@@ -108,8 +108,8 @@ public class LineGraph implements Serializable {
 		renderer.setShowGrid(true);
 		renderer.setGridColor(Color.LTGRAY);
 		//Set the colours of the labels and the axis. 
-		renderer.setAxesColor(Color.DKGRAY);
-		renderer.setLabelsColor(Color.DKGRAY);
+		renderer.setAxesColor(Color.WHITE);
+		renderer.setLabelsColor(Color.WHITE);
 		renderer.setApplyBackgroundColor(true);
 		//We can set the background and margin colors using the RGB values.
 		renderer.setBackgroundColor(Color.rgb(59, 59, 59));

@@ -216,6 +216,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 		//We initialise the renderer and dataseries.
 		graph.clear(xLabel,yLabel);
+		
 		//We add the list of countries to the scatter graph class.
 		scatterGraph.addCountryList(countries);
 	}
