@@ -89,6 +89,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/custombutton_btn_default_holo_light"
+            android:textColor="#FFFFFF"
             android:onClick="update"
             android:text="Update" />
 

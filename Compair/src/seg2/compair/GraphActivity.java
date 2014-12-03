@@ -196,7 +196,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 		//We create the adapter for the list view, using array indicatorName to fill the list. 
 		ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
-				R.array.indicatorName, android.R.layout.simple_spinner_item);
+				R.array.indicatorName, R.layout.indicatorspinner_item);
 		adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		yindicator.setAdapter(adapter2);
 		//upon making a selection we set the label string correctly. 
@@ -506,7 +506,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	{
 		//We add adapters to the x and y spinners, to edit the labels to match the correct chosen label. 
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-				R.array.date, android.R.layout.simple_spinner_item);
+				R.array.date, R.layout.indicatorspinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		xindicator.setAdapter(adapter);
 		xindicator.setEnabled(false);
@@ -518,7 +518,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	{
 		//We add adapters to the x and y spinners, to edit the labels to match the correct chosen label. 
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-				R.array.indicatorName, android.R.layout.simple_spinner_item);
+				R.array.indicatorName, R.layout.indicatorspinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		xindicator.setAdapter(adapter);
 		xindicator.setEnabled(false);

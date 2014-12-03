@@ -19,6 +19,7 @@
             android:layout_alignBottom="@+id/checkBox1"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/checkBox1"
+            android:textColor="#FFFFFF"
             android:text="TextView" />
     <CheckBox
             android:id="@+id/checkBox1"

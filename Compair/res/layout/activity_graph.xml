@@ -83,6 +83,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/custombutton_btn_default_holo_light"
             android:onClick="update"
+            android:textColor="#FFFFFF"
             android:text="Update"
             android:textSize="15dp" />
 
