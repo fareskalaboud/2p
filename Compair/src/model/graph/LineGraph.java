@@ -21,6 +21,7 @@ import org.achartengine.renderer.XYSeriesRenderer;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
+import android.util.Log;
 /**
  *This class defines the line graph and all the dataset/operations and renderer for it. 
  * @author Sean
@@ -56,6 +57,9 @@ public class LineGraph implements Serializable {
 	private StringBuilder builder;
 	//Used to store the missing countries.
 	private ArrayList<String> missingcountries;
+	//We hold the min max values for the y axis
+	double min = 0;
+	double max;
 	/**
 	 * We intialise the missing countries arraylist.
 	 */
@@ -168,6 +172,20 @@ public class LineGraph implements Serializable {
 				Date convertedDate = sdf.parse(date);
 				//We add the date and the value.
 				timeSeries.add(convertedDate, valuedouble);
+				//If the min value is 0 it means it hasn't changed.
+				if( min ==0)
+				{
+					min = valuedouble;
+				}
+
+				if(valuedouble < min)
+				{
+					min = valuedouble;	
+				}
+				if(valuedouble > max)
+				{
+					max = valuedouble;	
+				}
 			}
 		}
 
@@ -211,10 +229,33 @@ public class LineGraph implements Serializable {
 
 	public GraphicalView getLineView(Context c)
 	{
+
+		//We create the min/max dates 
+		StringBuilder builder = new StringBuilder();
+
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		String datestart = "01-01-1970";
+		String dateend = "01-01-2012";
+		Date convertedDateend = new Date();
+		Date convertedDatestart = new Date();
+		try {
+			convertedDateend = sdf.parse(dateend);
+			convertedDatestart = sdf.parse(datestart);
+		} catch (ParseException e) {
+			Log.e("ERRORPARSING","ERRORPARSING");
+			e.printStackTrace();
+		}
+		
+		double[] minmax = {convertedDatestart.getTime(),convertedDateend.getTime(),min,max};
+		renderer.setPanLimits(minmax);
+
 		GraphicalView chart = ChartFactory.getTimeChartView(c, dataset, renderer,"dd/MM/yyyy");
 
 		return chart;
 	}
+
+
 	/**
 	 * We create the string representing the countries missing the entire dataset.
 	 * @return String representing the countries missing a dataset, dataset should be entered before calling this method.
@@ -238,7 +279,13 @@ public class LineGraph implements Serializable {
 				//If this is the final country, then we want to put a fullstop instead.
 				if(i+1 == size)
 				{
-					builder.append(" and " + missingcountries.get(i) + ".");
+					if(size == 1)
+					{
+						builder.append(missingcountries.get(i) + ".");
+					} else {
+						builder.append(" and " + missingcountries.get(i) + ".");
+					}
+					
 				} else {
 					builder.append(missingcountries.get(i) + ",");
 				}

@@ -192,7 +192,7 @@ public class ScatterGraph implements Serializable {
 		panLimits[3] = max;
 		
 		setPanLimits();
-	
+		
 	}
 	/**
 	 * Sets the panlimits based on the min max values of the axis.
