@@ -251,7 +251,7 @@ public class LineGraph implements Serializable {
 
 		double[] minmax = {convertedDatestart.getTime(),convertedDateend.getTime(),min,max};
 		renderer.setPanLimits(minmax);
-
+		renderer.setZoomLimits(minmax);
 		GraphicalView chart = ChartFactory.getTimeChartView(c, dataset, renderer,"yyyy");
 
 		return chart;
