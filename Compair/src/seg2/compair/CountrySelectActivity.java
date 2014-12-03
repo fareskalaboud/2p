@@ -132,7 +132,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 
 				public void onTextChanged(CharSequence s, int start, int before, int count) {
 					if(clAdapter != null) {
-						clAdapter.getFilter().filter(s.toString());
+						clAdapter.filter(s.toString());
 					}
 				}
 			});
@@ -172,7 +172,6 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 					alliancesListView.setVisibility(View.VISIBLE);
 					countriesListView.setVisibility(View.GONE);
 					graphButton.setVisibility(View.GONE);
-					filterWidget.setEnabled(false);
 					filterWidget.setVisibility(View.INVISIBLE);
 				}
 			}

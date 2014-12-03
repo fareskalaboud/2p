@@ -1,5 +1,6 @@
 package seg2.compair;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.*;
 import model.Country;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by faresalaboud on 22/11/14.
@@ -16,8 +18,8 @@ import java.util.ArrayList;
 public class CountryListAdapter extends ArrayAdapter<Country> implements Filterable {
 
     private ArrayList<Country> countryList;
+    private ArrayList<Country> originCountryList;
     private Context context;
-    private Filter filter;
 
     /**
      * The constructor of the custom ListView adapter, which uses
@@ -35,6 +37,9 @@ public class CountryListAdapter extends ArrayAdapter<Country> implements Filtera
         this.context = context;
         this.countryList = new ArrayList<Country>();
         this.countryList.addAll(countryList);
+
+        this.originCountryList = new ArrayList<Country>();
+        this.originCountryList.addAll(countryList);
     }
 
     /**
@@ -47,12 +52,29 @@ public class CountryListAdapter extends ArrayAdapter<Country> implements Filtera
         ImageView flag;
     }
 
-    @Override
-    public Filter getFilter() {
-        if (filter == null){
-            filter = new CountryFilter(this);
+    /**
+     * Filter countries by their name and present
+     * them on the ListView
+     * @param filterString the constraint string we need to
+     *                     user for filtering
+     */
+    public void filter(String filterString) {
+        filterString = filterString.toLowerCase();
+
+        countryList.clear();
+        if (filterString.length() == 0) {
+            countryList.addAll(originCountryList);
+        } else {
+            for (Country country : originCountryList) {
+                if (country.getName().toLowerCase().contains(filterString)) {
+                    countryList.add(country);
+                }
+            }
         }
-        return filter;
+
+        clear();
+        addAll(countryList);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -83,18 +105,20 @@ public class CountryListAdapter extends ArrayAdapter<Country> implements Filtera
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Country country = countryList.get(position);
-        holder.code.setText("(" + country.getId() + ")");
-        holder.name.setText(country.getName() + " ");
-        holder.name.setChecked(country.isSelected());
-        holder.name.setTag(country);
-        int flagId = context.getResources().getIdentifier(country.getName().toLowerCase().replace(' ', '_'), "drawable", context.getApplicationContext().getPackageName());
-        if (flagId != 0) {
-            Log.d("FLAG FINDER", "Flag found: " + country.getName());
-            holder.flag.setImageResource(flagId);
-        } else {
-            Log.d("FLAG FINDER", "Flag NOT found: " + country.getName());
-            holder.flag.setImageDrawable(null);
+        if (position < countryList.size()) {
+            Country country = countryList.get(position);
+            holder.code.setText("(" + country.getId() + ")");
+            holder.name.setText(country.getName() + " ");
+            holder.name.setChecked(country.isSelected());
+            holder.name.setTag(country);
+            int flagId = context.getResources().getIdentifier(country.getName().toLowerCase().replace(' ', '_'), "drawable", context.getApplicationContext().getPackageName());
+            if (flagId != 0) {
+                Log.d("FLAG FINDER", "Flag found: " + country.getName());
+                holder.flag.setImageResource(flagId);
+            } else {
+                Log.d("FLAG FINDER", "Flag NOT found: " + country.getName());
+                holder.flag.setImageDrawable(null);
+            }
         }
 
         return convertView;
