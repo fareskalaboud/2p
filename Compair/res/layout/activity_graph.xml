@@ -2,15 +2,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/front_end_background"
+    android:background="#3b3b3b"
     android:orientation="vertical"
     tools:context="seg2.compair.GraphActivity" >
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:text="Choose indicators using the drop down boxes." />
+        android:text="Choose indicators using the drop down boxes."
+        android:textColor="#FFFFFF" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -20,9 +20,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
             android:padding="5dip"
             android:text="@string/xLabel"
+            android:textColor="#FFFFFF"
             android:textSize="15sp" />
 
         <Spinner
@@ -40,9 +40,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
             android:padding="5dip"
             android:text="@string/yLabel"
+            android:textColor="#FFFFFF"
             android:textSize="15sp" />
 
         <Spinner
@@ -83,16 +83,16 @@
             android:layout_height="wrap_content"
             android:background="@drawable/custombutton_btn_default_holo_light"
             android:onClick="update"
-            android:textColor="#FFFFFF"
             android:text="Update"
+            android:textColor="#FFFFFF"
             android:textSize="15dp" />
 
         <TextView
             android:id="@+id/datetext"
             android:layout_width="wrap_content"
-            android:textColor="#FFFFFF"
             android:layout_height="wrap_content"
             android:text="          "
+            android:textColor="#FFFFFF"
             android:textSize="15dp" />
 
         <SeekBar
