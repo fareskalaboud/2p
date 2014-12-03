@@ -34,6 +34,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -62,7 +63,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 	//Text for the date, invisible default
 	private TextView datetext;
-
 
 	//Update button
 	private Button update;
@@ -116,7 +116,9 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	//we use this button to fit the graph to view.
 	private Button fittoview; 
 	//We get the linear layout this button has to be added to.
-	LinearLayout bottomlayout;
+	private LinearLayout bottomlayout;
+	//This is the help dialog button.
+	private ImageView help;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -205,6 +207,9 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				return false;
 			}
 		});
+		//We intialise the help imageview button.
+		help = (ImageView)findViewById(R.id.btnHelp);
+	
 
 		//We set the maximum number of years for the seekbar.
 		datesSeekBar.setMax(numberOfYears-1);
@@ -249,11 +254,12 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			}
 		});
 
-		//We initialise the renderer and dataseries.
-		graph.clear(xLabel,yLabel);
 
 		//We add the list of countries to the scatter graph class.
 		scatterGraph.addCountryList(countries);
+		
+	
+		
 	}
 
 	/**
@@ -473,6 +479,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	{
 		//We remove the button that allows users to fit the line graph to view.
 		bottomlayout.removeView(fittoview);
+		//We change the help dialog button to blue
+		help.setImageResource(R.drawable.helpblue);
 		//We set the textfield to now show a date.
 		datetext.setText(year);
 		datetext.setTextSize(30f);
@@ -542,6 +550,9 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			//We add the fit to view button to the bottom layout and set the onclick listener.
 			bottomlayout.addView(fittoview, new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
 
+			//We turn the help dialog button back to gray
+			help.setImageResource(R.drawable.help);
+			
 			//We set the spinner back to 0 for the next instance of using dual indicators.
 			accessseekbarcount = 0;
 			//We set the x indicator back to the date array, to remove the rest of the indicators. 
@@ -616,7 +627,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			update.setEnabled(false);
 
 
-			//We reset this count so the spinner has to effect on the graph. 
+			//We reset this count so the spinner has no effect on the graph. 
 			accessseekbarcount = 0;
 
 			//We remove the old graph & animation from the view. 

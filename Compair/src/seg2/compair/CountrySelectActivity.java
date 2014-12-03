@@ -335,7 +335,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 		}
 
 		int checkedCountriesSize = checkedCountries.size();
-		if (checkedCountriesSize >= 1 && checkedCountriesSize <= 20) {
+		if (checkedCountriesSize >= 1 && checkedCountriesSize <= 30) {
 
 			if(checkedCountriesSize > 8)
 			{
@@ -384,7 +384,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 			}
 
 		} else {
-			Toast.makeText(getApplicationContext(), "Please choose at least 1 and most 20 countries", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "Please choose at least 1 and at most 30 countries", Toast.LENGTH_SHORT).show();
 		}
 	}
 
