@@ -22,7 +22,7 @@
         android:layout_alignBottom="@+id/checkBox1"
         android:layout_toRightOf="@+id/checkBox1"
         android:text="TextView"
-        android:textColor="#FFFFFF" />
+         />
 
     <ImageView
         android:id="@+id/flag"

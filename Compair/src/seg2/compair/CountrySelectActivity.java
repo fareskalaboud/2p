@@ -56,12 +56,14 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	private JSONParser parser;
 	private ArrayList<Country> checkedCountries = new ArrayList<Country>();
 	private ArrayList<Country> countryList;
+    private ArrayList<Country> allCountriesList;
 
 	private final ArrayList<String> alliancesName = new ArrayList<String>() {{add("NATO"); add("SCO"); add("BRICS"); add("ASEAN");}};
 	private ArrayList<Country> natoCountries = new ArrayList<Country>();
 	private ArrayList<Country> scoCountries = new ArrayList<Country>();
 	private ArrayList<Country> bricsCountries = new ArrayList<Country>();
 	private ArrayList<Country> aseanCountries = new ArrayList<Country>();
+
 
 	//Value is used in deciding whether to lock orientation for a certain period of time.
 	private int prevOrientation;
@@ -132,7 +134,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 
 				public void onTextChanged(CharSequence s, int start, int before, int count) {
 					if(clAdapter != null) {
-						clAdapter.getFilter().filter(s.toString());
+						clAdapter.filter(s.toString());
 					}
 				}
 			});
@@ -172,7 +174,6 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 					alliancesListView.setVisibility(View.VISIBLE);
 					countriesListView.setVisibility(View.GONE);
 					graphButton.setVisibility(View.GONE);
-					filterWidget.setEnabled(false);
 					filterWidget.setVisibility(View.INVISIBLE);
 				}
 			}
@@ -255,6 +256,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 				// Sort the countries by name and
 				// pass these to the listView
 				Collections.sort(countryList);
+                allCountriesList = countryList;
 				clAdapter = new CountryListAdapter(this, R.layout.countrylistview_row, countryList);
 				countriesListView.setAdapter(clAdapter);
 
@@ -308,6 +310,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	 */
 	public void onClick(View v) {
 		if(isInternetAvailable() && countryList.size() != 0) {
+            filterWidget.setText("");
 			sendCheckedCountriesToGraph();
 			Log.e("DONE","DONE");
 		} else {
@@ -324,8 +327,9 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	public void sendCheckedCountriesToGraph() {
 		checkedCountries = new ArrayList<Country>();
 
-		for (Country c : countryList) {
+		for (Country c : allCountriesList) {
 			if (c.isSelected()) {
+                Log.d("COUNTRIES:", "Added " +c.getName());
 				checkedCountries.add(c);
 			}
 		}

@@ -33,7 +33,6 @@ Compair contains tools to visualise and compare this data using multiple graph t
 Using this app is easy as pie:
 Select the countries you want, pick the statistics you want to compare and see the progress of thaat statistic over time."
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
         android:textSize="20dp" />
 
     <Button
@@ -46,7 +45,6 @@ Select the countries you want, pick the statistics you want to compare and see t
         android:onClick="goToCountrySelector"
         android:text="@string/next_button"
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
         android:textSize="15dp" />
 
 </RelativeLayout>

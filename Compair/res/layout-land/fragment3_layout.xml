@@ -22,7 +22,7 @@
         android:layout_marginBottom="53dp"
         android:background="@drawable/custombutton_btn_default_holo_light"
         android:text="Got it"
-        android:textColor="#FFFFFF" />
+         />
 
     <TextView
         android:id="@+id/TextView01"
@@ -33,7 +33,6 @@
         android:layout_marginTop="88dp"
         android:gravity="center"
         android:text="@string/fragment3desc"
-        android:textColor="#FFFFFF"
         android:textSize="18dp" />
 
     <ImageView

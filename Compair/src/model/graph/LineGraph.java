@@ -112,14 +112,14 @@ public class LineGraph implements Serializable {
 		renderer.setShowGrid(true);
 		renderer.setGridColor(Color.LTGRAY);
 		//Set the colours of the labels and the axis. 
-		renderer.setAxesColor(Color.WHITE);
-		renderer.setLabelsColor(Color.WHITE);
+		renderer.setAxesColor(Color.DKGRAY);
+		renderer.setLabelsColor(Color.DKGRAY);
 		renderer.setApplyBackgroundColor(true);
 		//We can set the background and margin colors using the RGB values.
-		renderer.setBackgroundColor(Color.rgb(59, 59, 59));
-		renderer.setMarginsColor(Color.rgb(59,59,59));
-		renderer.setXLabelsColor(Color.WHITE);
-		renderer.setYLabelsColor(0, Color.WHITE);
+		renderer.setBackgroundColor(Color.rgb(228, 228, 228));
+		renderer.setMarginsColor(Color.rgb(228,228,228));
+		renderer.setXLabelsColor(Color.DKGRAY);
+		renderer.setYLabelsColor(0, Color.DKGRAY);
 	}
 	/**
 	 * This method defines adding a data set to the graph. 

@@ -22,7 +22,6 @@
         android:onClick="goToCountrySelector"
         android:text="@string/next_button"
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
         android:textSize="24dp" />
 
     <TextView
@@ -36,7 +35,6 @@
         android:gravity="center_horizontal"
         android:text="Compair lets you compare several countries at a time \nusing a number of data on simple line or cubic line graphs"
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
         android:textSize="20dp" />
 
     <TextView
@@ -49,7 +47,6 @@
         android:layout_marginTop="100dp"
         android:text="Using this app is easy as pie: \n\n1. Select between 1 and 20 countries and touch Graph. \n2. Pick a statistic/dataset.*\n3. Press the Update button and see some magic happen.\n\n\n* This app also supports scatter graphs using multiple datasets. Simply click on the Lock button to unlock the graph&apos;s x-axis (which is by default set to Date)."
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
         android:textSize="20dp" />
 
     <ImageView

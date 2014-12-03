@@ -31,7 +31,6 @@
         android:layout_marginBottom="45dp"
         android:gravity="center"
         android:text="@string/fragment1desc"
-            android:textColor="#FFFFFF"
         android:textSize="28dp" />
 
 </RelativeLayout>

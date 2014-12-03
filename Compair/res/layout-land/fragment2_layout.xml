@@ -37,7 +37,6 @@
         android:layout_alignTop="@+id/imageView2"
         android:gravity="center"
         android:text="@string/fragment2desc"
-        android:textColor="#FFFFFF"
         android:textSize="18dp" />
 
 </RelativeLayout>
