@@ -60,6 +60,9 @@ public class LineGraph implements Serializable {
 	//We hold the min max values for the y axis
 	double min = 0;
 	double max;
+
+	//We use this array to hold all the labels of the years we want to add.
+	private ArrayList<String> yearlabels;
 	/**
 	 * We intialise the missing countries arraylist.
 	 */
@@ -83,6 +86,8 @@ public class LineGraph implements Serializable {
 
 		renderer = new XYMultipleSeriesRenderer();
 
+		yearlabels = new ArrayList<String>();
+
 		//We reset the missingcountries arraylist.
 		missingcountries = new ArrayList<String>();
 
@@ -96,6 +101,7 @@ public class LineGraph implements Serializable {
 		renderer.setLegendTextSize(24);
 		//This is used to set the default number of Labels on the X & Y axis. to increase labels, increase number. 
 		renderer.setYLabels(16);
+		renderer.setXLabels(8);
 
 		//We add the x and y names to the graph. 
 		renderer.setXTitle(xLabel);
@@ -130,7 +136,7 @@ public class LineGraph implements Serializable {
 	public void addDataSet(HashMap<String,String> map,Country c) throws ParseException
 	{
 		//We use the SDF to parse the strings into the correct format to create the Date object. 
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 
 		TimeSeries timeSeries = new TimeSeries(c.getName());
 		//We iterate through the map, getting the date and value. We put this into a series.
@@ -162,18 +168,17 @@ public class LineGraph implements Serializable {
 			{
 				nodatacount++;
 			}else{
-				//We append the date using a stringbuilder for the graph, as the graph uses date format.
-				StringBuilder builder = new StringBuilder();
 
 				String date = entry.getKey();
-				builder.append("01-01-" + date);
-				date = builder.toString();
 
 				Date convertedDate = sdf.parse(date);
+
 				//We add the date and the value.
 				timeSeries.add(convertedDate, valuedouble);
-				//If the min value is 0 it means it hasn't changed.
-				if( min ==0)
+				//If the min value is 0 it means it hasn't changed from the default value, hence the first value is now min.
+
+
+				if( min == 0)
 				{
 					min = valuedouble;
 				}
@@ -219,6 +224,7 @@ public class LineGraph implements Serializable {
 			//Increase the count. 
 			colourCount++;
 		}
+
 	}
 
 	/**
@@ -229,7 +235,6 @@ public class LineGraph implements Serializable {
 
 	public GraphicalView getLineView(Context c)
 	{
-
 		//We create the min and max dates and y values to prevent users from panning outside the graph.
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		String datestart = "01-01-1970";
@@ -243,11 +248,11 @@ public class LineGraph implements Serializable {
 			Log.e("ERRORPARSING","ERRORPARSING");
 			e.printStackTrace();
 		}
-		
+
 		double[] minmax = {convertedDatestart.getTime(),convertedDateend.getTime(),min,max};
 		renderer.setPanLimits(minmax);
 
-		GraphicalView chart = ChartFactory.getTimeChartView(c, dataset, renderer,"dd/MM/yyyy");
+		GraphicalView chart = ChartFactory.getTimeChartView(c, dataset, renderer,"yyyy");
 
 		return chart;
 	}
@@ -282,7 +287,7 @@ public class LineGraph implements Serializable {
 					} else {
 						builder.append(" and " + missingcountries.get(i) + ".");
 					}
-					
+
 				} else {
 					builder.append(missingcountries.get(i) + ",");
 				}
