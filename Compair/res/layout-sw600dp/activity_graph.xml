@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#D2ECF6"
+     android:background="@drawable/front_end_background"
     android:orientation="vertical"
     tools:context="seg2.compair.GraphActivity" >
 
@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="Choose the X and Y axes below."
+        android:textColor="#FFFFFF"
         android:textSize="25dp" />
 
     <LinearLayout
@@ -22,6 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dip"
+            android:textColor="#FFFFFF"
             android:text="x"
             android:textSize="30dp" />
 
@@ -41,6 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dip"
+            android:textColor="#FFFFFF"
             android:text="y"
             android:textSize="30dp" />
 
@@ -90,6 +93,7 @@
             android:id="@+id/datetext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
             android:text="          "
             android:textSize="30dp" />
 

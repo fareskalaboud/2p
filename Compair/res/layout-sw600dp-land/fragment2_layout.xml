@@ -22,7 +22,7 @@
         android:layout_marginTop="83dp"
         android:gravity="center"
         android:text="@string/fragment2desc"
-        android:textColor="#404040"
+         android:textColor="#FFFFFF"
         android:textSize="28dp" />
 
     <ImageView

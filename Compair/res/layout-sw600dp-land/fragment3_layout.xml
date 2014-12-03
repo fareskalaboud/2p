@@ -20,9 +20,10 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="53dp"
-        android:textSize="20dp"
         android:background="@drawable/custombutton_btn_default_holo_light"
-        android:text="Got it" />
+        android:text="Got it"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp" />
 
     <TextView
         android:id="@+id/TextView01"
@@ -33,7 +34,7 @@
         android:layout_marginTop="186dp"
         android:gravity="center"
         android:text="@string/fragment3desc"
-        android:textColor="#404040"
+        android:textColor="#FFFFFF"
         android:textSize="28dp" />
 
     <ImageView

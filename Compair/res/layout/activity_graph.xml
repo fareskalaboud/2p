@@ -2,13 +2,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#D2ECF6"
+    android:background="@drawable/front_end_background"
     android:orientation="vertical"
     tools:context="seg2.compair.GraphActivity" >
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
         android:text="Choose indicators using the drop down boxes." />
 
     <LinearLayout
@@ -19,6 +20,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
             android:padding="5dip"
             android:text="@string/xLabel"
             android:textSize="15sp" />
@@ -38,6 +40,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
             android:padding="5dip"
             android:text="@string/yLabel"
             android:textSize="15sp" />
@@ -86,6 +89,7 @@
         <TextView
             android:id="@+id/datetext"
             android:layout_width="wrap_content"
+            android:textColor="#FFFFFF"
             android:layout_height="wrap_content"
             android:text="          "
             android:textSize="15dp" />
