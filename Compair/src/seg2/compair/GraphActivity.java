@@ -325,6 +325,13 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 
 	}
+	/**
+	 * This class creates the help dialog upon user pressing the question mark.
+	 * @param view
+	 */
+	 public void openHelpDialog(View view) {
+	        new HelpDialog(this);
+	    }
 
 	/**
 	 * Class defines the time seekbar, changing the graph everytime the time changes.

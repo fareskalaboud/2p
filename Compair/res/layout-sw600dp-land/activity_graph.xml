@@ -13,43 +13,59 @@
         android:layout_marginRight="10dp"
         android:orientation="horizontal" >
 
+        <ImageView
+            android:id="@+id/xlock"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:onClick="lock"
+            android:src="@drawable/lock" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:padding="5dip"
             android:text="x"
             android:textSize="30dp" />
 
         <Spinner
             android:id="@+id/xspinner"
-            android:layout_width="400dp"
-            android:layout_height="wrap_content" />
+            android:layout_width="380dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
 
         <ImageView
             android:id="@+id/switchindicator"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_gravity="center"
             android:onClick="switchIndicators"
             android:src="@drawable/switchindicatorgrey" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:padding="5dip"
             android:text="y"
             android:textSize="30dp" />
 
         <Spinner
             android:id="@+id/yspinner"
-            android:layout_width="400dp"
-            android:layout_height="wrap_content" />
+            android:layout_width="380dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
 
-        <ImageView
-            android:id="@+id/xlock"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:onClick="lock"
-            android:src="@drawable/lock" />
+        <ImageButton
+            android:id="@+id/btnHelp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/help"
+            android:onClick="openHelpDialog" />
     </LinearLayout>
 
     <LinearLayout

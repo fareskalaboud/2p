@@ -33,7 +33,6 @@ public class NoInternetAlertDialog {
      */
     private void openAlert(View view) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity, AlertDialog.THEME_HOLO_DARK);
-
         alertDialogBuilder.setTitle("No Internet Connection");
         alertDialogBuilder.setMessage("You need a working internet connection to use this app. Please check that you are connected.");
         alertDialogBuilder.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
@@ -46,6 +45,7 @@ public class NoInternetAlertDialog {
                 dialog.cancel();
             }
         });
+
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         // show alert
