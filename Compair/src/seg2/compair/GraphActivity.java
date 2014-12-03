@@ -409,7 +409,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		//We set the textfield to now show a date.
 		datetext.setText(year);
 		datetext.setTextSize(30f);
-		datetext.setTextColor(Color.DKGRAY);
+		datetext.setTextColor(Color.WHITE);
 		//We set the visibility of the seekbar to visible. 
 		datesSeekBar.setVisibility(View.VISIBLE);
 		//We set the adapter up, and change the  lock image to an unlocked image. 
@@ -506,7 +506,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	{
 		//We add adapters to the x and y spinners, to edit the labels to match the correct chosen label. 
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-				R.array.date, R.layout.indicatorspinner_item);
+				R.array.date, R.layout.indicatorspinner_itemdate);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		xindicator.setAdapter(adapter);
 		xindicator.setEnabled(false);
