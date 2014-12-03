@@ -230,10 +230,7 @@ public class LineGraph implements Serializable {
 	public GraphicalView getLineView(Context c)
 	{
 
-		//We create the min/max dates 
-		StringBuilder builder = new StringBuilder();
-
-
+		//We create the min and max dates and y values to prevent users from panning outside the graph.
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		String datestart = "01-01-1970";
 		String dateend = "01-01-2012";
