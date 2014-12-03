@@ -13,15 +13,6 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/progress2" />
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        android:layout_alignLeft="@+id/imageView2"
-        android:layout_below="@+id/TextView01"
-        android:layout_marginTop="28dp"
-        android:src="@drawable/picture1" />
-
     <TextView
         android:id="@+id/TextView01"
         android:layout_width="wrap_content"
@@ -35,10 +26,19 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
+        android:layout_width="500dp"
+        android:layout_height="500dp"
         android:layout_above="@+id/imageView3"
         android:layout_centerHorizontal="true"
         android:src="@drawable/picture2" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="500dp"
+        android:layout_height="500dp"
+        android:layout_alignLeft="@+id/imageView2"
+        android:layout_alignTop="@+id/TextView01"
+        android:layout_marginTop="25dp"
+        android:src="@drawable/picture1" />
 
 </RelativeLayout>
