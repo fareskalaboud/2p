@@ -28,7 +28,7 @@
         android:layout_above="@+id/graphButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/countryListView" />
+        android:layout_below="@+id/radioGroup1" />
 
     <Button
         android:id="@+id/graphButton"
