@@ -113,10 +113,8 @@ public class CountryListAdapter extends ArrayAdapter<Country> implements Filtera
             holder.name.setTag(country);
             int flagId = context.getResources().getIdentifier(country.getName().toLowerCase().replace(' ', '_'), "drawable", context.getApplicationContext().getPackageName());
             if (flagId != 0) {
-                Log.d("FLAG FINDER", "Flag found: " + country.getName());
                 holder.flag.setImageResource(flagId);
             } else {
-                Log.d("FLAG FINDER", "Flag NOT found: " + country.getName());
                 holder.flag.setImageDrawable(null);
             }
         }

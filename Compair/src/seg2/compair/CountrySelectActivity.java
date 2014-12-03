@@ -310,6 +310,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	 */
 	public void onClick(View v) {
 		if(isInternetAvailable() && countryList.size() != 0) {
+            filterWidget.setText("");
 			sendCheckedCountriesToGraph();
 			Log.e("DONE","DONE");
 		} else {
@@ -328,6 +329,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 
 		for (Country c : allCountriesList) {
 			if (c.isSelected()) {
+                Log.d("COUNTRIES:", "Added " +c.getName());
 				checkedCountries.add(c);
 			}
 		}
