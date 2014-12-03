@@ -4,6 +4,10 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.app.Dialog;
+import android.content.Intent;
+import android.provider.Settings;
+import android.view.*;
 import model.Country;
 import model.Indicator;
 import model.download.JSONParser;
@@ -22,11 +26,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -294,6 +293,10 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		xindicator.setSelection(xindicatorpos);
 		yindicator.setSelection(yindicatorpos);
 	}
+
+    public void openHelpDialog(View view) {
+        new HelpDialog(this);
+    }
 
 	/**
 	 * This method creates a dialog box with a confirm button. 
