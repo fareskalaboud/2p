@@ -38,7 +38,7 @@
         android:layout_marginTop="32dp"
         android:gravity="center"
         android:text="@string/fragment2desc"
-        android:textColor="#404040"
+        android:textColor="#FFFFFF"
         android:textSize="18dp" />
 
 </RelativeLayout>

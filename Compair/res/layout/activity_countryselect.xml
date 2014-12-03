@@ -58,6 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:text="Countries"
+            android:textColor="#FFFFFF"
             android:textSize="14dp" />
 
         <RadioButton
@@ -66,6 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:text="Alliances"
+            android:textColor="#FFFFFF"
             android:textSize="14dp" />
     </RadioGroup>
 

@@ -1,6 +1,7 @@
 package seg2.compair;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,6 +87,7 @@ public class CountryListAdapter extends ArrayAdapter<Country> implements Filtera
         Country country = countryList.get(position);
         holder.code.setText("(" + country.getId() + ")");
         holder.name.setText(country.getName() + " ");
+        holder.name.setTextColor(Color.WHITE);
         holder.name.setChecked(country.isSelected());
         holder.name.setTag(country);
         int flagId = context.getResources().getIdentifier(country.getName().toLowerCase().replace(' ', '_'), "drawable", context.getApplicationContext().getPackageName());

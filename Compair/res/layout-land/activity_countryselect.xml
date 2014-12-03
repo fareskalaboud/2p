@@ -38,8 +38,8 @@
         android:background="@drawable/custombutton_btn_default_holo_light"
         android:onClick="onClick"
         android:text="@string/graph_button"
-          android:textColor="#FFFFFF"
         android:textAlignment="center"
+        android:textColor="#FFFFFF"
         android:textSize="24dp" />
 
     <EditText
@@ -62,8 +62,8 @@
         android:layout_alignLeft="@+id/radioGroup1"
         android:layout_alignParentTop="true"
         android:text="Choose countries or an alliance, then click &apos;Graph&apos;."
-        android:textSize="22dp"
-        android:textStyle="bold" />
+        android:textColor="#FFFFFF"
+        android:textSize="22dp" />
 
     <RadioGroup
         android:id="@+id/radioGroup1"
@@ -79,6 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:text="Countries"
+            android:textColor="#FFFFFF"
             android:textSize="14dp" />
 
         <RadioButton
@@ -87,6 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:text="Alliances"
+            android:textColor="#FFFFFF"
             android:textSize="14dp" />
     </RadioGroup>
 
