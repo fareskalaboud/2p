@@ -311,7 +311,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				
+
 				dialog.dismiss();
 			}
 		});
@@ -714,7 +714,14 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 						//A scatter graph exists now.
 						scatterGraphExists = true;
 						//We create a dialog to represent missing data
-						createMissingDialog(scatterGraph.getMissingCountries());
+
+						String missing = graph.getMissingDatasets();
+						if(missing.equals(""))
+						{
+							//Do nothing, as there is no missing countries.
+						} else {
+							createMissingDialog(missing);
+						}
 						//The spinner can now be used, since an update has occured.
 						accessseekbarcount = 1;
 						//The update button can now be pressed again.
@@ -779,8 +786,13 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 				//A line graph exists now.
 				lineGraphExists = true;
-
-				createMissingDialog(graph.getMissingDatasets());
+				String missing = graph.getMissingDatasets();
+				if(missing.equals(""))
+				{
+					//Do nothing, as there is no missing countries.
+				} else {
+					createMissingDialog(missing);
+				}
 				//The orientation can be changed now.
 				setRequestedOrientation(prevOrientation);
 			}else {
