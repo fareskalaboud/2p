@@ -25,14 +25,6 @@
         android:textSize="28dp" />
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="500dp"
-        android:layout_height="500dp"
-        android:layout_above="@+id/imageView3"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/picture2" />
-
-    <ImageView
         android:id="@+id/imageView1"
         android:layout_width="500dp"
         android:layout_height="500dp"
@@ -40,5 +32,13 @@
         android:layout_alignTop="@+id/TextView01"
         android:layout_marginTop="25dp"
         android:src="@drawable/picture1" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="500dp"
+        android:layout_height="500dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/picture2" />
 
 </RelativeLayout>
