@@ -74,12 +74,6 @@
         android:orientation="horizontal" />
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/bottomlayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -99,7 +93,7 @@
             android:id="@+id/datetext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="          "
+            android:text=""
             android:textSize="15dp" />
 
         <SeekBar

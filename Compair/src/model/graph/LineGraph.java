@@ -61,8 +61,6 @@ public class LineGraph implements Serializable {
 	double min = 0;
 	double max;
 
-	//We use this array to hold all the labels of the years we want to add.
-	private ArrayList<String> yearlabels;
 	/**
 	 * We intialise the missing countries arraylist.
 	 */
@@ -85,8 +83,6 @@ public class LineGraph implements Serializable {
 		dataset = new XYMultipleSeriesDataset();
 
 		renderer = new XYMultipleSeriesRenderer();
-
-		yearlabels = new ArrayList<String>();
 
 		//We reset the missingcountries arraylist.
 		missingcountries = new ArrayList<String>();
@@ -213,6 +209,7 @@ public class LineGraph implements Serializable {
 		/*
 		 * We create the renderer for the lines. 
 		 */
+		
 		for(int i = 0;i<numberOfSets;i++)
 		{
 			XYSeriesRenderer r = new XYSeriesRenderer();
@@ -252,7 +249,10 @@ public class LineGraph implements Serializable {
 		double[] minmax = {convertedDatestart.getTime(),convertedDateend.getTime(),min,max};
 		renderer.setPanLimits(minmax);
 		renderer.setZoomLimits(minmax);
+		//We need to reset the zoom, thats why we enable this, and reset the chart zoom.
+		renderer.setExternalZoomEnabled(true);
 		GraphicalView chart = ChartFactory.getTimeChartView(c, dataset, renderer,"yyyy");
+		chart.zoomReset();
 
 		return chart;
 	}
@@ -295,4 +295,6 @@ public class LineGraph implements Serializable {
 		}
 		return builder.toString();
 	}
+
+
 }

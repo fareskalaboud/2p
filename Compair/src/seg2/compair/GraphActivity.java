@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.achartengine.GraphicalView;
+
 import model.Country;
 import model.Indicator;
 import model.download.JSONParser;
@@ -17,7 +19,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -27,9 +28,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -113,6 +113,11 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	//Value is used in deciding whether to lock orientation for a certain period of time.
 	private int prevOrientation;
 
+	//we use this button to fit the graph to view.
+	private Button fittoview; 
+	//We get the linear layout this button has to be added to.
+	LinearLayout bottomlayout;
+
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -146,8 +151,38 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 		//Initialise the date text for dual indicators.
 		datetext = (TextView)findViewById(R.id.datetext);
+		//Initialise the fittoview button.
+		fittoview = new Button(this);
+		fittoview.setText("Fit to View");
+
+		fittoview.setOnClickListener(new OnClickListener()
+		{
+
+			@Override
+			public void onClick(View v) {
+				if(lineGraphExists == true)
+				{
+					//We add the view of the final graph.
+					layout.removeAllViews();
+					resetView();
+				}
+			}
+		});
+		fittoview.setBackgroundResource(R.drawable.custombutton_btn_default_holo_light);
+		//We get the layout fit to view button is added to.
+		bottomlayout = (LinearLayout)findViewById(R.id.bottomlayout);
 
 
+		//We check if the device is a tablet. If it is, we make the button bigger to fit the screen.
+		if(isTablet(this))
+		{
+			addFitButton(30,600);
+		} else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+		{
+			addFitButton(15,600);
+		} else {
+			addFitButton(15,300);
+		}
 
 		/*
 		 * This spinner is kept invisible till unlocked when the dual indicators are unlocked. 
@@ -216,9 +251,32 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 		//We initialise the renderer and dataseries.
 		graph.clear(xLabel,yLabel);
-		
+
 		//We add the list of countries to the scatter graph class.
 		scatterGraph.addCountryList(countries);
+	}
+
+	/**
+	 * This method is used to add the fit to view button to the screen depending on what size the text is
+	 * @param size The size of the text on the button.
+	 */
+	public void addFitButton(int size, int paramsize)
+	{
+		fittoview.setTextSize(size);
+		//We add the button to the bottom layout and set the onclick listener.
+		bottomlayout.addView(fittoview,new LayoutParams(paramsize, LayoutParams.WRAP_CONTENT));
+	}
+
+	/**
+	 * This method resets the graph view. Used by the fit to view button in the graph activity.
+	 */
+	private void resetView() {
+
+		//We add the view of the final graph.
+		GraphicalView view = graph.getLineView(getApplicationContext());
+
+		layout.addView(view, new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
+		scatterGraphExists = false;
 	}
 
 	@Override
@@ -272,6 +330,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		//if a scatter graph exists, we want to build it again in this view.
 		if(scatterGraphExists == true)
 		{
+			//We remove the fit the view button.
+			bottomlayout.removeView(fittoview);
 			//We add the view of the final graph.
 			layout.removeAllViews();
 			layout.addView(scatterGraph.getScatterGraph(this), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
@@ -329,9 +389,9 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	 * This class creates the help dialog upon user pressing the question mark.
 	 * @param view
 	 */
-	 public void openHelpDialog(View view) {
-	        new HelpDialog(this);
-	    }
+	public void openHelpDialog(View view) {
+		new HelpDialog(this);
+	}
 
 	/**
 	 * Class defines the time seekbar, changing the graph everytime the time changes.
@@ -394,9 +454,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		{
 
 		} else {
-			final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.rotateindicator);
 
-			switchindicator.startAnimation(animRotate);
 			int positionx = xindicator.getSelectedItemPosition();
 			int positiony = yindicator.getSelectedItemPosition();
 
@@ -413,7 +471,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	 */
 	public void setDualIndicator(boolean scatterexists, String year, boolean removeView)
 	{
-
+		//We remove the button that allows users to fit the line graph to view.
+		bottomlayout.removeView(fittoview);
 		//We set the textfield to now show a date.
 		datetext.setText(year);
 		datetext.setTextSize(30f);
@@ -478,6 +537,11 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			final AlertDialog alertDialog = builder.create();
 			alertDialog.show();
 		} else if(update.isEnabled() == true) {
+			//This means the lock is currently closed, and we want to go back to line graph.
+
+			//We add the fit to view button to the bottom layout and set the onclick listener.
+			bottomlayout.addView(fittoview, new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
+
 			//We set the spinner back to 0 for the next instance of using dual indicators.
 			accessseekbarcount = 0;
 			//We set the x indicator back to the date array, to remove the rest of the indicators. 
@@ -488,7 +552,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			switchindicator.setImageResource(R.drawable.switchindicatorgrey);
 			//We remove the seekbar and the date.
 			datesSeekBar.setVisibility(View.GONE);
-			datetext.setText("          ");
+			datetext.setText("");
 			//Remove all views out of the graph if there was any ready for the next graph. 
 			layout.removeAllViews();
 
@@ -664,7 +728,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			if(axiscount == 0)
 			{
 				if (((Indicator)result.get(IndicatorNamey)).getValues().size() > 0) {
-					System.out.println("HAVE Y");
+
 					//We get the indicator to get the data.
 					Indicator indicator = (Indicator) result.get(IndicatorNamey);
 					//We get the hashmap to iterate through.
@@ -678,7 +742,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 					dialog.dismiss();
 					update.setEnabled(true);
 					if (countriescount == 0){
-						System.out.println("show");
 						new NoInternetAlertDialog(this);
 					}
 				}
@@ -807,6 +870,17 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				countriescount++;
 			}
 		}
+	}
+
+	/**
+	 * This method is used to check if the device currently running is a tablet or a phone.l=
+	 * @param context The context of the application
+	 * @return is the device is a tablet.
+	 */
+	public static boolean isTablet(Context context) {
+		return (context.getResources().getConfiguration().screenLayout
+				& Configuration.SCREENLAYOUT_SIZE_MASK)
+				>= Configuration.SCREENLAYOUT_SIZE_LARGE;
 	}
 
 
