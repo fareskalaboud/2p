@@ -112,8 +112,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	private double[] yaxisminmax;
 	//The default year string for the dual indicators. 
 	private String year = "1960";
-	//Value is used in deciding whether to lock orientation for a certain period of time.
-	private int prevOrientation;
 
 	//we use this button to fit the graph to view.
 	private Button fittoview; 
@@ -664,17 +662,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		if(isInternetAvailable())
 		{
 			//We prevent the user from rotating the screen, causing issues with the parser sending information after the activity is destroyed.
-			prevOrientation = getRequestedOrientation();
-			//We get the current orientation, then we compare it to the different available orientations.
-			if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-				//If the orientation is landscape, we make sure it stays in landscape.
-				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-			} else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-			} else {
-				//If the orientation is going to be changed, we prevent the change.
-				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
-			}
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 			update.setEnabled(false);
 			//We stop the play button.
 			hasStopped = true;
@@ -862,8 +850,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 						//The update button can now be pressed again.
 						update.setEnabled(true);
 						//The orientation can be changed now.
-						setRequestedOrientation(prevOrientation);
-					}else {
+						setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+						} else {
 						//We increase the count for the next call.
 						countriescount++;
 					}
@@ -929,7 +917,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 					createMissingDialog(missing);
 				}
 				//The orientation can be changed now.
-				setRequestedOrientation(prevOrientation);
+				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
 			}else {
 				//We increase the count for the next call. 
 				countriescount++;

@@ -64,9 +64,6 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	private ArrayList<Country> bricsCountries = new ArrayList<Country>();
 	private ArrayList<Country> aseanCountries = new ArrayList<Country>();
 
-
-	//Value is used in deciding whether to lock orientation for a certain period of time.
-	private int prevOrientation;
 	//Checkbox that is used in the alert dialog to not show alert dialog again.
 	private CheckBox showmessage;
 	//We check here for any user preferences.
@@ -94,17 +91,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 		filterWidget = (EditText) findViewById(R.id.filter);
 
 		//We prevent the user from rotating the screen, causing issues with the parser sending information after the activity is destroyed.
-		prevOrientation = getRequestedOrientation();
-		//We get the current orientation, then we compare it to the different available orientations.
-		if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-			//If the orientation is landscape, we make sure it stays in landscape.
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		} else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		} else {
-			//If the orientation is going to be changed, we prevent the change.
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
-		}
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
 		// create the progress dialog
 		dialog = new ProgressDialog(this, AlertDialog.THEME_HOLO_DARK);
@@ -219,8 +206,8 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 		dialog.dismiss();
 
 		//The orientation can be changed now.
-		setRequestedOrientation(prevOrientation);
-
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+		
 		if (result.size() == 0) {
 			countryList = new ArrayList<Country>();
 			new NoInternetAlertDialog(this);
