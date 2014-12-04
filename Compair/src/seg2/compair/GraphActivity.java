@@ -85,7 +85,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	private LinearLayout layout;
 
 	//ImageView of the lock to unlock the Xaxis.
-	private ImageView lock;
+	private Button lock;
 	//ImageView of the switch indicator.
 	private ImageView switchindicator;
 
@@ -161,7 +161,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		background.setLayoutParams(params);
 		layout.addView(background);
 		//We initialise the imageview of the lock.
-		lock = (ImageView)findViewById(R.id.xlock);
+		lock = (Button)findViewById(R.id.xlock);
 		//We initialise the imageview of the switch indicator. 
 		switchindicator = (ImageView)findViewById(R.id.switchindicator);
 
@@ -208,22 +208,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		 */
 		datesSeekBar = (SeekBar)findViewById(R.id.datespinner);
 		datesSeekBar.setVisibility(View.GONE);
-		//We add a touch listener to the lock to change the lock when pressed.
-		lock.setOnTouchListener(new View.OnTouchListener() {        
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-
-				if(isOpen == false){
-					switch(event.getAction()) {
-					case MotionEvent.ACTION_DOWN:
-						lock.setImageResource(R.drawable.lockpressed);
-					case MotionEvent.ACTION_UP:
-						lock.setImageResource(R.drawable.lock);
-					}
-				}
-				return false;
-			}
-		});
+	
 		//We intialise the help imageview button.
 		help = (ImageView)findViewById(R.id.btnHelp);
 
@@ -533,7 +518,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		//We set the adapter up, and change the  lock image to an unlocked image. 
 		setXAdapterArray();
 		//We change the lock image to an unlocked image.
-		lock.setImageResource(R.drawable.unlock);
+		lock.setBackgroundResource(R.drawable.customlockopen);
 		//We change the colour of the switch indicator, indicating it is now possible to switch.
 		switchindicator.setImageResource(R.drawable.switchindicatorblue);
 
@@ -602,7 +587,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			//We set the x indicator back to the date array, to remove the rest of the indicators. 
 			setXAdapterDate();
 			//We set the lock back to close.
-			lock.setImageResource(R.drawable.lock);
+			lock.setBackgroundResource(R.drawable.lock);
 			//We change the colour of the switch indicator, indicating it is not possible to switch.
 			switchindicator.setImageResource(R.drawable.switchindicatorgrey);
 			//We remove the play button
