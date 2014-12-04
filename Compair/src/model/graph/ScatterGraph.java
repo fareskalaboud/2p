@@ -19,6 +19,7 @@ import org.achartengine.renderer.XYSeriesRenderer;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
+import android.util.Log;
 
 /**
  *This class defines the scatter graph and all the dataset/operations and renderer for it. 
@@ -316,6 +317,7 @@ public class ScatterGraph implements Serializable {
 
 		//The size of the array
 		int size = missing.size();
+	
 		//if there are actually missing data, then we create the string.
 		if(size > 0)
 		{
@@ -328,7 +330,13 @@ public class ScatterGraph implements Serializable {
 				//If this is the final country, then we want to put a fullstop instead.
 				if(i+1 == size)
 				{
-					builder.append(" and " + missing.get(i) + ".");
+					if(size == 1)
+					{
+						builder.append(missing.get(i) + ".");
+					} else {
+						builder.append(" and " + missing.get(i) + ".");
+					}
+
 				} else {
 					builder.append(missing.get(i) + ",");
 				}

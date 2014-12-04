@@ -823,7 +823,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 						scatterGraphExists = true;
 						//We create a dialog to represent missing data
 
-						String missing = graph.getMissingDatasets();
+						String missing = scatterGraph.getMissingCountries();
 						if(missing.equals(""))
 						{
 							//Do nothing, as there is no missing countries.
