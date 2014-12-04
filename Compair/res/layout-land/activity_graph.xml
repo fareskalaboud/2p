@@ -93,6 +93,7 @@
             android:id="@+id/datetext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text=""
             android:textSize="15dp" />
 
@@ -100,6 +101,7 @@
             android:id="@+id/datespinner"
             android:layout_width="340dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="0.36"
             android:progressDrawable="@drawable/customseekbar_scrubber_progress"
             android:thumb="@drawable/customseekbar_scrubber_control" />
@@ -108,6 +110,7 @@
             android:id="@+id/playbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:background="@drawable/customplaybutton"
             android:onClick="playbutton" />
     </LinearLayout>

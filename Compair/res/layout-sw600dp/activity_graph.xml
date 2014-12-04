@@ -104,6 +104,7 @@
             android:id="@+id/datespinner"
             android:layout_width="259dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginRight="10dp"
             android:progressDrawable="@drawable/customseekbar_scrubber_progress"
             android:thumb="@drawable/customseekbar_scrubber_control" />

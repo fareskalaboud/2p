@@ -62,8 +62,8 @@
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="15dp"
-            android:onClick="openHelpDialog"
-            android:background="@drawable/customdialoghelp" />
+            android:background="@drawable/customdialoghelp"
+            android:onClick="openHelpDialog" />
     </LinearLayout>
 
     <LinearLayout
@@ -84,6 +84,7 @@
             android:id="@+id/update"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:background="@drawable/custombutton_btn_default_holo_light"
             android:onClick="update"
             android:text="Update"
@@ -93,6 +94,7 @@
             android:id="@+id/datetext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text=""
             android:textSize="15dp" />
 
@@ -100,6 +102,7 @@
             android:id="@+id/datespinner"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:progressDrawable="@drawable/customseekbar_scrubber_progress"
             android:thumb="@drawable/customseekbar_scrubber_control" />
 
@@ -107,8 +110,9 @@
             android:id="@+id/playbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="playbutton"
-            android:background="@drawable/customplaybutton" />
+            android:layout_gravity="center"
+            android:background="@drawable/customplaybutton"
+            android:onClick="playbutton" />
     </LinearLayout>
 
 </LinearLayout>
