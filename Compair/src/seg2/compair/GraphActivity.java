@@ -125,7 +125,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	private int i = 0;
 	private boolean hasStopped = false;
 	private boolean isRunning = false;
-
+	//The playbutton that is used to auto increment the seekbar.
 	private ImageView playbutton;
 
 	@SuppressWarnings("unchecked")
@@ -153,10 +153,10 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 		//Initialise the layout to add animations and graphs to.
 		layout = (LinearLayout) findViewById(R.id.chart);
-		
+		//We add the background tutorial to the graph background.
 		ImageView background = new ImageView(this);
 		background.setImageResource(R.drawable.graphbackground);
-		
+
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		params.gravity = Gravity.CENTER;
 		background.setLayoutParams(params);
@@ -353,7 +353,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		}
 
 		//if a scatter graph exists, we want to build it again in this view.
-	if(scatterGraphExists == true)
+		if(scatterGraphExists == true)
 		{
 			//We remove the fit the view button.
 			bottomlayout.removeView(fittoview);
@@ -990,9 +990,9 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			}
 
 		});
-		
+
 		thread.start();
-		
+
 
 	}
 
