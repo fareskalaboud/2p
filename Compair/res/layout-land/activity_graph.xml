@@ -104,12 +104,12 @@
             android:progressDrawable="@drawable/customseekbar_scrubber_progress"
             android:thumb="@drawable/customseekbar_scrubber_control" />
 
-        <ImageView
+        <Button
             android:id="@+id/playbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="playbutton"
-            android:src="@drawable/ic_media_play" />
+            android:background="@drawable/customplaybutton"
+            android:onClick="playbutton" />
     </LinearLayout>
 
 </LinearLayout>

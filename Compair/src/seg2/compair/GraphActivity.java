@@ -125,7 +125,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	private boolean hasStopped = false;
 	private boolean isRunning = false;
 	//The playbutton that is used to auto increment the seekbar.
-	private ImageView playbutton;
+	private Button playbutton;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -166,7 +166,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		switchindicator = (ImageView)findViewById(R.id.switchindicator);
 
 		//We intialise the play button
-		playbutton = (ImageView)findViewById(R.id.playbutton);
+		playbutton = (Button)findViewById(R.id.playbutton);
 		playbutton.setVisibility(View.GONE);
 		//Initialise the date text for dual indicators.
 		datetext = (TextView)findViewById(R.id.datetext);
@@ -465,12 +465,12 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		if(isRunning == false)
 		{
 			//IF the button is not running already.
-			playbutton.setImageResource(R.drawable.ic_media_pause);
+			playbutton.setBackgroundResource(R.drawable.custompausebutton);
 			hasStopped = false;
 			startAnimationSeek();
 			isRunning = true;
 		} else {
-			playbutton.setImageResource(R.drawable.ic_media_play);
+			playbutton.setBackgroundResource(R.drawable.customplaybutton);
 			hasStopped = true;
 			isRunning = false;
 		}
@@ -594,7 +594,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			playbutton.setVisibility(View.GONE);
 			hasStopped = true;
 			isRunning = false;
-			playbutton.setImageResource(R.drawable.ic_media_play);
+			playbutton.setBackgroundResource(R.drawable.ic_media_play);
 			//We remove the seekbar and the date.
 			datesSeekBar.setVisibility(View.GONE);
 			datetext.setText("");
@@ -652,7 +652,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			//We stop the play button.
 			hasStopped = true;
 			isRunning = false;
-			playbutton.setImageResource(R.drawable.ic_media_play);
+			playbutton.setBackgroundResource(R.drawable.ic_media_play);
 
 			//We reset this count so the spinner has no effect on the graph. 
 			accessseekbarcount = 0;
