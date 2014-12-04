@@ -336,7 +336,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		}
 
 		//if a scatter graph exists, we want to build it again in this view.
-		if(scatterGraphExists == true)
+	if(scatterGraphExists == true)
 		{
 			//We remove the fit the view button.
 			bottomlayout.removeView(fittoview);
@@ -353,10 +353,14 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			//We get the minimum/maximum values for the axis.
 			xaxisminmax = scatterGraph.getXMinMax();
 			yaxisminmax = scatterGraph.getYMinMax();
-		}
-		if(isOpen == true)
+			//We set the lock open, and a scatter graph already exists in the viewport.
+			if(isOpen == true)
+			{
+				setDualIndicator(true, year, false);
+			}
+		} else if(isOpen == true)
 		{
-			setDualIndicator(true, year, false);
+			setDualIndicator(false, year, true);
 		}
 
 
