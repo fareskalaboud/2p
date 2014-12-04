@@ -23,6 +23,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -152,7 +153,14 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 		//Initialise the layout to add animations and graphs to.
 		layout = (LinearLayout) findViewById(R.id.chart);
-
+		
+		ImageView background = new ImageView(this);
+		background.setImageResource(R.drawable.graphbackground);
+		
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		params.gravity = Gravity.CENTER;
+		background.setLayoutParams(params);
+		layout.addView(background);
 		//We initialise the imageview of the lock.
 		lock = (ImageView)findViewById(R.id.xlock);
 		//We initialise the imageview of the switch indicator. 
