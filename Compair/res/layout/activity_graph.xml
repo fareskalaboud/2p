@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
 
-        <ImageView
+        <Button
             android:id="@+id/btnHelp"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -63,7 +63,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="15dp"
             android:onClick="openHelpDialog"
-            android:src="@drawable/help" />
+            android:background="@drawable/customdialoghelp" />
     </LinearLayout>
 
     <LinearLayout

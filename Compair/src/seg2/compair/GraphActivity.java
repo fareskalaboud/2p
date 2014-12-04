@@ -118,7 +118,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	//We get the linear layout this button has to be added to.
 	private LinearLayout bottomlayout;
 	//This is the help dialog button.
-	private ImageView help;
+	private Button help;
 
 	//Values used in the play/stop button.
 	private int i = 0;
@@ -210,7 +210,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		datesSeekBar.setVisibility(View.GONE);
 	
 		//We intialise the help imageview button.
-		help = (ImageView)findViewById(R.id.btnHelp);
+		help = (Button)findViewById(R.id.btnHelp);
 
 
 		//We set the maximum number of years for the seekbar.
@@ -507,7 +507,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		//We remove the button that allows users to fit the line graph to view.
 		bottomlayout.removeView(fittoview);
 		//We change the help dialog button to blue
-		help.setImageResource(R.drawable.helpblue);
+		help.setBackgroundResource(R.drawable.customdialoghelpblue);
 		//We set the play button to be seen.
 		playbutton.setVisibility(View.VISIBLE);
 		//We set the textfield to now show a date.
@@ -580,7 +580,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			bottomlayout.addView(fittoview, new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
 
 			//We turn the help dialog button back to gray
-			help.setImageResource(R.drawable.help);
+			help.setBackgroundResource(R.drawable.help);
 
 			//We set the spinner back to 0 for the next instance of using dual indicators.
 			accessseekbarcount = 0;
