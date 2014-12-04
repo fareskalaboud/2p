@@ -42,9 +42,9 @@ public class LineGraph implements Serializable {
 	//The array to store all colours
 	private int[] colours = {Color.parseColor("#CD5C5C"),Color.parseColor("#4169E1"),Color.parseColor("#9ACD32"),Color.parseColor("#8A2BE2")
 			,Color.parseColor("#2897B7"),Color.parseColor("#2F74D0"),Color.parseColor("#6755E3"),Color.parseColor("#93BF96")
-			,Color.parseColor("#75D6FF"),Color.parseColor("#FE67EB"),Color.parseColor("#DFDF00"),Color.parseColor("#6094DB")
-			,Color.parseColor("#89FC63"),Color.parseColor("#8FFEDD"),Color.parseColor("#BBBBFF"),Color.parseColor("#DFB0FF")
-			,Color.parseColor("#BAD0EF"),Color.parseColor("#7DFDD7"),Color.parseColor("#FFBBF7"),Color.parseColor("#FFA8A8")
+			,Color.parseColor("#75D6FF"),Color.parseColor("#FE67EB"),Color.parseColor("#0000CE"),Color.parseColor("#6094DB")
+			,Color.parseColor("#1F88A7"),Color.parseColor("#C27E3A"),Color.parseColor("#BBBBFF"),Color.parseColor("#DFB0FF")
+			,Color.parseColor("#BAD0EF"),Color.parseColor("#C8B400"),Color.parseColor("#FFBBF7"),Color.parseColor("#FFA8A8")
 			,Color.parseColor("#FFB60B"),Color.parseColor("#FFAC62"),Color.parseColor("#CF8D72"),Color.parseColor("#CB59E8")
 			,Color.parseColor("#A5D3CA"),Color.parseColor("#FF8E8E"),Color.parseColor("#67C7E2"),Color.parseColor("#A5D3CA")
 			,Color.parseColor("#FFA8FF"),Color.parseColor("#9191FF"),Color.parseColor("#DECF9C"),Color.parseColor("#FF9331")
@@ -209,7 +209,7 @@ public class LineGraph implements Serializable {
 		/*
 		 * We create the renderer for the lines. 
 		 */
-		
+
 		for(int i = 0;i<numberOfSets;i++)
 		{
 			XYSeriesRenderer r = new XYSeriesRenderer();
