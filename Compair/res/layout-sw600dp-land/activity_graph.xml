@@ -64,8 +64,8 @@
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="15dp"
-            android:src="@drawable/help"
-            android:onClick="openHelpDialog" />
+            android:onClick="openHelpDialog"
+            android:src="@drawable/help" />
     </LinearLayout>
 
     <LinearLayout
@@ -102,11 +102,18 @@
 
         <SeekBar
             android:id="@+id/datespinner"
-            android:layout_width="match_parent"
+            android:layout_width="700dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:progressDrawable="@drawable/customseekbar_scrubber_progress"
             android:thumb="@drawable/customseekbar_scrubber_control" />
+
+        <ImageView
+            android:id="@+id/playbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="playbutton"
+            android:src="@drawable/ic_media_play" />
     </LinearLayout>
 
 </LinearLayout>

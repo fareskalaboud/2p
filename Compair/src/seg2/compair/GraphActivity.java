@@ -109,7 +109,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	private double[] xaxisminmax;
 	private double[] yaxisminmax;
 	//The default year string for the dual indicators. 
-	private String year = "1970";
+	private String year = "1960";
 	//Value is used in deciding whether to lock orientation for a certain period of time.
 	private int prevOrientation;
 
@@ -120,7 +120,12 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	//This is the help dialog button.
 	private ImageView help;
 
+	//Values used in the play/stop button.
 	private int i = 0;
+	private boolean hasStopped = false;
+	private boolean isRunning = false;
+
+	private ImageView playbutton;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -131,8 +136,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		//We get the string array from CountrySelectActivity.
 		countries = (ArrayList<Country>) getIntent().getSerializableExtra("countries");
 
-		//We add the years from 1970 to 2012 into an arraylist. 
-		for(int i = 1970; i<=2012; i++)
+		//We add the years from 1960 to 2012 into an arraylist. 
+		for(int i = 1960; i<=2012; i++)
 		{
 			dates.add(String.valueOf(i));
 		}
@@ -153,6 +158,9 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		//We initialise the imageview of the switch indicator. 
 		switchindicator = (ImageView)findViewById(R.id.switchindicator);
 
+		//We intialise the play button
+		playbutton = (ImageView)findViewById(R.id.playbutton);
+		playbutton.setVisibility(View.GONE);
 		//Initialise the date text for dual indicators.
 		datetext = (TextView)findViewById(R.id.datetext);
 		//Initialise the fittoview button.
@@ -180,10 +188,10 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		//We check if the device is a tablet. If it is, we make the button bigger to fit the screen.
 		if(isTablet(this))
 		{
-			addFitButton(30,600);
+			addFitButton(30,450);
 		} else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
 		{
-			addFitButton(15,600);
+			addFitButton(15,450);
 		} else {
 			addFitButton(15,300);
 		}
@@ -267,6 +275,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	/**
 	 * This method is used to add the fit to view button to the screen depending on what size the text is
 	 * @param size The size of the text on the button.
+	 * @param paramsize The size of the button itself (width)
 	 */
 	public void addFitButton(int size, int paramsize)
 	{
@@ -455,6 +464,25 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		}
 
 	}
+	/**
+	 * This method is used by the play button to start stop incrementing the seekbar.
+	 * @param v
+	 */
+	public void playbutton(View v)
+	{
+		if(isRunning == false)
+		{
+			//IF the button is not running already.
+			playbutton.setImageResource(R.drawable.ic_media_pause);
+			hasStopped = false;
+			startAnimationSeek();
+			isRunning = true;
+		} else {
+			playbutton.setImageResource(R.drawable.ic_media_play);
+			hasStopped = true;
+			isRunning = false;
+		}
+	}
 
 	/**
 	 * This method is used by the switch indicators imageview, to execute the animation and to switch the indicators in the spinners.
@@ -478,7 +506,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	/**
 	 * This method handles changing the UI to support dual indicators.
 	 * @param scatterexists Does a scattergraph already exist in viewport.
-	 * @param year The year that we want to set the date text at (Usually 1970).
+	 * @param year The year that we want to set the date text at (Usually 1960).
 	 * @param removeView Do we want to remove all views out of graph(Usually yes, unless orientation change).
 	 */
 	public void setDualIndicator(boolean scatterexists, String year, boolean removeView)
@@ -487,6 +515,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		bottomlayout.removeView(fittoview);
 		//We change the help dialog button to blue
 		help.setImageResource(R.drawable.helpblue);
+		//We set the play button to be seen.
+		playbutton.setVisibility(View.VISIBLE);
 		//We set the textfield to now show a date.
 		datetext.setText(year);
 		datetext.setTextSize(30f);
@@ -535,7 +565,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 
-					setDualIndicator(false, "1970", true);
+					setDualIndicator(false, "1960", true);
 				}
 			});
 
@@ -567,6 +597,11 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			lock.setImageResource(R.drawable.lock);
 			//We change the colour of the switch indicator, indicating it is not possible to switch.
 			switchindicator.setImageResource(R.drawable.switchindicatorgrey);
+			//We remove the play button
+			playbutton.setVisibility(View.GONE);
+			hasStopped = true;
+			isRunning = false;
+			playbutton.setImageResource(R.drawable.ic_media_play);
 			//We remove the seekbar and the date.
 			datesSeekBar.setVisibility(View.GONE);
 			datetext.setText("");
@@ -631,7 +666,10 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 			}
 			update.setEnabled(false);
-
+			//We stop the play button.
+			hasStopped = true;
+			isRunning = false;
+			playbutton.setImageResource(R.drawable.ic_media_play);
 
 			//We reset this count so the spinner has no effect on the graph. 
 			accessseekbarcount = 0;
@@ -672,8 +710,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				//We iterate through the countries and get the indicators map.
 				for(Country country: countries)
 				{
-					parser.getIndicatorFor(country.getId(), IndicatorNamey, "1970","2012");
-					parser.getIndicatorFor(country.getId(), IndicatorNamex, "1970", "2012");
+					parser.getIndicatorFor(country.getId(), IndicatorNamey, "1960","2012");
+					parser.getIndicatorFor(country.getId(), IndicatorNamex, "1960", "2012");
 				}
 
 			} else {
@@ -690,7 +728,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				//We iterate through the countries and get the indicators map.
 				for(Country country: countries)
 				{
-					parser.getIndicatorFor(country.getId(), IndicatorName, "1970","2012");
+					parser.getIndicatorFor(country.getId(), IndicatorName, "1960","2012");
 				}
 			}
 
@@ -888,53 +926,66 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			}
 		}
 	}
-/**
- * This code will run the seekbar and the date text, and increment the values on a background thread.
- */
+	/**
+	 * This code will run the seekbar and the date text, and increment the values on a background thread.
+	 */
 	public void startAnimationSeek()
 	{
-		new Thread(new Runnable()
+		Thread thread = new Thread(new Runnable()
 		{
 			@Override
 			public void run() {
 
-				while(true)
+				while(hasStopped == false)
 				{
 					for (i = datesSeekBar.getProgress(); i < numberOfYears; i++) {
 
-						runOnUiThread(new Runnable()
+						if(hasStopped == false)
 						{
 
-							@Override
-							public void run() {
-								datesSeekBar.setProgress(i);
-								datetext.setText(dates.get(i));
-							}
-
-						});
-						if(i+1 == numberOfYears)
-						{
 							runOnUiThread(new Runnable()
 							{
+
 								@Override
 								public void run() {
-									datesSeekBar.setProgress(0);
-									datetext.setText(dates.get(0));
+									datesSeekBar.setProgress(i);
+									datetext.setText(dates.get(i));
 								}
-							});
-						}
 
-						try {
-							//Use this value to sleep the thread, causing a small pause.
-							Thread.sleep(100);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
+							});
+							if(i+1 == numberOfYears)
+							{
+								runOnUiThread(new Runnable()
+								{
+									@Override
+									public void run() {
+										datesSeekBar.setProgress(0);
+										datetext.setText(dates.get(0));
+									}
+								});
+							}
+
+							try {
+								//Use this value to sleep the thread, causing a small pause.
+								Thread.sleep(70);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						} else {
+							break;
 						}
 					}
 				}
+
+				//We reset hasstopped for the next iteration, since the thread has stopped.
+				hasStopped = false;
 			}
 
-		}).start();
+		});
+		
+		thread.start();
+		
+
 	}
 
 	/**
