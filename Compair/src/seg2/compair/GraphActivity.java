@@ -120,6 +120,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	//This is the help dialog button.
 	private ImageView help;
 
+	private int i = 0;
+
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -209,7 +211,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		});
 		//We intialise the help imageview button.
 		help = (ImageView)findViewById(R.id.btnHelp);
-	
+
 
 		//We set the maximum number of years for the seekbar.
 		datesSeekBar.setMax(numberOfYears-1);
@@ -257,9 +259,9 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 		//We add the list of countries to the scatter graph class.
 		scatterGraph.addCountryList(countries);
-		
-	
-		
+
+
+
 	}
 
 	/**
@@ -552,7 +554,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 			//We turn the help dialog button back to gray
 			help.setImageResource(R.drawable.help);
-			
+
 			//We set the spinner back to 0 for the next instance of using dual indicators.
 			accessseekbarcount = 0;
 			//We set the x indicator back to the date array, to remove the rest of the indicators. 
@@ -881,6 +883,54 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				countriescount++;
 			}
 		}
+	}
+/**
+ * This code will run the seekbar and the date text, and increment the values on a background thread.
+ */
+	public void startAnimationSeek()
+	{
+		new Thread(new Runnable()
+		{
+			@Override
+			public void run() {
+
+				while(true)
+				{
+					for (i = datesSeekBar.getProgress(); i < numberOfYears; i++) {
+
+						runOnUiThread(new Runnable()
+						{
+
+							@Override
+							public void run() {
+								datesSeekBar.setProgress(i);
+								datetext.setText(dates.get(i));
+							}
+
+						});
+						if(i+1 == numberOfYears)
+						{
+							runOnUiThread(new Runnable()
+							{
+								@Override
+								public void run() {
+									datesSeekBar.setProgress(0);
+									datetext.setText(dates.get(0));
+								}
+							});
+						}
+
+						try {
+							//Use this value to sleep the thread, causing a small pause.
+							Thread.sleep(100);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+
+		}).start();
 	}
 
 	/**

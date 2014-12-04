@@ -97,7 +97,7 @@ public class LineGraph implements Serializable {
 		renderer.setLegendTextSize(24);
 		//This is used to set the default number of Labels on the X & Y axis. to increase labels, increase number. 
 		renderer.setYLabels(16);
-		renderer.setXLabels(8);
+		renderer.setXLabels(10);
 
 		//We add the x and y names to the graph. 
 		renderer.setXTitle(xLabel);
