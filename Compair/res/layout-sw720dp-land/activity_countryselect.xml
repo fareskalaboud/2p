@@ -33,7 +33,7 @@
     <ListView
         android:id="@+id/countryListView"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
+        android:layout_height="500dp"
         android:layout_alignBottom="@+id/allianceListView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -42,7 +42,7 @@
     <ListView
         android:id="@+id/allianceListView"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
+        android:layout_height="500dp"
         android:layout_above="@+id/graphButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
