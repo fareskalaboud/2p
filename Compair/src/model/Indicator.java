@@ -3,10 +3,11 @@ package model;
 import java.util.HashMap;
 
 /**
- * Created by alextelek on 22/11/14.
+ * Created by AlexTelek on 22/11/14.
  */
 public class Indicator {
-    private String id;
+    @SuppressWarnings("unused")
+	private String id;
     private String name;
     private boolean isDouble;
     private HashMap<String, String> indicatorValues;

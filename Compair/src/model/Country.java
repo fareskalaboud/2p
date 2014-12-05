@@ -1,8 +1,5 @@
 package model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 
 public class Country implements Comparable<Country>, Serializable {

@@ -1,6 +1,5 @@
 package seg2.compair;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,7 +9,6 @@ import android.widget.*;
 import model.Country;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by faresalaboud on 22/11/14.

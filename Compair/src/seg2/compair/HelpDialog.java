@@ -3,13 +3,11 @@ package seg2.compair;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.provider.Settings;
 import android.text.Html;
 import android.view.View;
 
 /**
- * Created by faresalaboud on 3/12/14.
+ * Created by FaresAlaboud on 3/12/14.
  */
 public class HelpDialog {
 

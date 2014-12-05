@@ -19,7 +19,6 @@ import org.achartengine.renderer.XYSeriesRenderer;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
-import android.util.Log;
 
 /**
  *This class defines the scatter graph and all the dataset/operations and renderer for it. 

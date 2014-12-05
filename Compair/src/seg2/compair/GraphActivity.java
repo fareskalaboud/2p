@@ -27,7 +27,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -53,11 +52,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 	//We use this for the dates
 	private ArrayList<String> dates = new ArrayList<String>();
-
-	//The start year of the data
-	private final String startYear = "1960";
-	//The end year of the data
-	private final String endYear = "2012";
 
 	//Spinners for the x indicators and the y indicators
 	private Spinner xindicator;
@@ -280,6 +274,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	/**
 	 * This method resets the graph view. Used by the fit to view button in the graph activity.
 	 */
+	@SuppressWarnings("deprecation")
 	private void resetView() {
 
 		//We add the view of the final graph.
@@ -307,6 +302,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		outState.putSerializable("linegraph", graph);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onRestoreInstanceState(Bundle savedState) {
 		super.onRestoreInstanceState(savedState);
@@ -355,7 +351,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			//We get the minimum/maximum values for the axis.
 			xaxisminmax = scatterGraph.getXMinMax();
 			yaxisminmax = scatterGraph.getYMinMax();
-			//We set the lock open, and a scatter graph already exists in the viewport.
+			//We set the lock open, and a scatter graph already exists in the ViewPort.
 			if(isOpen == true)
 			{
 				setDualIndicator(true, year, false);
@@ -558,7 +554,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 
-					setDualIndicator(false, "startYear", true);
+					setDualIndicator(false, "1960", true);
 				}
 			});
 
@@ -693,8 +689,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				//We iterate through the countries and get the indicators map.
 				for(Country country: countries)
 				{
-					parser.getIndicatorFor(country.getId(), IndicatorNamey, "startYear","endYear");
-					parser.getIndicatorFor(country.getId(), IndicatorNamex, "startYear", "endYear");
+					parser.getIndicatorFor(country.getId(), IndicatorNamey, "1960","2012");
+					parser.getIndicatorFor(country.getId(), IndicatorNamex, "1960", "2012");
 				}
 
 			} else {
@@ -711,7 +707,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				//We iterate through the countries and get the indicators map.
 				for(Country country: countries)
 				{
-					parser.getIndicatorFor(country.getId(), IndicatorName, "startYear","endYear");
+					parser.getIndicatorFor(country.getId(), IndicatorName, "1960","2012");
 				}
 			}
 
@@ -933,13 +929,11 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 							//it from stalling.
 							runOnUiThread(new Runnable()
 							{
-
 								@Override
 								public void run() {
 									datesSeekBar.setProgress(i);
 									datetext.setText(dates.get(i));
 								}
-
 							});
 							//We restart the loop by setting progress back to 0
 							if(i+1 == numberOfYears)
@@ -953,7 +947,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 									}
 								});
 							}
-
 							try {
 								//Use this value to sleep the thread, causing a small pause.
 								Thread.sleep(70);
@@ -965,22 +958,17 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 						}
 					}
 				}
-
 				//We reset hasstopped for the next iteration, since the thread has stopped.
 				hasStopped = false;
 			}
-
 		});
-
 		thread.start();
-
-
 	}
 
 	/**
 	 * This method is used to check if the device currently running is a tablet or a phone.l=
 	 * @param context The context of the application
-	 * @return is the device is a tablet.
+	 * @return is the device a tablet.
 	 */
 	public static boolean isTablet(Context context) {
 		return (context.getResources().getConfiguration().screenLayout

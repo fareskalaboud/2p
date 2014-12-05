@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="DefaultLocale">
+        <ignore path="src/seg2/compair/CountryListAdapter.java" />
+    </issue>
+    <issue id="InflateParams">
+        <ignore path="src/seg2/compair/CountryListAdapter.java" />
+        <ignore path="src/seg2/compair/CountrySelectActivity.java" />
+        <ignore path="src/seg2/compair/GraphActivity.java" />
+    </issue>
+    <issue id="SimpleDateFormat">
+        <ignore path="src/model/graph/LineGraph.java" />
+    </issue>
+</lint>

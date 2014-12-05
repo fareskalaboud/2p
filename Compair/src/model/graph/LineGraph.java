@@ -62,7 +62,7 @@ public class LineGraph implements Serializable {
 	double max;
 
 	/**
-	 * We intialise the missing countries arraylist.
+	 * We initialize the missing countries ArrayList.
 	 */
 	public LineGraph()
 	{
@@ -70,7 +70,7 @@ public class LineGraph implements Serializable {
 	}
 
 	/**
-	 * This class resets the dataset and the renderer. We add the default properties to the renderer. 
+	 * This class resets the Data-set and the renderer. We add the default properties to the renderer. 
 	 * @param xLabel The label on the X Axis
 	 * @param yLabel The Label on the Y Axis
 	 */
@@ -125,7 +125,7 @@ public class LineGraph implements Serializable {
 	}
 	/**
 	 * This method defines adding a data set to the graph. 
-	 * @param map The Hashmap we have to iterate. 
+	 * @param map The HashMap we have to iterate. 
 	 * @param c The country of the data. 
 	 * @throws ParseException The date was in the incorrect format (has to just be a year i.e 2009).
 	 */

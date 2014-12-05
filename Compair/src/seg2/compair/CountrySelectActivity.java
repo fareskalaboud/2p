@@ -18,7 +18,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
@@ -58,13 +57,14 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	private ArrayList<Country> countryList;
     private ArrayList<Country> allCountriesList;
 
+	@SuppressWarnings("serial")
 	private final ArrayList<String> alliancesName = new ArrayList<String>() {{add("NATO"); add("SCO"); add("BRICS"); add("ASEAN");}};
 	private ArrayList<Country> natoCountries = new ArrayList<Country>();
 	private ArrayList<Country> scoCountries = new ArrayList<Country>();
 	private ArrayList<Country> bricsCountries = new ArrayList<Country>();
 	private ArrayList<Country> aseanCountries = new ArrayList<Country>();
 
-	//Checkbox that is used in the alert dialog to not show alert dialog again.
+	//CheckBox that is used in the alert dialog to not show alert dialog again.
 	private CheckBox showmessage;
 	//We check here for any user preferences.
 	private SharedPreferences preferences;
@@ -135,14 +135,16 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	private void configureRadioButtons() {
 		countryRadioButton = (RadioButton) findViewById(R.id.countryRadioButton);
 		countryRadioButton.setChecked(true);
-		countryRadioButton.setTextColor(new Color().rgb(0, 178, 255));
+		new Color();
+		countryRadioButton.setTextColor(Color.rgb(0, 178, 255));
 		allianceRadioButton = (RadioButton) findViewById(R.id.allianceRadioButton);
 
 		countryRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (isChecked) {
-					countryRadioButton.setTextColor(new Color().rgb(0, 178, 255));
+					new Color();
+					countryRadioButton.setTextColor(Color.rgb(0, 178, 255));
 					allianceRadioButton.setTextColor(Color.BLACK);
 					countriesListView.setVisibility(View.VISIBLE);
 					alliancesListView.setVisibility(View.GONE);
@@ -156,7 +158,8 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (isChecked) {
-					allianceRadioButton.setTextColor(new Color().rgb(0, 178, 255));
+					new Color();
+					allianceRadioButton.setTextColor(Color.rgb(0, 178, 255));
 					countryRadioButton.setTextColor(Color.BLACK);
 					alliancesListView.setVisibility(View.VISIBLE);
 					countriesListView.setVisibility(View.GONE);
@@ -310,7 +313,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	 * to the next activity, which graphs the data it obtains
 	 * from it.
 	 */
-	@SuppressWarnings("unchecked")
+	
 	public void sendCheckedCountriesToGraph() {
 		checkedCountries = new ArrayList<Country>();
 
@@ -341,7 +344,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 					builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int id) {
-							//If the checkbox is checked, it means the user does not want to see the message again. We add this to preference for the next start-up.
+							//If the CheckBox is checked, it means the user does not want to see the message again. We add this to preference for the next start-up.
 							if(showmessage.isChecked())
 							{
 								SharedPreferences.Editor editor = preferences.edit();
