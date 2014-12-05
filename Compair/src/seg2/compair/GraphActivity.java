@@ -56,7 +56,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	//Spinners for the x indicators and the y indicators
 	private Spinner xindicator;
 	private Spinner yindicator;
-	//Seekbar for dualindicators
+	//SeekBar for Dual indicators
 	private SeekBar datesSeekBar;
 
 	//progress bar for loading
@@ -78,12 +78,12 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	private String IndicatorName;
 	//The example list of countries.
 	private ArrayList<Country> countries;
-	//The count of countries used to add datasets.
+	//The count of countries used to add DataSets.
 	private int countriescount = 0;
 	//The layout we add the graph to, and the loading animation.
 	private LinearLayout layout;
 
-	//ImageView of the lock to unlock the Xaxis.
+	//ImageView of the lock to unlock the X axis.
 	private Button lock;
 	//ImageView of the switch indicator.
 	private ImageView switchindicator;
@@ -99,14 +99,14 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	private String IndicatorNamey;
 	private String IndicatorNamex;
 
-	//This is the axiscount, we use this when using dual indicators to tell what axis information we are 
+	//This is the axis count, we use this when using dual indicators to tell what axis information we are 
 	//listening for.
 	private int axiscount = 0;
-	//This count is used when deciding if the call that the datespinner activates is null and to not be used
+	//This count is used when deciding if the call that the dates spinner activates is null and to not be used
 	private int accessseekbarcount  = 0;
-	//Used for the seekbar, to get the correct year and the number of years to display.
+	//Used for the SeekBar, to get the correct year and the number of years to display.
 	private int numberOfYears;
-	//The minimum and maximum value for the scattergraph in two arrays.
+	//The minimum and maximum value for the scatter graph in two arrays.
 	private double[] xaxisminmax;
 	private double[] yaxisminmax;
 	//The default year string for the dual indicators. 
@@ -123,7 +123,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	private int i = 0;
 	private boolean hasStopped = false;
 	private boolean isRunning = false;
-	//The playbutton that is used to auto increment the seekbar.
+	//The Play button that is used to auto increment the SeekBar.
 	private Button playbutton;
 
 	@SuppressWarnings("unchecked")
@@ -135,13 +135,13 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		//We get the string array from CountrySelectActivity.
 		countries = (ArrayList<Country>) getIntent().getSerializableExtra("countries");
 
-		//We add the years from startYear to endYear into an arraylist. 
+		//We add the years from startYear to endYear into an ArrayList. 
 		for(int i = 1960; i<=2012; i++)
 		{
 			dates.add(String.valueOf(i));
 		}
 
-		//We get the total size of the dates for the seekbar.
+		//We get the total size of the dates for the SeekBar,.
 		numberOfYears = dates.size();
 
 		// We get the x any y indicators and update button.
@@ -149,7 +149,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		yindicator = (Spinner)findViewById(R.id.yspinner);
 		update = (Button)findViewById(R.id.update);
 
-		//Initialise the layout to add animations and graphs to.
+		//Initialize the layout to add animations and graphs to.
 		layout = (LinearLayout) findViewById(R.id.chart);
 		//We add the background tutorial to the graph background.
 		ImageView background = new ImageView(this);
@@ -159,17 +159,17 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		params.gravity = Gravity.CENTER;
 		background.setLayoutParams(params);
 		layout.addView(background);
-		//We initialise the imageview of the lock.
+		//We initialize the ImageView of the lock.
 		lock = (Button)findViewById(R.id.xlock);
-		//We initialise the imageview of the switch indicator. 
+		//We initialize the ImageView of the switch indicator. 
 		switchindicator = (ImageView)findViewById(R.id.switchindicator);
 
-		//We intialise the play button
+		//We initialize the play button
 		playbutton = (Button)findViewById(R.id.playbutton);
 		playbutton.setVisibility(View.GONE);
-		//Initialise the date text for dual indicators.
+		//Initialize the date text for dual indicators.
 		datetext = (TextView)findViewById(R.id.datetext);
-		//Initialise the fittoview button.
+		//Initialize the FitToView button.
 		fittoview = new Button(this);
 		fittoview.setText("Fit to View");
 
@@ -206,13 +206,13 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		datesSeekBar = (SeekBar)findViewById(R.id.datespinner);
 		datesSeekBar.setVisibility(View.GONE);
 
-		//We intialise the help imageview button.
+		//We Initialize the help ImageView button.
 		help = (Button)findViewById(R.id.btnHelp);
 
 
-		//We set the maximum number of years for the seekbar.
+		//We set the maximum number of years for the SeekBar.
 		datesSeekBar.setMax(numberOfYears-1);
-		//Listener for the seekbar on dual indicators. 
+		//Listener for the SeekBar on dual indicators. 
 		datesSeekBar.setOnSeekBarChangeListener(new seekBarListener());
 
 		//We add adapters to the x and y spinners, to edit the labels to match the correct chosen label. 
@@ -267,7 +267,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	public void addFitButton(int size, int paramsize)
 	{
 		fittoview.setTextSize(size);
-		//We add the button to the bottom layout and set the onclick listener.
+		//We add the button to the bottom layout and set the  OnClickListener.
 		bottomlayout.addView(fittoview,new LayoutParams(paramsize, LayoutParams.WRAP_CONTENT));
 	}
 
@@ -288,8 +288,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		//We save the current data when switching orientations.
-		//We save the lockstatus, seekbarstatus, x and y indicators and if a graph has been created.
-		//We also give the scattergraph and linegraph to easily repaint the view onto the activity.
+		//We save the Lock status, SeekBar status, x and y indicators and if a graph has been created.
+		//We also give the Scatter Graph and the Line Graph to easily repaint the view onto the activity.
 		outState.putBoolean("lock", isOpen);
 		outState.putBoolean("seekbar", seekBarIsVisible);
 		outState.putBoolean("lineGraphExists", lineGraphExists);
@@ -309,8 +309,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		// restore the current data, for instance when changing the screen
 		// orientation
 		/*
-		 * We get the lock, if the seekbar is visible, if the graphs exists, the position of the indicators
-		 * the year that is currently shown on the textview, the position of the seekbar if it exists, 
+		 * We get the lock, if the SeekBar is visible, if the graphs exists, the position of the indicators
+		 * the year that is currently shown on the TextView, the position of the SeekBar if it exists, 
 		 * the graph itself as two graphical views.
 		 */
 		isOpen= savedState.getBoolean("lock");
@@ -323,7 +323,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		int yearPosition = savedState.getInt("yearPosition");
 		graph = (LineGraph) savedState.getSerializable("linegraph");
 		scatterGraph = (ScatterGraph) savedState.getSerializable("scattergraph");
-		//If a linegraph exists, we want to build it again in this view.
+		//If a LineGraph exists, we want to build it again in this view.
 		if(lineGraphExists == true)
 		{
 			//We add the view of the final graph.
@@ -343,7 +343,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			layout.addView(scatterGraph.getScatterGraph(this), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
 			lineGraphExists = false;
 
-			//We set the seekbar to active
+			//We set the SeekBar to active
 			accessseekbarcount = 1;
 			//We set the spinner position
 			datesSeekBar.setProgress(yearPosition);
@@ -403,7 +403,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	}
 
 	/**
-	 * Class defines the time seekbar, changing the graph everytime the time changes.
+	 * Class defines the time SeekBar, changing the graph every time the time changes.
 	 * @author Sean
 	 */
 	private class seekBarListener implements SeekBar.OnSeekBarChangeListener{
@@ -453,7 +453,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 	}
 	/**
-	 * This method is used by the play button to start stop incrementing the seekbar.
+	 * This method is used by the play button to start stop incrementing the SeekBar.
 	 * @param v
 	 */
 	public void playbutton(View v)
@@ -473,7 +473,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	}
 
 	/**
-	 * This method is used by the switch indicators imageview, to execute the animation and to switch the indicators in the spinners.
+	 * This method is used by the switch indicators ImageView, to execute the animation and to switch the indicators in the spinners.
 	 * @param v
 	 */
 	public void switchIndicators(View v)
@@ -494,7 +494,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	}
 	/**
 	 * This method handles changing the UI to support dual indicators.
-	 * @param scatterexists Does a scattergraph already exist in viewport.
+	 * @param scatterexists Does a ScatterGraph already exist in ViewPort.
 	 * @param year The year that we want to set the date text at (Usually startYear).
 	 * @param removeView Do we want to remove all views out of graph(Usually yes, unless orientation change).
 	 */
@@ -506,16 +506,16 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		help.setBackgroundResource(R.drawable.customdialoghelpblue);
 		//We set the play button to be seen.
 		playbutton.setVisibility(View.VISIBLE);
-		//We set the textfield to now show a date.
+		//We set the TextField to now show a date.
 		datetext.setText(year);
 		datetext.setTextSize(30f);
-		//We set the visibility of the seekbar to visible. 
+		//We set the visibility of the SeekBar to visible. 
 		datesSeekBar.setVisibility(View.VISIBLE);
 		//We set the adapter up, and change the  lock image to an unlocked image. 
 		setXAdapterArray();
 		//We change the lock image to an unlocked image.
 		lock.setBackgroundResource(R.drawable.customlockopen);
-		//We change the colour of the switch indicator, indicating it is now possible to switch.
+		//We change the Color of the switch indicator, indicating it is now possible to switch.
 		switchindicator.setImageResource(R.drawable.switchindicatorblue);
 
 		if(removeView == true)
@@ -531,7 +531,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		xindicator.setEnabled(true);
 		//the lock is now open. 
 		isOpen = true;
-		//The seekbar is available.
+		//The SeekBar is available.
 		seekBarIsVisible = true;
 
 	}
@@ -572,7 +572,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		} else if(update.isEnabled() == true) {
 			//This means the lock is currently closed, and we want to go back to line graph.
 
-			//We add the fit to view button to the bottom layout and set the onclick listener.
+			//We add the fit to view button to the bottom layout and set the onClickListener.
 			bottomlayout.addView(fittoview, new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
 
 			//We turn the help dialog button back to gray
@@ -584,14 +584,14 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			setXAdapterDate();
 			//We set the lock back to close.
 			lock.setBackgroundResource(R.drawable.lock);
-			//We change the colour of the switch indicator, indicating it is not possible to switch.
+			//We change the Color of the switch indicator, indicating it is not possible to switch.
 			switchindicator.setImageResource(R.drawable.switchindicatorgrey);
 			//We remove the play button
 			playbutton.setVisibility(View.GONE);
 			hasStopped = true;
 			isRunning = false;
 			playbutton.setBackgroundResource(R.drawable.ic_media_play);
-			//We remove the seekbar and the date.
+			//We remove the SeekBar and the date.
 			datesSeekBar.setVisibility(View.GONE);
 			datetext.setText("");
 			//Remove all views out of the graph if there was any ready for the next graph. 
@@ -601,11 +601,11 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			lineGraphExists = false;
 			scatterGraphExists = false;
 
-			//Prevent editing of the xindicator.
+			//Prevent editing of the xIndicator.
 			xindicator.setEnabled(false);
 			//We prevent the user from seeing anything but date. 
 			isOpen = false;
-			//The seekbar is now not available.
+			//The SeekBar is now not available.
 			seekBarIsVisible = false;
 		} else {
 			//Do nothing as the update method is currently running. 
@@ -671,10 +671,10 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			if(isOpen == true)
 			{
 
-				//We set progress of the seekbar to 0
+				//We set progress of the SeekBar to 0
 				datesSeekBar.setProgress(0);
 
-				//We clear the renderer and datasets.
+				//We clear the renderer and DataSets.
 				scatterGraph.clearAll(xLabel, yLabel);
 
 				//We get the selected index to get the index code. 
@@ -682,9 +682,9 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				int IndicatorPosx = xindicator.getSelectedItemPosition();
 				IndicatorNamey = getResources().getStringArray(R.array.indicatorID)[IndicatorPosy];
 				IndicatorNamex = getResources().getStringArray(R.array.indicatorID)[IndicatorPosx];
-				//We create the parser object
+				//We create the parser object.
 				JSONParser parser = new JSONParser(this);
-				//We reset the countriescount
+				//We reset the Countries count.
 				countriescount = 0;
 				//We iterate through the countries and get the indicators map.
 				for(Country country: countries)
@@ -695,14 +695,14 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 			} else {
 
-				//We clear the renderer and datasets.
+				//We clear the renderer and DataSets.
 				graph.clear(xLabel,yLabel);
 				//We get the selected index to get the index code. 
 				int IndicatorPos = yindicator.getSelectedItemPosition();
 				IndicatorName = getResources().getStringArray(R.array.indicatorID)[IndicatorPos];
 				//We create the parser object
 				JSONParser parser = new JSONParser(this);
-				//We reset the countriescount
+				//We reset the Countries count.
 				countriescount = 0;
 				//We iterate through the countries and get the indicators map.
 				for(Country country: countries)
@@ -712,7 +712,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			}
 
 		} else{
-			// no internet connection
+			// no Internet connection.
 		}
 	}
 
@@ -765,13 +765,13 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 					//We get the indicator to get the data.
 					Indicator indicator = (Indicator) result.get(IndicatorNamey);
-					//We get the hashmap to iterate through.
+					//We get the HashMap to iterate through.
 					HashMap<String,String> hashmap = indicator.getValues();
-					//We add the y dataset to the graph.
+					//We add the y DataSet to the graph.
 					scatterGraph.addYDataSet(hashmap, countries.get(countriescount));
-					//Increment the value to show the next dataset is for the y axis.
+					//Increment the value to show the next DataSet is for the y axis.
 				} else {
-					// No data for xAxis, so probably no internet at all
+					// No data for xAxis, so probably no Internet at all
 					// show dialog
 					dialog.dismiss();
 					update.setEnabled(true);
@@ -786,14 +786,14 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 					System.out.println("HAVE X");
 					//We get the x axis data from the indicator class.
 					Indicator indicator = (Indicator) result.get(IndicatorNamex);
-					//We get the hashmap to iterate through.
+					//We get the HashMap to iterate through.
 					HashMap<String,String> hashmap = indicator.getValues();
-					//We add the dataset to the class.
+					//We add the DataSet to the class.
 					scatterGraph.addXDataSet(hashmap, countries.get(countriescount));
-					//We add the data to the graph. We using countriescount to keep track of what countries data we are adding.
+					//We add the data to the graph. We using Countries count to keep track of what countries data we are adding.
 					scatterGraph.addDataToGraph(countries.get(countriescount), year);
 
-					//We compare the count to the size of the arraylist, to see if we have finished adding the data.
+					//We compare the count to the size of the ArrayList, to see if we have finished adding the data.
 					if(countriescount == (countries.size()-1))
 					{
 
@@ -801,7 +801,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 						xaxisminmax = scatterGraph.getXMinMax();
 						yaxisminmax = scatterGraph.getYMinMax();
 
-						//We now set the minmax for the graph.
+						//We now set the Minimum Maximum for the graph.
 
 						scatterGraph.setXAxisMinMax(xaxisminmax[0],xaxisminmax[1]);
 						scatterGraph.setYAxisMinMax(yaxisminmax[0],yaxisminmax[1]);
@@ -826,7 +826,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 						} else {
 							createMissingDialog(missing);
 						}
-						//The spinner can now be used, since an update has occured.
+						//The spinner can now be used, since an update has occurred.
 						accessseekbarcount = 1;
 						//The update button can now be pressed again.
 						update.setEnabled(true);
@@ -837,7 +837,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 						countriescount++;
 					}
 				} else {
-					// Make sure we update the countries count even we don't have internet
+					// Make sure we update the countries count even we don't have Internet
 					if(countriescount != (countries.size()-1)) {
 						countriescount++;
 					}
@@ -847,8 +847,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			}
 		} else {
 			// This means that the data we are getting is for a single indicator. 
-			// we got result when there is no internet connection,
-			// but the size of the hashmap is empty
+			// we got result when there is no Internet connection,
+			// but the size of the HashMap is empty
 			if (((Indicator)result.get(IndicatorName)).getName() == null) {
 				// reset everything
 				dialog.dismiss();
@@ -860,10 +860,10 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 			//We get the indicator to get the data. 
 			Indicator indicator = (Indicator) result.get(IndicatorName);
-			//We get the hashmap to iterate through. 
+			//We get the HashMap to iterate through. 
 			HashMap<String,String> hashmap = indicator.getValues();
 
-			//We add the dataset based on the country and indicator. 
+			//We add the DataSet based on the country and indicator. 
 			try {
 				graph.addDataSet(hashmap, countries.get(countriescount));
 			} catch (ParseException e) {
@@ -871,10 +871,10 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				e.printStackTrace();
 			}
 
-			//We compare the count to the size of the arraylist, to see if we have finished adding the data. 
+			//We compare the count to the size of the ArrayList, to see if we have finished adding the data. 
 			if(countriescount == (countries.size()-1))
 			{
-				//We add the correct amount of renderers. 
+				//We add the correct amount of series to the Renderer. 
 				graph.addRenderers();
 
 				/*
@@ -906,7 +906,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		}
 	}
 	/**
-	 * This code will run the seekbar and the date text, and increment the values on a background thread.
+	 * This code will run the SeekBar and the date text, and increment the values on a background thread.
 	 */
 	public void startAnimationSeek()
 	{
@@ -925,7 +925,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 						 */
 						if(hasStopped == false)
 						{
-							//We set the progress on the ui thread. This means the ui thread does the least amount of work, preventing
+							//We set the progress on the UI thread. This means the UI thread does the least amount of work, preventing
 							//it from stalling.
 							runOnUiThread(new Runnable()
 							{
@@ -958,7 +958,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 						}
 					}
 				}
-				//We reset hasstopped for the next iteration, since the thread has stopped.
+				//We reset HasStopped for the next iteration, since the thread has stopped.
 				hasStopped = false;
 			}
 		});
@@ -978,8 +978,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 
 	/**
-	 * Alex's method to check if internet is available. We check before pressing update to make sure there is an internet connection. 
-	 * @return boolean representing if there is an internet connection.
+	 * Alex's method to check if Internet is available. We check before pressing update to make sure there is an internet connection. 
+	 * @return boolean representing if there is an Internet connection.
 	 */
 	private boolean isInternetAvailable() {
 		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
