@@ -1,5 +1,7 @@
 package seg2.compair;
 
+import introduction.IntroductionActivity;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -78,6 +80,23 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_countryselect);
+		
+		if (!isInternetAvailable()) {
+			new NoInternetAlertDialog(this);
+		}
+		
+		//We check if the user has already seen the introduction.
+		//If they have not, we start the introduction.
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+		String skipintro = preferences.getString("com.SEG2.skipintro", "noskip");
+
+		if(!(skipintro.equals("skipintro")))
+		{
+			Intent intent = new Intent(this, IntroductionActivity.class);
+			startActivity(intent);
+		} 
+
 
 		// make sure we have an empty set of checked countries
 		checkedCountries = new ArrayList<Country>();
