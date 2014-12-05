@@ -23,6 +23,7 @@ import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -358,10 +359,25 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			{
 				setDualIndicator(true, year, false);
 			}
+
+			//In this method we remove the old dates, and add the new dates that are available.
+			ArrayList<String> scattercountries = scatterGraph.getAvailableYears(countries);
+
+			dates.clear();
+			for(String x : scattercountries)
+			{
+				dates.add(x);
+			}
+
+			numberOfYears = dates.size();
+
+			datesSeekBar.setMax(numberOfYears-1);
 		} else if(isOpen == true)
 		{
 			setDualIndicator(false, year, true);
 		}
+
+
 		//We set the indicators to represent the indicators selected before orientation switch.
 		xindicator.setSelection(xindicatorpos);
 		yindicator.setSelection(yindicatorpos);
@@ -413,36 +429,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		@SuppressWarnings("deprecation")
 		@Override
 		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-			for(int i=0; i<numberOfYears; i++) {
-
-				if(datesSeekBar.getProgress()==i) {
-					String date = dates.get(i);
-					datetext.setText(date);
-					year = date;
-
-					//get data for year i
-
-					if(accessseekbarcount == 0)
-					{//Do nothing, the graph has not been created yet to modify with the seekbar.
-					} else {
-						//We remove the old graph from view and set up the renderer and dataset.
-						layout.removeAllViews();
-						scatterGraph.clearAll(xLabel, yLabel);
-						//We add the country data to the graph
-						for(Country country: countries)
-						{
-							scatterGraph.addDataToGraph(country, date);
-						}
-						//We set the minimum and maximum values for the graphs. This is to prevent them from changing each time the slider changes. 
-						scatterGraph.setXAxisMinMax(xaxisminmax[0],xaxisminmax[1]);
-						scatterGraph.setYAxisMinMax(yaxisminmax[0],yaxisminmax[1]);
-						//We add the view of the final graph.
-						layout.addView(scatterGraph.getScatterGraph(getApplicationContext()), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
-
-					}
-				}
-			}
+			//This method handles getting us the graph on the seekbar changing.
+			getDualGraph();
 		}
 
 		@Override
@@ -486,15 +474,64 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		} else {
 			final Animation animRotate = AnimationUtils.loadAnimation(this, R.anim.rotateindicator);
 			switchindicator.startAnimation(animRotate);
+			//We switch their positions around. 
 			int positionx = xindicator.getSelectedItemPosition();
 			int positiony = yindicator.getSelectedItemPosition();
 
 			yindicator.setSelection(positionx);
 			xindicator.setSelection(positiony);
-			
-			updateGraph();
+	
+			if(scatterGraphExists == true)
+			{
+
+				scatterGraph.switchDataSets();
+				double[] tempxminmax = xaxisminmax;
+
+				xaxisminmax = yaxisminmax;
+				yaxisminmax = tempxminmax;
+				String tempLabel = xLabel;
+				xLabel = yLabel;
+				yLabel = tempLabel;
+				getDualGraph();
+			}
 		}
 
+	}
+	/**
+	 * This method gets the graph from the stored data in the scatter graph class for a particular year
+	 * based on the countries and the year selected on the seekbar.
+	 */
+	public void getDualGraph()
+	{
+		for(int i=0; i<numberOfYears; i++) {
+
+			if(datesSeekBar.getProgress()==i) {
+				String date = dates.get(i);
+				datetext.setText(date);
+				year = date;
+
+				//get data for year i
+
+				if(accessseekbarcount == 0)
+				{//Do nothing, the graph has not been created yet to modify with the seekbar.
+				} else {
+					//We remove the old graph from view and set up the renderer and dataset.
+					layout.removeAllViews();
+					scatterGraph.clearAll(xLabel, yLabel);
+					//We add the country data to the graph
+					for(Country country: countries)
+					{
+						scatterGraph.addDataToGraph(country, date);
+					}
+					//We set the minimum and maximum values for the graphs. This is to prevent them from changing each time the slider changes. 
+					scatterGraph.setXAxisMinMax(xaxisminmax[0],xaxisminmax[1]);
+					scatterGraph.setYAxisMinMax(yaxisminmax[0],yaxisminmax[1]);
+					//We add the view of the final graph.
+					layout.addView(scatterGraph.getScatterGraph(getApplicationContext()), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
+
+				}
+			}
+		}
 	}
 	/**
 	 * This method handles changing the UI to support dual indicators.
@@ -825,8 +862,19 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 						//A scatter graph exists now.
 						scatterGraphExists = true;
 						//We create a dialog to represent missing data
-
 						String missing = scatterGraph.getMissingCountries();
+						//In this method we remove the old dates, and add the new dates that are available.
+						ArrayList<String> scattercountries = scatterGraph.getAvailableYears(countries);
+
+						dates.clear();
+						for(String x : scattercountries)
+						{
+							dates.add(x);
+						}
+
+						numberOfYears = dates.size();
+
+						datesSeekBar.setMax(numberOfYears-1);
 						if(missing.equals(""))
 						{
 							//Do nothing, as there is no missing countries.
@@ -889,7 +937,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			//We compare the count to the size of the ArrayList, to see if we have finished adding the data. 
 			if(countriescount == (countries.size()-1))
 			{
