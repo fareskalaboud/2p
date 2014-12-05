@@ -8,6 +8,7 @@
     <string name="graph_button">Graph</string>
     <string name="xLabel">x</string>
     <string name="yLabel">y</string>
+    <string name="update">Update</string>
     <string name="nodata">all countries without data</string>
     <string name="multiplecountries">Select multiple countries</string>
     <string name="confirmindicator">Are you sure you want to unlock the X Axis? \n This will change the graph to a scatter graph.</string>

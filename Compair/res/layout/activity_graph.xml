@@ -87,8 +87,8 @@
             android:layout_gravity="center"
             android:background="@drawable/custombutton_btn_default_holo_light"
             android:onClick="update"
-            android:text="Update"
-            android:textSize="15dp" />
+            android:text="@string/update"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/datetext"
@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text=""
-            android:textSize="15dp" />
+            android:textSize="15sp" />
 
         <SeekBar
             android:id="@+id/datespinner"

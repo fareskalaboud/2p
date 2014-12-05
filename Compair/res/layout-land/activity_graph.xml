@@ -24,8 +24,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="5dip"
-            android:text="x"
-            android:textSize="18dp" />
+            android:text="@string/xLabel"
+            android:textSize="18sp" />
 
         <Spinner
             android:id="@+id/xspinner"
@@ -46,8 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="5dip"
-            android:text="y"
-            android:textSize="18dp" />
+            android:text="@string/yLabel"
+            android:textSize="18sp" />
 
         <Spinner
             android:id="@+id/yspinner"
@@ -86,8 +86,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/custombutton_btn_default_holo_light"
             android:onClick="update"
-            android:text="Update"
-            android:textSize="15dp" />
+            android:text="@string/update"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/datetext"
@@ -95,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text=""
-            android:textSize="15dp" />
+            android:textSize="15sp" />
 
         <SeekBar
             android:id="@+id/datespinner"

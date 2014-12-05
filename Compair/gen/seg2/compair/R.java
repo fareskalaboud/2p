@@ -414,22 +414,23 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f060002;
         public static final int app_name=0x7f060000;
-        public static final int cancel=0x7f060010;
-        public static final int confirm=0x7f06000f;
-        public static final int confirmcountries=0x7f06000e;
-        public static final int confirmindicator=0x7f060009;
-        public static final int countrylist=0x7f06000a;
-        public static final int fragment1desc=0x7f060012;
-        public static final int fragment2desc=0x7f060011;
-        public static final int fragment3desc=0x7f060013;
+        public static final int cancel=0x7f060011;
+        public static final int confirm=0x7f060010;
+        public static final int confirmcountries=0x7f06000f;
+        public static final int confirmindicator=0x7f06000a;
+        public static final int countrylist=0x7f06000b;
+        public static final int fragment1desc=0x7f060013;
+        public static final int fragment2desc=0x7f060012;
+        public static final int fragment3desc=0x7f060014;
         public static final int graph_button=0x7f060004;
         public static final int hello_world=0x7f060001;
-        public static final int icon_search=0x7f06000b;
-        public static final int multiplecountries=0x7f060008;
+        public static final int icon_search=0x7f06000c;
+        public static final int multiplecountries=0x7f060009;
         public static final int next_button=0x7f060003;
-        public static final int nodata=0x7f060007;
-        public static final int selectcountries=0x7f06000d;
-        public static final int start=0x7f06000c;
+        public static final int nodata=0x7f060008;
+        public static final int selectcountries=0x7f06000e;
+        public static final int start=0x7f06000d;
+        public static final int update=0x7f060007;
         public static final int xLabel=0x7f060005;
         public static final int yLabel=0x7f060006;
     }
