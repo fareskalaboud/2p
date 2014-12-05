@@ -844,7 +844,14 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 					} else {
 						//We increase the progress counter.
 						counter++;
-						dialog.setProgress(counter);
+
+						new Thread(new Runnable() {
+							@Override
+							public void run() {
+								dialog.incrementProgressBy(1);
+							}
+						}).start();
+
 						//We increase the count for the next call.
 						countriescount++;
 					}
@@ -917,7 +924,13 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				//We increase the count for the next call. 
 				countriescount++;
 				counter++;
-				dialog.setProgress(counter);
+
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						dialog.incrementProgressBy(1);
+					}
+				}).start();
 			}
 		}
 	}
