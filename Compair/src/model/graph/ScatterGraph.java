@@ -60,6 +60,8 @@ public class ScatterGraph implements Serializable {
 	private ArrayList<String> missing;
 
 	private double[] panLimits;
+	private String yLabel;
+	private String xLabel;
 
 	/**
 	 * Initialises the hashmaps, the string builder, the missing countries arrays, the countries array and the colorMap.
@@ -352,6 +354,9 @@ public class ScatterGraph implements Serializable {
 	 */
 	public void clearAll(String xLabel,String yLabel)
 	{
+
+		this.xLabel = xLabel;
+		this.yLabel = yLabel;
 		//We reset these counts. They tell later methods the amount of colours or sets that are needed. 
 		colourcount = 0;
 
@@ -380,8 +385,8 @@ public class ScatterGraph implements Serializable {
 		renderer.setYLabels(16);
 
 		//We add the x and y names to the graph. 
-		renderer.setXTitle(xLabel);
-		renderer.setYTitle(yLabel);
+		renderer.setXTitle(this.xLabel);
+		renderer.setYTitle(this.yLabel);
 
 		//Sets the size of the individual points.
 		renderer.setPointSize(7f);
@@ -402,5 +407,40 @@ public class ScatterGraph implements Serializable {
 		renderer.setMarginsColor(Color.rgb(228,228,228));
 		renderer.setXLabelsColor(Color.DKGRAY);
 		renderer.setYLabelsColor(0, Color.DKGRAY);
+	}
+
+	public ArrayList<String> getAvailableYears(ArrayList<Country> countries) {
+		ArrayList<String> availYears = new ArrayList<String>();
+		for(int i = 1960; i<=2012; i++){
+			for(Country c: countries){
+
+				String stringYear = String.valueOf(i);
+
+				HashMap<String, String> xDataset = xMap.get(c.getId());
+				HashMap<String, String> yDataset = yMap.get(c.getId());
+
+				if(xDataset.get(stringYear).equals("0") || yDataset.get(stringYear).equals("0"))
+				{
+
+				}
+				else {
+					availYears.add(String.valueOf(i)); 
+					break;
+				}
+			}
+
+
+
+		}
+		return availYears;
+	}
+	//This method switches the data hashmaps around, upon user pressing the switch indicators buton.
+	public void switchDataSets()
+	{
+		HashMap<String, HashMap<String, String>> tempDataset = new HashMap<String,HashMap<String,String>>();
+
+		tempDataset = xMap;
+		xMap = yMap;
+		yMap = tempDataset;
 	}
 }
