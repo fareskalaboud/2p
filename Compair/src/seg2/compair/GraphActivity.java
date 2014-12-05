@@ -480,7 +480,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 			yindicator.setSelection(positionx);
 			xindicator.setSelection(positiony);
-	
+
 			if(scatterGraphExists == true)
 			{
 
@@ -845,19 +845,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 						xaxisminmax = scatterGraph.getXMinMax();
 						yaxisminmax = scatterGraph.getYMinMax();
 
-						//We now set the Minimum Maximum for the graph.
 
-						scatterGraph.setXAxisMinMax(xaxisminmax[0],xaxisminmax[1]);
-						scatterGraph.setYAxisMinMax(yaxisminmax[0],yaxisminmax[1]);
-
-						/*
-						 * We get the layout for the graph, remove all views from the graph.
-						 * We add the new graph to the layout in the form of a view.
-						 * We also set the loading animation to be transparent.
-						 */
 						dialog.dismiss();
-						layout.removeAllViews();
-						layout.addView(scatterGraph.getScatterGraph(getApplicationContext()), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
 
 						//A scatter graph exists now.
 						scatterGraphExists = true;
@@ -865,7 +854,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 						String missing = scatterGraph.getMissingCountries();
 						//In this method we remove the old dates, and add the new dates that are available.
 						ArrayList<String> scattercountries = scatterGraph.getAvailableYears(countries);
-
+						//We clear the dates arraylist and add arraylists given by the new dates that are actually available.
 						dates.clear();
 						for(String x : scattercountries)
 						{
@@ -875,14 +864,18 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 						numberOfYears = dates.size();
 
 						datesSeekBar.setMax(numberOfYears-1);
+						datesSeekBar.setProgress(0);
+						//The spinner can now be used, since an update has occurred.
+						accessseekbarcount = 1;
+						//We create the graph
+						getDualGraph();
 						if(missing.equals(""))
 						{
 							//Do nothing, as there is no missing countries.
 						} else {
 							createMissingDialog(missing);
 						}
-						//The spinner can now be used, since an update has occurred.
-						accessseekbarcount = 1;
+
 						//The update button can now be pressed again.
 						update.setEnabled(true);
 						//The orientation can be changed now.
