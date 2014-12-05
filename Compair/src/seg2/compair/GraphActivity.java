@@ -23,7 +23,6 @@ import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -129,6 +128,9 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	//Counter for loading countries
 	private int counter = 0;
 
+	//Image for no data picture
+	private ImageView nodata;
+
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -154,7 +156,15 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 		//Initialize the layout to add animations and graphs to.
 		layout = (LinearLayout) findViewById(R.id.chart);
-		//We add the background tutorial to the graph background.
+		//We add the background tutorial to the graph background and the nodata picture.
+		nodata = new ImageView(this);
+
+		//We set the background to be the nodata symbol, we also set the correct parameters.
+		nodata = new ImageView(this);
+		nodata.setBackgroundResource(R.drawable.nodata);
+
+		nodata.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT));
 		ImageView background = new ImageView(this);
 		background.setImageResource(R.drawable.graphbackground);
 
@@ -166,7 +176,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		lock = (Button)findViewById(R.id.xlock);
 		//We initialize the ImageView of the switch indicator. 
 		switchindicator = (ImageView)findViewById(R.id.switchindicator);
-
 		//We initialize the play button
 		playbutton = (Button)findViewById(R.id.playbutton);
 		playbutton.setVisibility(View.GONE);
@@ -426,7 +435,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	 */
 	private class seekBarListener implements SeekBar.OnSeekBarChangeListener{
 
-		@SuppressWarnings("deprecation")
 		@Override
 		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 			//This method handles getting us the graph on the seekbar changing.
@@ -501,6 +509,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	 * This method gets the graph from the stored data in the scatter graph class for a particular year
 	 * based on the countries and the year selected on the seekbar.
 	 */
+	@SuppressWarnings("deprecation")
 	public void getDualGraph()
 	{
 		for(int i=0; i<numberOfYears; i++) {
@@ -527,7 +536,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 					scatterGraph.setXAxisMinMax(xaxisminmax[0],xaxisminmax[1]);
 					scatterGraph.setYAxisMinMax(yaxisminmax[0],yaxisminmax[1]);
 					//We add the view of the final graph.
-					layout.addView(scatterGraph.getScatterGraph(getApplicationContext()), new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
+					layout.addView(scatterGraph.getScatterGraph(getApplicationContext()), new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
 
 				}
 			}
@@ -543,6 +552,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	{
 		//We remove the button that allows users to fit the line graph to view.
 		bottomlayout.removeView(fittoview);
+
 		//We change the help dialog button to blue
 		help.setBackgroundResource(R.drawable.customdialoghelpblue);
 		//We set the play button to be seen.
@@ -563,6 +573,9 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		{
 			//Remove all views out of the graph if there was any ready for the next graph. 
 			layout.removeAllViews();
+			layout.addView(nodata);
+
+
 		}
 
 		//Both graphs do not exist currently, as the view is now empty.
@@ -637,7 +650,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			datetext.setText("");
 			//Remove all views out of the graph if there was any ready for the next graph. 
 			layout.removeAllViews();
-
+			layout.addView(nodata);
 			//Both graphs do not exist currently, as the view is now empty.
 			lineGraphExists = false;
 			scatterGraphExists = false;
@@ -706,7 +719,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			dialog.setIndeterminate(false);
 			dialog.setCancelable(false);
 			dialog.setCanceledOnTouchOutside(false);
-			dialog.setProgressStyle(dialog.STYLE_HORIZONTAL);
+			dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 			dialog.setProgress(counter);
 			dialog.setMax(countries.size());
 			dialog.show();
@@ -835,23 +848,20 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 					HashMap<String,String> hashmap = indicator.getValues();
 					//We add the DataSet to the class.
 					scatterGraph.addXDataSet(hashmap, countries.get(countriescount));
-					//We add the data to the graph. We using Countries count to keep track of what countries data we are adding.
-					scatterGraph.addDataToGraph(countries.get(countriescount), year);
 
 					if(countriescount == (countries.size()-1))
 					{
+						//This means that this is the final country to add to the graph.
 
 						//We get the minimum/maximum values for the axis.
 						xaxisminmax = scatterGraph.getXMinMax();
 						yaxisminmax = scatterGraph.getYMinMax();
 
-
 						dialog.dismiss();
 
 						//A scatter graph exists now.
 						scatterGraphExists = true;
-						//We create a dialog to represent missing data
-						String missing = scatterGraph.getMissingCountries();
+
 						//In this method we remove the old dates, and add the new dates that are available.
 						ArrayList<String> scattercountries = scatterGraph.getAvailableYears(countries);
 						//We clear the dates arraylist and add arraylists given by the new dates that are actually available.
@@ -869,6 +879,9 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 						accessseekbarcount = 1;
 						//We create the graph
 						getDualGraph();
+						//We create a dialog to represent missing data
+						String missing = scatterGraph.getMissingCountries();
+
 						if(missing.equals(""))
 						{
 							//Do nothing, as there is no missing countries.
