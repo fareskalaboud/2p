@@ -491,6 +491,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 			yindicator.setSelection(positionx);
 			xindicator.setSelection(positiony);
+			
+			updateGraph();
 		}
 
 	}

@@ -29,7 +29,8 @@
         </activity>
         <activity
             android:name=".CountrySelectActivity"
-            android:theme="@style/AppBaseTheme" >
+            android:theme="@style/AppBaseTheme"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".GraphActivity"
