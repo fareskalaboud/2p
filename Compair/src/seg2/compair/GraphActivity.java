@@ -44,7 +44,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 /**
- * This class defines the graph ui and the functionality to change indicators. 
+ * This class defines the graph UI and the functionality to change indicators. 
  * @author Sean
  * @author Amrinder
  */
@@ -53,6 +53,11 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 	//We use this for the dates
 	private ArrayList<String> dates = new ArrayList<String>();
+
+	//The start year of the data
+	private final String startYear = "1960";
+	//The end year of the data
+	private final String endYear = "2012";
 
 	//Spinners for the x indicators and the y indicators
 	private Spinner xindicator;
@@ -136,7 +141,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		//We get the string array from CountrySelectActivity.
 		countries = (ArrayList<Country>) getIntent().getSerializableExtra("countries");
 
-		//We add the years from 1960 to 2012 into an arraylist. 
+		//We add the years from startYear to endYear into an arraylist. 
 		for(int i = 1960; i<=2012; i++)
 		{
 			dates.add(String.valueOf(i));
@@ -176,7 +181,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 		fittoview.setOnClickListener(new OnClickListener()
 		{
-
 			@Override
 			public void onClick(View v) {
 				if(lineGraphExists == true)
@@ -190,7 +194,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		fittoview.setBackgroundResource(R.drawable.custombutton_btn_default_holo_light);
 		//We get the layout fit to view button is added to.
 		bottomlayout = (LinearLayout)findViewById(R.id.bottomlayout);
-
 
 		//We check if the device is a tablet. If it is, we make the button bigger to fit the screen.
 		if(isTablet(this))
@@ -208,7 +211,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		 */
 		datesSeekBar = (SeekBar)findViewById(R.id.datespinner);
 		datesSeekBar.setVisibility(View.GONE);
-	
+
 		//We intialise the help imageview button.
 		help = (Button)findViewById(R.id.btnHelp);
 
@@ -233,7 +236,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			public void onNothingSelected(AdapterView<?> arg0) {
 				// TODO Auto-generated method stub
 			}
-
 		});
 
 		//We create the adapter for the list view, using array indicatorName to fill the list. 
@@ -243,7 +245,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		yindicator.setAdapter(adapter2);
 		//upon making a selection we set the label string correctly. 
 		yindicator.setOnItemSelectedListener(new OnItemSelectedListener(){
-
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
@@ -363,8 +364,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		{
 			setDualIndicator(false, year, true);
 		}
-
-
+		//We set the indicators to represent the indicators selected before orientation switch.
 		xindicator.setSelection(xindicatorpos);
 		yindicator.setSelection(yindicatorpos);
 	}
@@ -499,7 +499,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	/**
 	 * This method handles changing the UI to support dual indicators.
 	 * @param scatterexists Does a scattergraph already exist in viewport.
-	 * @param year The year that we want to set the date text at (Usually 1960).
+	 * @param year The year that we want to set the date text at (Usually startYear).
 	 * @param removeView Do we want to remove all views out of graph(Usually yes, unless orientation change).
 	 */
 	public void setDualIndicator(boolean scatterexists, String year, boolean removeView)
@@ -558,7 +558,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 
-					setDualIndicator(false, "1960", true);
+					setDualIndicator(false, "startYear", true);
 				}
 			});
 
@@ -693,8 +693,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				//We iterate through the countries and get the indicators map.
 				for(Country country: countries)
 				{
-					parser.getIndicatorFor(country.getId(), IndicatorNamey, "1960","2012");
-					parser.getIndicatorFor(country.getId(), IndicatorNamex, "1960", "2012");
+					parser.getIndicatorFor(country.getId(), IndicatorNamey, "startYear","endYear");
+					parser.getIndicatorFor(country.getId(), IndicatorNamex, "startYear", "endYear");
 				}
 
 			} else {
@@ -711,7 +711,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				//We iterate through the countries and get the indicators map.
 				for(Country country: countries)
 				{
-					parser.getIndicatorFor(country.getId(), IndicatorName, "1960","2012");
+					parser.getIndicatorFor(country.getId(), IndicatorName, "startYear","endYear");
 				}
 			}
 
@@ -836,7 +836,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 						update.setEnabled(true);
 						//The orientation can be changed now.
 						setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
-						} else {
+					} else {
 						//We increase the count for the next call.
 						countriescount++;
 					}
