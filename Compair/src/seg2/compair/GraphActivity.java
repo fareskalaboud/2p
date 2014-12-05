@@ -918,14 +918,19 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		{
 			@Override
 			public void run() {
-
+				/*
+				 * While the user hasn't requested to stop the animation, keep iterating through.
+				 */
 				while(hasStopped == false)
 				{
 					for (i = datesSeekBar.getProgress(); i < numberOfYears; i++) {
-
+						/*
+						 * We check after every progression to check if the user wants to pause.
+						 */
 						if(hasStopped == false)
 						{
-
+							//We set the progress on the ui thread. This means the ui thread does the least amount of work, preventing
+							//it from stalling.
 							runOnUiThread(new Runnable()
 							{
 
@@ -936,6 +941,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 								}
 
 							});
+							//We restart the loop by setting progress back to 0
 							if(i+1 == numberOfYears)
 							{
 								runOnUiThread(new Runnable()
