@@ -125,6 +125,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	private boolean isRunning = false;
 	//The Play button that is used to auto increment the SeekBar.
 	private Button playbutton;
+	//Counter for loading countries
+	private int counter = 0;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -662,9 +664,12 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 			// create the progress dialog
 			dialog = new ProgressDialog(this, AlertDialog.THEME_HOLO_DARK);
 			dialog.setMessage("Loading. Please wait...");
-			dialog.setIndeterminate(true);
+			dialog.setIndeterminate(false);
 			dialog.setCancelable(false);
 			dialog.setCanceledOnTouchOutside(false);
+			dialog.setProgressStyle(dialog.STYLE_HORIZONTAL);
+			dialog.setProgress(counter);
+			dialog.setMax(countries.size());
 			dialog.show();
 
 			//We check if the lock is open, for dual indicators. 
@@ -755,6 +760,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onJSONParseFinished(String type, HashMap result) {
+
 		//We check if the lock is opened, and the information is dual indicators or just a single indicator (isOpen is false).
 		if(isOpen == true)
 		{
@@ -793,7 +799,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 					//We add the data to the graph. We using Countries count to keep track of what countries data we are adding.
 					scatterGraph.addDataToGraph(countries.get(countriescount), year);
 
-					//We compare the count to the size of the ArrayList, to see if we have finished adding the data.
 					if(countriescount == (countries.size()-1))
 					{
 
@@ -832,7 +837,12 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 						update.setEnabled(true);
 						//The orientation can be changed now.
 						setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+						//We reset the counter for the next update.
+						counter = 0;
 					} else {
+						//We increase the progress counter.
+						counter++;
+						dialog.setProgress(counter);
 						//We increase the count for the next call.
 						countriescount++;
 					}
@@ -870,7 +880,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+			
 			//We compare the count to the size of the ArrayList, to see if we have finished adding the data. 
 			if(countriescount == (countries.size()-1))
 			{
@@ -899,9 +909,13 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				}
 				//The orientation can be changed now.
 				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+				//We reset the count when we have finished getting all the values.
+				counter = 0;
 			}else {
 				//We increase the count for the next call. 
 				countriescount++;
+				counter++;
+				dialog.setProgress(counter);
 			}
 		}
 	}
