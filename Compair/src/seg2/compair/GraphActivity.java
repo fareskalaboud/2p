@@ -663,7 +663,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 
 			// create the progress dialog
 			dialog = new ProgressDialog(this, AlertDialog.THEME_HOLO_DARK);
-			dialog.setMessage("Loading. Please wait...");
+			dialog.setMessage("Mining for data...");
 			dialog.setIndeterminate(false);
 			dialog.setCancelable(false);
 			dialog.setCanceledOnTouchOutside(false);

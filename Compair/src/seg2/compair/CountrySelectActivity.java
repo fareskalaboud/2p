@@ -374,7 +374,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 			}
 
 		} else {
-			Toast.makeText(getApplicationContext(), "Please choose at least 1 and at most 30 countries", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "Please select from 1 to 30 countries (You have selected "+ checkedCountriesSize + " countries)", Toast.LENGTH_SHORT).show();
 		}
 	}
 
