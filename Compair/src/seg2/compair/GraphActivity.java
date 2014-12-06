@@ -166,7 +166,13 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		nodata.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT));
 		ImageView background = new ImageView(this);
-		background.setImageResource(R.drawable.graphbackground);
+		//If the orientation is landscape we use a different image
+		if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
+		{
+			background.setImageResource(R.drawable.graphbackgroundlarge);
+		} else {
+			background.setImageResource(R.drawable.graphbackground);
+		}
 
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		params.gravity = Gravity.CENTER;
