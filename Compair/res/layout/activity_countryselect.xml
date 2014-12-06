@@ -10,7 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="seg2.compair.CountrySelectActivity" >
 
-
     <ListView
         android:id="@+id/countryListView"
         android:layout_width="match_parent"
@@ -39,6 +38,7 @@
         android:onClick="onClick"
         android:text="@string/graph_button"
         android:textAlignment="center"
+        android:textColor="#3a3a3a"
         android:textSize="24dp" />
 
     <RadioGroup
