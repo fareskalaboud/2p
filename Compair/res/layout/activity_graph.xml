@@ -90,6 +90,15 @@
             android:onClick="update"
             android:text="@string/update"
             android:textSize="15sp" />
+        
+         <Button
+            android:id="@+id/fittoview"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/custombutton_btn_default_holo_light"
+            android:text="@string/fittoview"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/datetext"

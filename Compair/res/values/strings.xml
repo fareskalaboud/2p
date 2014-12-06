@@ -22,6 +22,7 @@
     <string name="fragment2desc"> The graph has extensive interactivity and features, so take time to explore!</string>
     <string name="fragment1desc"> Thank you for downloading Compair!\n\nCompair allows you to compare multiple countries datasets provided by the world bank.\n\nSwipe to continue.</string>
     <string name="fragment3desc"> The application works on both Android tablets and phones, however we recommend using a tablet to display the data.</string>
+    <string name="fittoview">Fit to view</string>
 
     <string-array name="indicatorID">
         <item>SP.DYN.LE00.IN</item>

@@ -185,8 +185,7 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		//Initialize the date text for dual indicators.
 		datetext = (TextView)findViewById(R.id.datetext);
 		//Initialize the FitToView button.
-		fittoview = new Button(this);
-		fittoview.setText("Fit to View");
+		fittoview = (Button) findViewById(R.id.fittoview);
 
 		fittoview.setOnClickListener(new OnClickListener()
 		{
@@ -200,20 +199,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 				}
 			}
 		});
-		fittoview.setBackgroundResource(R.drawable.custombutton_btn_default_holo_light);
 		//We get the layout fit to view button is added to.
 		bottomlayout = (LinearLayout)findViewById(R.id.bottomlayout);
-
-		//We check if the device is a tablet. If it is, we make the button bigger to fit the screen.
-		if(isTablet(this))
-		{
-			addFitButton(30,450);
-		} else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
-		{
-			addFitButton(15,450);
-		} else {
-			addFitButton(15,300);
-		}
 
 		/*
 		 * This spinner is kept invisible till unlocked when the dual indicators are unlocked. 
@@ -271,19 +258,6 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 		scatterGraph.addCountryList(countries);
 	}
 
-	/**
-	 * This method is used to add the fit to view button to the screen depending on what size the text is
-	 * @param size The size of the text on the button.
-	 * @param paramsize The size of the button itself (width)
-	 */
-	public void addFitButton(int size, int paramsize)
-	{
-		fittoview.setTextSize(size);
-        fittoview.setTextColor(Color.WHITE);
-        fittoview.setBackgroundColor(Color.rgb(50, 153, 212));
-		//We add the button to the bottom layout and set the  OnClickListener.
-		bottomlayout.addView(fittoview,new LayoutParams(paramsize, LayoutParams.WRAP_CONTENT));
-	}
 
 	/**
 	 * This method resets the graph view. Used by the fit to view button in the graph activity.

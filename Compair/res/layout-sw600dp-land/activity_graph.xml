@@ -84,16 +84,26 @@
         android:orientation="horizontal" >
 
         <Button
-                android:id="@+id/update"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:background="#3299d4"
-                android:onClick="update"
-                android:text="@string/update"
-                android:textSize="30sp"
-                android:textColor="#ffffff"/>
+            android:id="@+id/update"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#3299d4"
+            android:onClick="update"
+            android:text="@string/update"
+            android:textColor="#ffffff"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/fittoview"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="#3299d4"
+            android:text="@string/fittoview"
+            android:textColor="#ffffff"
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/datetext"
