@@ -10,15 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="seg2.compair.CountrySelectActivity" >
 
-    <ImageView
-        android:id="@+id/background"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="80dp"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/front_end_background" />
 
     <ListView
         android:id="@+id/countryListView"
