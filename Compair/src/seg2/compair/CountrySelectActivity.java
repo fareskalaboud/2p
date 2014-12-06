@@ -155,7 +155,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 		countryRadioButton = (RadioButton) findViewById(R.id.countryRadioButton);
 		countryRadioButton.setChecked(true);
 		new Color();
-		countryRadioButton.setTextColor(Color.rgb(0, 178, 255));
+		countryRadioButton.setTextColor(Color.rgb(50, 153, 212));
 		allianceRadioButton = (RadioButton) findViewById(R.id.allianceRadioButton);
 
 		countryRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -163,7 +163,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (isChecked) {
 					new Color();
-					countryRadioButton.setTextColor(Color.rgb(0, 178, 255));
+					countryRadioButton.setTextColor(Color.rgb(50, 153, 212));
 					allianceRadioButton.setTextColor(Color.BLACK);
 					countriesListView.setVisibility(View.VISIBLE);
 					alliancesListView.setVisibility(View.GONE);

@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.graphics.Color;
+import android.view.*;
 import model.Country;
 import model.Indicator;
 import model.download.JSONParser;
@@ -23,11 +25,6 @@ import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
@@ -282,6 +279,8 @@ public class GraphActivity extends Activity implements JSONParserListener<HashMa
 	public void addFitButton(int size, int paramsize)
 	{
 		fittoview.setTextSize(size);
+        fittoview.setTextColor(Color.WHITE);
+        fittoview.setBackgroundColor(Color.rgb(50, 153, 212));
 		//We add the button to the bottom layout and set the  OnClickListener.
 		bottomlayout.addView(fittoview,new LayoutParams(paramsize, LayoutParams.WRAP_CONTENT));
 	}

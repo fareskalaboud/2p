@@ -84,15 +84,16 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/update"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/custombutton_btn_default_holo_light"
-            android:onClick="update"
-            android:text="@string/update"
-            android:textSize="30sp" />
+                android:id="@+id/update"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="#3299d4"
+                android:onClick="update"
+                android:text="@string/update"
+                android:textSize="30sp"
+                android:textColor="#ffffff"/>
 
         <TextView
             android:id="@+id/datetext"

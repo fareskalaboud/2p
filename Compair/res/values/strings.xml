@@ -5,10 +5,10 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="next_button">Next</string>
-    <string name="graph_button">Graph</string>
+    <string name="graph_button">&#032;&#032;&#032;Graph&#032;&#032;&#032;</string>
     <string name="xLabel">x</string>
     <string name="yLabel">y</string>
-    <string name="update">Update</string>
+    <string name="update">&#032;Update&#032;</string>
     <string name="nodata">all countries without data</string>
     <string name="multiplecountries">Select multiple countries</string>
     <string name="confirmindicator">Are you sure you want to unlock the X Axis? \n This will change the graph to a scatter graph.</string>
