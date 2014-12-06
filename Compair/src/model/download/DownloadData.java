@@ -23,6 +23,12 @@ import java.io.InputStreamReader;
  */
 public class DownloadData extends AsyncTask<String, String, JSONArray> {
 
+    private DownloadDataListener<JSONArray> downloadDataListener;
+
+    public DownloadData(DownloadDataListener<JSONArray> downloadDataListener) {
+        this.downloadDataListener = downloadDataListener;
+    }
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -74,16 +80,16 @@ public class DownloadData extends AsyncTask<String, String, JSONArray> {
                 return new JSONArray(content.toString());
             } catch (JSONException e) {
                 Log.e("JSON parse", "Error while converting string to json");
+                return null;
             }
         } else {
             return null;
         }
-
-        return null;
     }
 
     @Override
     protected void onPostExecute(JSONArray jsonArray) {
         super.onPostExecute(jsonArray);
+        downloadDataListener.onDownloadFinished(jsonArray);
     }
 }

@@ -1,0 +1,130 @@
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#e4e4e4"
+    android:orientation="vertical"
+    tools:context="seg2.compair.GraphActivity" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/xlock"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:background="@drawable/customlock"
+            android:onClick="lock" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="5dip"
+            android:text="@string/xLabel"
+            android:textSize="30sp" />
+
+        <Spinner
+            android:id="@+id/xspinner"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <ImageView
+            android:id="@+id/switchindicator"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:onClick="switchIndicators"
+            android:src="@drawable/switchindicatorgrey" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="5dip"
+            android:text="@string/yLabel"
+            android:textSize="30sp" />
+
+        <Spinner
+            android:id="@+id/yspinner"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <Button
+            android:id="@+id/btnHelp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/customdialoghelp"
+            android:onClick="openHelpDialog" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/chart"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal" />
+
+    <LinearLayout
+        android:id="@+id/bottomlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/update"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/custombutton_btn_default_holo_light"
+            android:onClick="update"
+            android:text="@string/update"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/fittoview"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custombutton_btn_default_holo_light"
+            android:text="@string/fittoview"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/datetext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="30sp" />
+
+        <SeekBar
+            android:id="@+id/datespinner"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:progressDrawable="@drawable/customseekbar_scrubber_progress"
+            android:thumb="@drawable/customseekbar_scrubber_control" />
+
+        <Button
+            android:id="@+id/playbutton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/customplaybutton"
+            android:onClick="playbutton" />
+    </LinearLayout>
+
+</LinearLayout>
