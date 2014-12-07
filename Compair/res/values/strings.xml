@@ -25,85 +25,85 @@
     <string name="fittoview">Fit to view</string>
 
     <string-array name="indicatorID">
-        <item>SP.DYN.LE00.IN</item>
-        <item>SM.POP.NETM</item>
-        <item>SP.POP.GROW</item>
-        <item>NY.GDP.MKTP.CD</item>
-        <item>GC.DOD.TOTL.GD.ZS</item>
-        <item>SP.POP.0014.TO.ZS</item>
-        <item>SP.POP.1564.TO.ZS</item>
-        <item>EG.USE.COMM.FO.ZS</item>
-        <item>EP.PMP.SGAS.CD</item>
-        <item>FR.INR.RINR</item>
-        <item>SL.TLF.0714.ZS</item>
-        <item>SP.POP.TOTL</item>
-        <item>SL.GDP.PCAP.EM.KD</item>
-        <item>SH.XPD.PCAP</item>
-        <item>SE.ADT.LITR.ZS</item>
-        <item>MS.MIL.XPND.GD.ZS</item>
-        <item>EN.POP.DNST</item>
-        <item>SP.POP.GROW</item>
-        <item>FP.CPI.TOTL.ZG</item>
-        <item>SP.RUR.TOTL</item>
         <item>AG.LND.ARBL.HA.PC</item>
-        <item>SP.URB.TOTL</item>
-        <item>NY.GNP.ATLS.CD</item>
-        <item>SL.TLF.TOTL.IN</item>
-        <item>EG.IMP.CONS.ZS</item>
-        <item>AG.LND.FRST.K2</item>
+        <item>SP.DYN.CBRT.IN</item>
+        <item>SL.TLF.0714.ZS</item>
         <item>BN.CAB.XOKA.CD</item>
+        <item>EG.IMP.CONS.ZS</item>
         <item>DT.DOD.DECT.CD</item>
         <item>BX.KLT.DINV.CD.WD</item>
-        <item>DT.DOD.DIMF.CD</item>
-        <item>SP.DYN.CBRT.IN</item>
+        <item>AG.LND.FRST.K2</item>
+        <item>EG.USE.COMM.FO.ZS</item>
+        <item>NY.GDP.MKTP.CD</item>
+        <item>SL.GDP.PCAP.EM.KD</item>
+        <item>NY.GNP.ATLS.CD</item>
+        <item>SH.XPD.PCAP</item>
+        <item>GC.DOD.TOTL.GD.ZS</item>
+        <item>FP.CPI.TOTL.ZG</item>
+        <item>SL.TLF.TOTL.IN</item>
         <item>SP.DYN.LE00.IN</item>
+        <item>SP.DYN.LE00.IN</item>
+        <item>SE.ADT.LITR.ZS</item>
+        <item>MS.MIL.XPND.GD.ZS</item>
+        <item>IS.VEH.NVEH.P3</item>
+        <item>SM.POP.NETM</item>
         <item>IS.VEH.PCAR.P3</item>
+        <item>SP.POP.0014.TO.ZS</item>
+        <item>SP.POP.1564.TO.ZS</item>
+        <item>EN.POP.DNST</item>
+        <item>SP.POP.GROW</item>
+        <item>SP.POP.GROW</item>
+        <item>SP.POP.TOTL</item>
+        <item>EP.PMP.SGAS.CD</item>
+        <item>FR.INR.RINR</item>
+        <item>SP.RUR.TOTL</item>
         <item>IC.TAX.TOTL.CP.ZS</item>
         <item>SL.UEM.TOTL.FE.ZS</item>
         <item>SL.UEM.TOTL.MA.ZS</item>
-        <item>IS.VEH.NVEH.P3</item>
+        <item>SP.URB.TOTL</item>
+        <item>DT.DOD.DIMF.CD</item>
     </string-array>
     <string-array name="date">
         <item>Date</item>
     </string-array>
     <string-array name="indicatorName">
-        <item>Life Expectancy at Birth, Total (%)</item>
-        <item>Net Migration</item>
-        <item>Population Growth (Annual %)</item>
-        <item>GDP (current US$)</item>
-        <item>Imports of goods and services (% GDP)</item>
-        <item>Population ages 0/14 (% total)</item>
-        <item>Population ages 15/64 (% total)</item>
-        <item>Fossil fuel energy consumption</item>
-        <item>Pump price for gasoline per liter</item>
-        <item>Real interest rate</item>
-        <item>Children in employment, total (% of children ages 7/14)</item>
-        <item>Population, total</item>
-        <item>GDP per person employed</item>
-        <item>Health expenditure per capita (current US$)</item>
-        <item>Literacy rate, adult total (% of people ages 15 and above) </item>
-        <item>Military expenditure (% of GDP)</item>
-        <item>Population density (people per sq. km)</item>
-        <item>Population growth (annual %)</item>
-        <item>Inflation, consumer prices (annual %)</item>
-        <item>Rural population</item>
         <item>Arable land(hectares per person)</item>
-        <item>Urban population</item>
-        <item>GNI Atlas Method</item>
-        <item>Labor force, total</item>
-        <item>Energy imports, net(%use of energy)</item>
-        <item>Forest Area</item>
+        <item>Birth rate, crude(per 1000 people)</item>
+        <item>Children in employment, total (% of children ages 7/14)</item>
         <item>Current account balance</item>
+        <item>Energy imports, net(%use of energy)</item>
         <item>External debt stocks</item>
         <item>Foreign direct investment, net inflows</item>
-        <item>Use of IMF credit (DOD, current US$)</item>
-        <item>Birth rate, crude(per 1000 people)</item>
+        <item>Forest Area</item>
+        <item>Fossil fuel energy consumption</item>
+        <item>GDP (current US$)</item>
+        <item>GDP per person employed</item>
+        <item>GNI Atlas Method</item>
+        <item>Health expenditure per capita (current US$)</item>
+        <item>Imports of goods and services (% GDP)</item>
+        <item>Inflation, consumer prices (annual %)</item>
+        <item>Labor force, total</item>
+        <item>Life Expectancy at Birth, Total (%)</item>
         <item>Life expectancy at birth, total(years)</item>
+        <item>Literacy rate, adult total (% of people ages 15 and above) </item>
+        <item>Military expenditure (% of GDP)</item>
+        <item>Motor vehicles(per 1000 pers)</item>
+        <item>Net Migration</item>
         <item>Passenger cars(per 1000)</item>
+        <item>Population ages 0/14 (% total)</item>
+        <item>Population ages 15/64 (% total)</item>
+        <item>Population density (people per sq. km)</item>
+        <item>Population Growth (Annual %)</item>
+        <item>Population growth (annual %)</item>
+        <item>Population, total</item>
+        <item>Pump price for gasoline per liter</item>
+        <item>Real interest rate</item>
+        <item>Rural population</item>
         <item>Total tax rate(%of commercial profits)</item>
         <item>Unemployment, female (% of female labor force)</item>
         <item>Unemployment, male (% of male labor force) </item>
-        <item>Motor vehicles(per 1000 pers)</item>
+        <item>Urban population</item>
+        <item>Use of IMF credit (DOD, current US$)</item>
     </string-array>
     <string-array name="ACAP">
         <item>ARG</item>

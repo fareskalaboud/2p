@@ -2,6 +2,8 @@ package seg2.compair;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 import android.graphics.Color;
