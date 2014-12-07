@@ -105,6 +105,158 @@
         <item>Unemployment, male (% of male labor force) </item>
         <item>Motor vehicles(per 1000 pers)</item>
     </string-array>
+    <string-array name="ACAP">
+        <item>ARG</item>
+        <item>AUS</item>
+        <item>BRA</item>
+        <item>CHL</item>
+        <item>ECU</item>
+        <item>FRA</item>
+        <item>NZL</item>
+        <item>NOR</item>
+        <item>PER</item>
+        <item>ZAF</item>
+        <item>ESP</item>
+        <item>GBR</item>
+        <item>URY</item>   
+    </string-array> 
+    
+    <string-array name="ACD">
+        <item>AFG</item>
+        <item>BHR</item>
+        <item>BGD</item>
+        <item>BTN</item>
+        <item>KHM</item>
+        <item>CHN</item>
+        <item>IND</item>
+        <item>IDN</item>
+        <item>IRN</item>
+        <item>JPN</item>
+        <item>KAZ</item>
+        <item>PRK</item>
+        <item>KWT</item>
+        <item>KGZ</item>
+        <item>LAO</item>
+        <item>MYS</item>
+        <item>MNG</item>
+        <item>MMR</item>
+        <item>OMN</item>
+        <item>PAK</item>
+        <item>PHL</item>
+        <item>QAT</item>
+        <item>RUS</item>
+        <item>SAI</item>
+        <item>SGP</item>
+        <item>LKA</item>
+        <item>TJK</item>
+        <item>THA</item>
+        <item>TUR</item>
+        <item>UAE</item>
+        <item>UZB</item>
+        <item>VNM</item>
+    </string-array>
+
+    <string-array name="APEC">
+        <item>AUS</item>
+        <item>BRN</item>
+        <item>CAN</item>
+        <item>IDN</item>
+        <item>JPN</item>
+        <item>KOR</item>
+        <item>MYS</item>
+        <item>NZL</item>
+        <item>PHL</item>
+        <item>SGP</item>
+        <item>THA</item>
+        <item>USA</item>
+        <item>HKG</item>
+        <item>CHN</item>
+        <item>MEX</item>
+        <item>PNG</item>
+        <item>CHL</item>
+        <item>PER</item>
+        <item>RUS</item>
+        <item>VNM</item>
+    </string-array>
+    
+    <string-array name="ArabLeague">
+        <item>DZA</item>
+        <item>BHR</item>
+        <item>COM</item>
+        <item>DJI</item>
+        <item>EGY</item>
+        <item>IRQ</item>
+        <item>JOR</item>
+        <item>KWT</item>
+        <item>LBN</item>
+        <item>LBY</item>
+        <item>MRT</item>
+        <item>MAR</item>
+        <item>OMN</item>
+        <item>QAT</item>
+        <item>SAU</item> 
+        <item>SOM</item>
+        <item>SDN</item>
+        <item>SYR</item>
+        <item>TUN</item>
+        <item>TDR</item>
+        <item>YEM</item>
+    </string-array>
+
+     <string-array name="ASEAN">
+        <item>BRN</item>
+        <item>KHM</item>
+        <item>IDN</item>
+        <item>LAO</item>
+        <item>MYS</item>
+        <item>MMR</item>
+        <item>PHL</item>
+        <item>SGP</item>
+        <item>THA</item>
+        <item>VNM</item>
+    </string-array>
+    
+     <string-array name="BIMSTEC">
+         <item>BGD</item>
+         <item>BTN</item>
+         <item>MMR</item>
+         <item>IND</item>
+         <item>NPL</item>
+         <item>LKA</item>
+         <item>THA</item>
+     </string-array>
+
+   	<string-array name="BRICS">
+        <item>BRA</item>
+        <item>RUS</item>
+        <item>IND</item>
+        <item>CHN</item>
+        <item>ZAF</item>
+    </string-array>
+    
+   	<string-array name="ECO">
+            <item>AFG</item>
+            <item>AZE</item>
+            <item>IRN</item>
+            <item>KAZ</item>
+            <item>KGZ</item>
+            <item>PAK</item>
+            <item>TJK</item>
+            <item>TUR</item>
+            <item>TKM</item>
+            <item>UZB</item>
+        </string-array>
+        
+        <string-array name="MGC">
+            <item>IND</item>
+            <item>THA</item>
+            <item>MMR</item>
+            <item>KHM</item>
+            <item>LAO</item>
+            <item>VNM</item>
+        </string-array>    
+
+
     <string-array name="NATO">
         <item>ALB</item>
         <item>BEL</item>
@@ -135,6 +287,22 @@
         <item>GBR</item>
         <item>USA</item>
     </string-array>
+
+    <string-array name="OPEC">
+        <item>DZA</item>
+        <item>AGO</item>
+        <item>ECU</item>
+        <item>IRN</item>
+        <item>IRQ</item>
+        <item>KWT</item>
+        <item>LBY</item>
+        <item>NGA</item>
+        <item>QAT</item>
+        <item>SAU </item>
+        <item>UAE</item>
+        <item>VEN</item>
+    </string-array>
+
     <string-array name="SCO">
         <item>CHN</item>
         <item>KAZ</item>
@@ -142,25 +310,6 @@
         <item>RUS</item>
         <item>TJK</item>
         <item>UZB</item>
-    </string-array>
-    <string-array name="BRICS">
-        <item>BRA</item>
-        <item>RUS</item>
-        <item>IND</item>
-        <item>CHN</item>
-        <item>ZAF</item>
-    </string-array>
-    <string-array name="ASEAN">
-        <item>BRN</item>
-        <item>KHM</item>
-        <item>IDN</item>
-        <item>LAO</item>
-        <item>MYS</item>
-        <item>MMR</item>
-        <item>PHL</item>
-        <item>SGP</item>
-        <item>THA</item>
-        <item>VNM</item>
     </string-array>
 
 </resources>
