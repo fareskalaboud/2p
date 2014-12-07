@@ -89,6 +89,7 @@
             android:background="@drawable/custombutton_btn_default_holo_light"
             android:onClick="update"
             android:text="@string/update"
+            android:textColor="#3a3a3a"
             android:textSize="15sp" />
         
          <Button
@@ -98,6 +99,7 @@
             android:layout_gravity="center"
             android:background="@drawable/custombutton_btn_default_holo_light"
             android:text="@string/fittoview"
+             android:textColor="#3a3a3a"
             android:textSize="15sp" />
 
         <TextView

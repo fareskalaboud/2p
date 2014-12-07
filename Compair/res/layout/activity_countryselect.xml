@@ -10,7 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="seg2.compair.CountrySelectActivity" >
 
-
     <ListView
         android:id="@+id/countryListView"
         android:layout_width="match_parent"
@@ -24,7 +23,7 @@
         android:id="@+id/allianceListView"
         android:layout_width="match_parent"
         android:layout_height="205dp"
-        android:layout_above="@+id/graphButton"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/radioGroup1" />
@@ -39,6 +38,7 @@
         android:onClick="onClick"
         android:text="@string/graph_button"
         android:textAlignment="center"
+        android:textColor="#3a3a3a"
         android:textSize="24dp" />
 
     <RadioGroup

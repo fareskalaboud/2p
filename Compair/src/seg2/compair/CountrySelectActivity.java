@@ -57,14 +57,24 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	private JSONParser parser;
 	private ArrayList<Country> checkedCountries = new ArrayList<Country>();
 	private ArrayList<Country> countryList;
-    private ArrayList<Country> allCountriesList;
+	private ArrayList<Country> allCountriesList;
 
 	@SuppressWarnings("serial")
-	private final ArrayList<String> alliancesName = new ArrayList<String>() {{add("NATO"); add("SCO"); add("BRICS"); add("ASEAN");}};
+	private final ArrayList<String> alliancesName = new ArrayList<String>() {{add("NATO"); add("SCO"); add("BRICS"); add("ASEAN");
+	add("ACAP");add("ACD");add("APEC");add("ArabLeague");add("BIMSTEC");add("ECO");add("MGC");add("OPEC");}};
 	private ArrayList<Country> natoCountries = new ArrayList<Country>();
 	private ArrayList<Country> scoCountries = new ArrayList<Country>();
 	private ArrayList<Country> bricsCountries = new ArrayList<Country>();
 	private ArrayList<Country> aseanCountries = new ArrayList<Country>();
+
+	private ArrayList<Country> acapCountries = new ArrayList<Country>();
+	private ArrayList<Country> acdCountries = new ArrayList<Country>();
+	private ArrayList<Country> apecCountries = new ArrayList<Country>();
+	private ArrayList<Country> arabLeagueCountries = new ArrayList<Country>();
+	private ArrayList<Country> bimstecCountries = new ArrayList<Country>();
+	private ArrayList<Country> ecoCountries = new ArrayList<Country>();
+	private ArrayList<Country> mgcCountries = new ArrayList<Country>();
+	private ArrayList<Country> opecCountries = new ArrayList<Country>();
 
 	//CheckBox that is used in the alert dialog to not show alert dialog again.
 	private CheckBox showmessage;
@@ -80,11 +90,11 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_countryselect);
-		
+
 		if (!isInternetAvailable()) {
 			new NoInternetAlertDialog(this);
 		}
-		
+
 		//We check if the user has already seen the introduction.
 		//If they have not, we start the introduction.
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -110,7 +120,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 		filterWidget = (EditText) findViewById(R.id.filter);
 
 		//We prevent the user from rotating the screen, causing issues with the parser sending information after the activity is destroyed.
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
 		// create the progress dialog
 		dialog = new ProgressDialog(this, AlertDialog.THEME_HOLO_DARK);
@@ -229,7 +239,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 
 		//The orientation can be changed now.
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
-		
+
 		if (result.size() == 0) {
 			countryList = new ArrayList<Country>();
 			new NoInternetAlertDialog(this);
@@ -244,10 +254,27 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 				ArrayList<String> bricsCountriesString = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.BRICS)));
 				ArrayList<String> aseanCountriesString = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.ASEAN)));
 
+				ArrayList<String> acapCountriesString = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.ACAP)));
+				ArrayList<String> acdCountriesString = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.ACD)));
+				ArrayList<String> apecCountriesString = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.APEC)));
+				ArrayList<String> arabLeagueCountriesString = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.ArabLeague)));
+				ArrayList<String> bimstecCountriesString = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.BIMSTEC)));
+				ArrayList<String> ecoCountriesString = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.ECO)));
+				ArrayList<String> mgcCountriesString = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.MGC)));
+				ArrayList<String> opecCountriesString = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.OPEC)));
 				natoCountries = new ArrayList<Country>();
 				scoCountries = new ArrayList<Country>();
 				bricsCountries = new ArrayList<Country>();
 				aseanCountries = new ArrayList<Country>();
+
+				acapCountries = new ArrayList<Country>();
+				acdCountries = new ArrayList<Country>();
+				apecCountries = new ArrayList<Country>();
+				arabLeagueCountries = new ArrayList<Country>();
+				bimstecCountries = new ArrayList<Country>();
+				ecoCountries = new ArrayList<Country>();
+				mgcCountries = new ArrayList<Country>();
+				opecCountries = new ArrayList<Country>();
 
 				Iterator iterator = result.entrySet().iterator();
 				while (iterator.hasNext()) {
@@ -259,13 +286,22 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 					if (bricsCountriesString.contains(currentCountry.getId())) bricsCountries.add(currentCountry);
 					if (aseanCountriesString.contains(currentCountry.getId())) aseanCountries.add(currentCountry);
 
+					if (acapCountriesString.contains(currentCountry.getId())) acapCountries.add(currentCountry);
+					if (acdCountriesString.contains(currentCountry.getId())) acdCountries.add(currentCountry);
+					if (apecCountriesString.contains(currentCountry.getId())) apecCountries.add(currentCountry);
+					if (arabLeagueCountriesString.contains(currentCountry.getId())) arabLeagueCountries.add(currentCountry);
+					if (bimstecCountriesString.contains(currentCountry.getId())) bimstecCountries.add(currentCountry);
+					if (ecoCountriesString.contains(currentCountry.getId())) ecoCountries.add(currentCountry);
+					if (mgcCountriesString.contains(currentCountry.getId())) mgcCountries.add(currentCountry);
+					if (opecCountriesString.contains(currentCountry.getId())) opecCountries.add(currentCountry);
+
 					countryList.add((Country)pairs.getValue());
 				}
 
 				// Sort the countries by name and
 				// pass these to the listView
 				Collections.sort(countryList);
-                allCountriesList = countryList;
+				allCountriesList = countryList;
 				clAdapter = new CountryListAdapter(this, R.layout.countrylistview_row, countryList);
 				countriesListView.setAdapter(clAdapter);
 
@@ -291,7 +327,16 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 				if (allianceName.equals("NATO")) presentNextView(natoCountries);
 				else if (allianceName.equals("SCO")) presentNextView(scoCountries);
 				else if (allianceName.equals("BRICS")) presentNextView(bricsCountries);
-				else presentNextView(aseanCountries);
+				else if (allianceName.equals("ASEAN")) presentNextView(aseanCountries);
+				
+				else if (allianceName.equals("ACAP")) presentNextView(acdCountries);
+				else if (allianceName.equals("ACD")) presentNextView(acdCountries);
+				else if (allianceName.equals("APEC")) presentNextView(apecCountries);
+				else if (allianceName.equals("ArabLeague")) presentNextView(arabLeagueCountries);
+				else if (allianceName.equals("BIMSTEC")) presentNextView(bimstecCountries);
+				else if (allianceName.equals("ECO")) presentNextView(ecoCountries);
+				else if (allianceName.equals("MGC")) presentNextView(mgcCountries);
+				else if (allianceName.equals("OPEC")) presentNextView(opecCountries);
 			}
 		});
 	}
@@ -319,7 +364,7 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	 */
 	public void onClick(View v) {
 		if(isInternetAvailable() && countryList.size() != 0) {
-            filterWidget.setText("");
+			filterWidget.setText("");
 			sendCheckedCountriesToGraph();
 			Log.e("DONE","DONE");
 		} else {
@@ -332,13 +377,13 @@ public class CountrySelectActivity extends Activity implements JSONParserListene
 	 * to the next activity, which graphs the data it obtains
 	 * from it.
 	 */
-	
+
 	public void sendCheckedCountriesToGraph() {
 		checkedCountries = new ArrayList<Country>();
 
 		for (Country c : allCountriesList) {
 			if (c.isSelected()) {
-                Log.d("COUNTRIES:", "Added " +c.getName());
+				Log.d("COUNTRIES:", "Added " +c.getName());
 				checkedCountries.add(c);
 			}
 		}
