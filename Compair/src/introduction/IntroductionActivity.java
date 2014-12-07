@@ -11,7 +11,6 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
 public class IntroductionActivity extends FragmentActivity {
 	
 	private PageAdapter mPageAdapter;
@@ -32,7 +31,6 @@ public class IntroductionActivity extends FragmentActivity {
 		ViewPager pager =  (ViewPager)findViewById(R.id.viewpager);
 		
 		pager.setAdapter(mPageAdapter);
-		
 	}
 
 	@Override

@@ -1,6 +1,4 @@
 package introduction;
-
-
 import seg2.compair.CountrySelectActivity;
 import seg2.compair.R;
 import android.content.Intent;
@@ -15,9 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-
 public class Fragment3 extends Fragment {
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -51,15 +47,10 @@ public class Fragment3 extends Fragment {
 				Intent intent = new Intent(getActivity().getApplicationContext(), CountrySelectActivity.class);
 			
 				startActivity(intent);
-				
-				
-				
 			}
 			
 		});
 		
 		return v;
 	}
-
-
 }

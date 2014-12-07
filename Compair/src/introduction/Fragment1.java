@@ -1,9 +1,5 @@
 package introduction;
 
-
-
-
-
 import seg2.compair.R;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,8 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-
-	
 	public class Fragment1 extends Fragment {
 		
 		@Override
@@ -23,9 +17,6 @@ import android.widget.RelativeLayout;
 			{
 				return null;
 			}
-			
 			return (RelativeLayout) inflater.inflate(R.layout.fragment1_layout, container,false);
 		}
-	
-
 }
